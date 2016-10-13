@@ -31,7 +31,7 @@ class StatusStrings
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Status", mappedBy="statusString")
+     * @ORM\OneToMany(targetEntity="Status", mappedBy="statusString", cascade="all")
      */
     private $statuses;
 
@@ -85,6 +85,7 @@ class StatusStrings
     public function addStatus(\AppBundle\Entity\Status $status)
     {
         $this->statuses[] = $status;
+        $status->setStatusString($this);
 
         return $this;
     }

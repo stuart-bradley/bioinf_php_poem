@@ -37,7 +37,7 @@ class OmicsExperimentSubTypeStrings
     private $typeID;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentSubTypeString")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentSubTypeString", cascade="all")
      */
     private $omicsExperimentSubTypes;
 
@@ -115,6 +115,7 @@ class OmicsExperimentSubTypeStrings
     public function addOmicsExperimentSubType(\AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType)
     {
         $this->omicsExperimentSubTypes[] = $omicsExperimentSubType;
+        $omicsExperimentSubType->setOmicsExperimentSubTypeString($this);
 
         return $this;
     }

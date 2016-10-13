@@ -30,7 +30,7 @@ class OmicsExperimentTypeStrings
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperimentTypeString")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperimentTypeString", cascade="all")
      */
     private $omicsExperimentTypes;
 
@@ -83,6 +83,7 @@ class OmicsExperimentTypeStrings
     public function addOmicsExperimentType(\AppBundle\Entity\OmicsExperimentType $omicsExperimentType)
     {
         $this->omicsExperimentTypes[] = $omicsExperimentType;
+        $omicsExperimentType->setOmicsExperimentTypeString($this);
 
         return $this;
     }

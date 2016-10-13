@@ -35,7 +35,7 @@ class OmicsExperimentSubType
     private $omicsExperimentType;
 
     /**
-     * @ORM\OneToMany(targetEntity="Sample", mappedBy="omicsExperimentSubType")
+     * @ORM\OneToMany(targetEntity="Sample", mappedBy="omicsExperimentSubType", cascade="all")
      */
     private $samples;
 
@@ -112,6 +112,7 @@ class OmicsExperimentSubType
     public function addSample(\AppBundle\Entity\Sample $sample)
     {
         $this->samples[] = $sample;
+        $sample->setOmicsExperimentSubType($this);
 
         return $this;
     }

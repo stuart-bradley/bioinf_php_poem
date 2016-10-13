@@ -45,16 +45,10 @@ class Sample
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sampled_date", type="date")
+     * @ORM\Column(name="sampled_date_time", type="datetime")
      */
-    private $sampledDate;
+    private $sampledDateTime;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="sampled_time", type="time")
-     */
-    private $sampledTime;
 
     /**
      * @var string
@@ -83,7 +77,7 @@ class Sample
     private $omicsExperimentSubType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SequencingRun", inversedBy="samples")
+     * @ORM\ManyToOne(targetEntity="SequenceRun", inversedBy="samples")
      * @ORM\JoinColumn(name="sequencing_run_id", referencedColumnName="id")
      */
     private $sequencingRun;
@@ -169,54 +163,6 @@ class Sample
     public function getBCRunID()
     {
         return $this->BCRunID;
-    }
-
-    /**
-     * Set sampledDate
-     *
-     * @param \DateTime $sampledDate
-     *
-     * @return Sample
-     */
-    public function setSampledDate($sampledDate)
-    {
-        $this->sampledDate = $sampledDate;
-
-        return $this;
-    }
-
-    /**
-     * Get sampledDate
-     *
-     * @return \DateTime
-     */
-    public function getSampledDate()
-    {
-        return $this->sampledDate;
-    }
-
-    /**
-     * Set sampledTime
-     *
-     * @param \DateTime $sampledTime
-     *
-     * @return Sample
-     */
-    public function setSampledTime($sampledTime)
-    {
-        $this->sampledTime = $sampledTime;
-
-        return $this;
-    }
-
-    /**
-     * Get sampledTime
-     *
-     * @return \DateTime
-     */
-    public function getSampledTime()
-    {
-        return $this->sampledTime;
     }
 
     /**
@@ -337,5 +283,29 @@ class Sample
     public function getMaterialTypeString()
     {
         return $this->materialTypeString;
+    }
+
+    /**
+     * Set sampledDateTime
+     *
+     * @param \DateTime $sampledDateTime
+     *
+     * @return Sample
+     */
+    public function setSampledDateTime($sampledDateTime)
+    {
+        $this->sampledDateTime = $sampledDateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get sampledDateTime
+     *
+     * @return \DateTime
+     */
+    public function getSampledDateTime()
+    {
+        return $this->sampledDateTime;
     }
 }

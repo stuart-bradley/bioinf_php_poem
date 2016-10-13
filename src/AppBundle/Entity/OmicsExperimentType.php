@@ -23,13 +23,6 @@ class OmicsExperimentType
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="type", type="integer")
-     */
-    private $type;
-
-    /**
      * @ORM\ManyToOne(targetEntity="OmicsExperiment", inversedBy="omicsExperimentTypes")
      * @ORM\JoinColumn(name="omics_experiment_id", referencedColumnName="id")
      */
@@ -42,7 +35,7 @@ class OmicsExperimentType
     private $omicsExperimentTypeString;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentType")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentType", cascade="all")
      */
     private $omicsExperimentSubTypes;
 
@@ -59,30 +52,6 @@ class OmicsExperimentType
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param integer $type
-     *
-     * @return OmicsExperimentType
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return int
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -119,6 +88,7 @@ class OmicsExperimentType
     public function addOmicsExperimentSubType(\AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType)
     {
         $this->omicsExperimentSubTypes[] = $omicsExperimentSubType;
+        $omicsExperimentSubType->setOmicsExperimentType($this);
 
         return $this;
     }

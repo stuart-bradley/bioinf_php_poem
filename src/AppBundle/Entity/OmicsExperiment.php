@@ -66,12 +66,12 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment")
+     * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade="all")
      */
     private $statuses;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment", cascade="all")
      */
     private $omicsExperimentTypes;
 
@@ -245,6 +245,7 @@ class OmicsExperiment
     public function addStatus(\AppBundle\Entity\Status $status)
     {
         $this->statuses[] = $status;
+        $status->setOmicsExperiment($this);
 
         return $this;
     }
@@ -279,6 +280,7 @@ class OmicsExperiment
     public function addOmicsExperimentType(\AppBundle\Entity\OmicsExperimentType $omicsExperimentType)
     {
         $this->omicsExperimentTypes[] = $omicsExperimentType;
+        $omicsExperimentType->setOmicsExperiment($this);
 
         return $this;
     }

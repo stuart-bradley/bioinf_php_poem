@@ -30,7 +30,7 @@ class MaterialTypeStrings
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Sample", mappedBy="materialTypeString")
+     * @ORM\OneToMany(targetEntity="Sample", mappedBy="materialTypeString", cascade="all")
      */
     private $samples;
 
@@ -84,6 +84,7 @@ class MaterialTypeStrings
     public function addSample(\AppBundle\Entity\Sample $sample)
     {
         $this->samples[] = $sample;
+        $sample->setMaterialTypeString($this);
 
         return $this;
     }
