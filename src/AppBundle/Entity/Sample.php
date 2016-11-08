@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Sample
@@ -25,6 +26,8 @@ class Sample
      * @var int
      *
      * @ORM\Column(name="bcexperiment_id", type="integer")
+     *
+     * @Assert\NotBlank()
      */
     private $BCExperimentID;
 
@@ -32,6 +35,8 @@ class Sample
      * @var int
      *
      * @ORM\Column(name="bcsample_id", type="integer")
+     *
+     * @Assert\NotBlank()
      */
     private $BCSampleID;
 
@@ -39,6 +44,8 @@ class Sample
      * @var int
      *
      * @ORM\Column(name="bcrun_id", type="integer")
+     *
+     * @Assert\NotBlank()
      */
     private $BCRunID;
 
@@ -46,6 +53,8 @@ class Sample
      * @var \DateTime
      *
      * @ORM\Column(name="sampled_date_time", type="datetime")
+     *
+     * @Assert\NotBlank()
      */
     private $sampledDateTime;
 
@@ -54,6 +63,8 @@ class Sample
      * @var string
      *
      * @ORM\Column(name="sampled_by", type="string")
+     *
+     * @Assert\NotBlank()
      */
     private $sampledBy;
 
@@ -61,6 +72,8 @@ class Sample
      * @var bool
      *
      * @ORM\Column(name="rnalater_treated", type="boolean")
+     *
+     * @Assert\NotBlank()
      */
     private $RNALaterTreated;
 
@@ -80,7 +93,12 @@ class Sample
      * @ORM\ManyToOne(targetEntity="SequenceRun", inversedBy="samples")
      * @ORM\JoinColumn(name="sequencing_run_id", referencedColumnName="id")
      */
-    private $sequencingRun;
+    private $sequenceRun;
+
+    public function __construct()
+    {
+        $this->sampledDateTime = new \DateTime();
+    }
 
 
     /**
@@ -238,27 +256,27 @@ class Sample
     }
 
     /**
-     * Set sequencingRun
+     * Set sequenceRun
      *
-     * @param \AppBundle\Entity\SequencingRun $sequencingRun
+     * @param \AppBundle\Entity\SequenceRun $sequenceRun
      *
      * @return Sample
      */
-    public function setSequencingRun(\AppBundle\Entity\SequencingRun $sequencingRun = null)
+    public function setSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun = null)
     {
-        $this->sequencingRun = $sequencingRun;
+        $this->sequenceRun = $sequenceRun;
 
         return $this;
     }
 
     /**
-     * Get sequencingRun
+     * Get sequenceRun
      *
-     * @return \AppBundle\Entity\SequencingRun
+     * @return \AppBundle\Entity\SequenceRun
      */
-    public function getSequencingRun()
+    public function getSequenceRun()
     {
-        return $this->sequencingRun;
+        return $this->sequenceRun;
     }
 
     /**

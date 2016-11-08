@@ -2,6 +2,7 @@
 // src/AppBundle/Form/OmicsExperimentType.php
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Status;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +24,21 @@ class OmicsExperimentType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('questions', TextareaType::class, array('label' => 'Questions to be answered'))
             ->add('requestedEndDate', DateType::class)
-            ->add('omicsExperimentTypes', CollectionType::class, array('entry_type' => \AppBundle\Entity\OmicsExperimentType::class))
+            ->add('statuses', CollectionType::class, array(
+                'entry_type' => StatusType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+                'prototype_name' => '__status_prot__',
+            ))
+            ->add('omicsExperimentTypes', CollectionType::class, array(
+                'entry_type' => OmicsExperimentTypeType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+                'prototype_name' => '__exptype_prot__'))
             ->add('save', SubmitType::class, array('label' => 'Create Experiment'))
         ;
     }

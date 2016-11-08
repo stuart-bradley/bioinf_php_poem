@@ -1,0 +1,75 @@
+{# src/AppBundle/Resources/views/omic_experiment/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'omics_experiment/omics_experiment_subfields.html.twig'%}
+
+{%  block body %}
+    <div id="prototypes">
+        <div id="proto-samples" data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype.samples.vars.prototype)|e }}"></div>
+        <div id="proto-omics_experiment_sub_types" data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype)|e }}"></div>
+        <div id="proto-omics_experiment_types" data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype)|e }}"></div>
+        <div id="proto-statuses" data-prototype="{{ form_row(form.statuses.vars.prototype)|e }}"></div>
+    </div>
+    <h1>Omics Experiment</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.projectName) }}
+        {{ form_row(form.requestedBy) }}
+        {{ form_row(form.requestedDate) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.questions) }}
+        {{ form_row(form.requestedEndDate) }}
+
+        <h3>Statuses</h3>
+        <ul style="list-style-type: none;" class="col-statuses">
+            {% for status in form.statuses %}
+                {{ form_row(status) }}
+            {% endfor %}
+        </ul>
+        <button type="button" class="btn btn-statuses btn-success">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Status
+        </button>
+
+        <h3>Omics Experiment Types</h3>
+        <ul style="list-style-type: none;" class="col-omics_experiment_types">
+            {% for omics_experiment_type in form.omicsExperimentTypes %}
+                {{ form_row(omics_experiment_type) }}
+                <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
+                    {% for omics_experiment_sub_type in omics_experiment_type.omicsExperimentSubTypes %}
+                        {{ form_row(omics_experiment_sub_type) }}
+                        <ul style="list-style-type: none;" class="col-samples">
+                            {% for sample in omics_experiment_sub_type.samples %}
+                                {{ form_row(sample) }}
+                            {% endfor %}
+                            <button type="button" class="btn btn-samples btn-success">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sample
+                            </button>
+                        </ul>
+                    {% else %}
+                        <ul style="list-style-type: none;" class="col-samples"></ul>
+                    {% endfor %}
+                    <button type="button" class="btn btn-omics_experiment_sub_types btn-success">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Sub-Type
+                    </button>
+                </ul>
+            {% else %}
+                <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
+                    <ul style="list-style-type: none;" class="col-samples">
+                    </ul>
+                </ul>
+            {% endfor %}
+
+        </ul>
+    <button type="button" class="btn btn-omics_experiment_types btn-success">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Type
+    </button><br><br>
+    {{ form_widget(form.save) }}
+    <div style="display: none;">{{ form_rest(form) }}</div>
+    {{ form_end(form)}}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        new FormCollections(['statuses','omics_experiment_types','omics_experiment_sub_types','samples']);
+        new ExpSubTypeSelectionUpdater({{ select_relations|json_encode()|raw }});
+    </script>
+{%  endblock %}

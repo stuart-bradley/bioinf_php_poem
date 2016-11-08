@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SequenceRun
@@ -26,6 +27,8 @@ class SequenceRun
      * @var string
      *
      * @ORM\Column(name="run_by", type="string")
+     *
+     * @Assert\NotBlank()
      */
     private $runBy;
 
@@ -33,6 +36,9 @@ class SequenceRun
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $startDate;
 
@@ -40,27 +46,33 @@ class SequenceRun
      * @var \DateTime
      *
      * @ORM\Column(name="end_dat", type="date")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
-    private $endDat;
+    private $endDate;
 
     /**
      * @var string
      *
      * @ORM\Column(name="kit", type="string")
+     *
+     * @Assert\NotBlank()
      */
     private $kit;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="material_type", type="integer")
+     * @ORM\ManyToOne(targetEntity="MaterialTypeStrings", inversedBy="sequenceRuns")
+     * @ORM\JoinColumn(name="material_type_strings_id", referencedColumnName="id")
      */
-    private $materialType;
+    private $materialTypeString;
 
     /**
      * @var int
      *
      * @ORM\Column(name="run_coverage_target", type="integer")
+     *
+     * @Assert\NotBlank()
      */
     private $runCoverageTarget;
 
@@ -72,7 +84,7 @@ class SequenceRun
     private $readLength;
 
     /**
-     * @ORM\OneToMany(targetEntity="Sample", mappedBy="sequenceRun")
+     * @ORM\OneToMany(targetEntity="Sample", mappedBy="sequenceRun", cascade="all", orphanRemoval=true)
      */
     private $samples;
 
@@ -141,27 +153,27 @@ class SequenceRun
     }
 
     /**
-     * Set endDat
+     * Set endDate
      *
-     * @param \DateTime $endDat
+     * @param \DateTime $endDate
      *
      * @return SequenceRun
      */
-    public function setEndDat($endDat)
+    public function setEndDate($endDate)
     {
-        $this->endDat = $endDat;
+        $this->endDate = $endDate;
 
         return $this;
     }
 
     /**
-     * Get endDat
+     * Get endDate
      *
      * @return \DateTime
      */
-    public function getEndDat()
+    public function getEndDate()
     {
-        return $this->endDat;
+        return $this->endDate;
     }
 
     /**
@@ -186,30 +198,6 @@ class SequenceRun
     public function getKit()
     {
         return $this->kit;
-    }
-
-    /**
-     * Set materialType
-     *
-     * @param integer $materialType
-     *
-     * @return SequenceRun
-     */
-    public function setMaterialType($materialType)
-    {
-        $this->materialType = $materialType;
-
-        return $this;
-    }
-
-    /**
-     * Get materialType
-     *
-     * @return int
-     */
-    public function getMaterialType()
-    {
-        return $this->materialType;
     }
 
     /**
@@ -292,5 +280,29 @@ class SequenceRun
     public function getSamples()
     {
         return $this->samples;
+    }
+
+    /**
+     * Set materialTypeString
+     *
+     * @param \AppBundle\Entity\MaterialTypeStrings $materialTypeString
+     *
+     * @return SequenceRun
+     */
+    public function setMaterialTypeString(\AppBundle\Entity\MaterialTypeStrings $materialTypeString = null)
+    {
+        $this->materialTypeString = $materialTypeString;
+
+        return $this;
+    }
+
+    /**
+     * Get materialTypeString
+     *
+     * @return \AppBundle\Entity\MaterialTypeStrings
+     */
+    public function getMaterialTypeString()
+    {
+        return $this->materialTypeString;
     }
 }

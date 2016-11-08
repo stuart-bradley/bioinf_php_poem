@@ -4,7 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OmicsExperiment
@@ -27,6 +27,8 @@ class OmicsExperiment
      * @var string
      *
      * @ORM\Column(name="project_name", type="string")
+     *
+     * @Assert\NotBlank()
      */
     private $projectName;
 
@@ -34,6 +36,8 @@ class OmicsExperiment
      * @var string
      *
      * @ORM\Column(name="requested_by", type="string")
+     *
+     * @Assert\NotBlank()
      */
     private $requestedBy;
 
@@ -41,6 +45,9 @@ class OmicsExperiment
      * @var \DateTime
      *
      * @ORM\Column(name="requested_date", type="date")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $requestedDate;
 
@@ -48,6 +55,8 @@ class OmicsExperiment
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     *
+     * @Assert\NotBlank()
      */
     private $description;
 
@@ -55,6 +64,8 @@ class OmicsExperiment
      * @var string
      *
      * @ORM\Column(name="questions", type="text")
+     *
+     * @Assert\NotBlank()
      */
     private $questions;
 
@@ -62,16 +73,19 @@ class OmicsExperiment
      * @var \DateTime
      *
      * @ORM\Column(name="requested_end_date", type="date")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
     private $requestedEndDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade="all")
+     * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade="all", orphanRemoval=true)
      */
     private $statuses;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment", cascade="all")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment", cascade="all", orphanRemoval=true)
      */
     private $omicsExperimentTypes;
 
@@ -79,6 +93,8 @@ class OmicsExperiment
     {
         $this->statuses = new ArrayCollection();
         $this->omicsExperimentTypes = new ArrayCollection();
+        $this->requestedDate = new \DateTime();
+        $this->requestedEndDate = new \DateTime();
     }
     
     /**

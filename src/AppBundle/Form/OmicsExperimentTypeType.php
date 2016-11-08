@@ -13,8 +13,17 @@ class OmicsExperimentTypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('omicsExperimentTypeString', EntityType::class, array('class' => 'AppBundle:OmicsExperimentTypeStrings','choice_label' => 'type'))
-            ->add('omicsExperimentSubTypes', CollectionType::class, array('entry_type' => \AppBundle\Entity\OmicsExperimentSubType::class))
+            ->add('omicsExperimentTypeString', EntityType::class, array(
+                'class' => 'AppBundle:OmicsExperimentTypeStrings',
+                'choice_label' => 'type',
+                'label' => 'Experiment type'))
+            ->add('omicsExperimentSubTypes', CollectionType::class, array(
+                'entry_type' => OmicsExperimentSubTypeType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+                'prototype_name' => '__expsubtype_prot__'))
         ;
     }
 

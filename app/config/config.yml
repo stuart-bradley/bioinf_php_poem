@@ -36,6 +36,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+            - "bootstrap_3_layout.html.twig"
 
 # Doctrine Configuration
 doctrine:
@@ -66,3 +68,43 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+    assets:
+            bootstrap_js:
+                inputs:
+                    - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/js/bootstrap.js
+            bootstrap_css:
+                inputs:
+                    - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap.css
+                    - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/css/bootstrap-theme.css
+                filters: [cssrewrite]
+
+            bootstrap_glyphicons_ttf:
+                inputs:
+                    - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
+                output: "fonts/glyphicons-halflings-regular.ttf"
+            bootstrap_glyphicons_eot:
+                inputs:
+                    - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
+                output: "fonts/glyphicons-halflings-regular.eot"
+            bootstrap_glyphicons_svg:
+                inputs:
+                    - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
+                output: "fonts/glyphicons-halflings-regular.svg"
+            bootstrap_glyphicons_woff:
+                inputs:
+                    - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+                output: "fonts/glyphicons-halflings-regular.woff"
+            bootstrap_glyphicons_woff2:
+                            inputs:
+                                - %kernel.root_dir%/../vendor/twbs/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
+                            output: "fonts/glyphicons-halflings-regular.woff2"
+
+            jquery:
+                inputs:
+                    - %kernel.root_dir%/../vendor/components/jquery/jquery.js

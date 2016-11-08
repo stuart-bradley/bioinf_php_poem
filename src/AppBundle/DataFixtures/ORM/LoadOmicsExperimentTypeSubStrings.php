@@ -15,19 +15,19 @@ class LoadOmicsExperimentTypeSubStrings extends AbstractFixture implements Order
     {
 
         $omicsExperimentSubTypes = [
-            ["Transcriptomics","Mutation Analysis"],
-            ["Transcriptomics","Contamination Analysis"],
-            ["Transcriptomics","Genome Assembly"],
-            ["Proteomics","Time Course"],
-            ["Proteomics","Differential Expression"]
+            "Mutation Analysis",
+            "Contamination Analysis",
+            "Genome Assembly",
+            "Time Course",
+            "Differential Expression"
         ];
 
 
         foreach($omicsExperimentSubTypes as $experimentSubType) {
             $omicsExperimentSubTypeString = new OmicsExperimentSubTypeStrings();
-            $omicsExperimentSubTypeString -> setType($experimentSubType[1]);
-            // Grabs reference by type from LoadOmicsExperimentTypeStrings.
-            $omicsExperimentSubTypeString -> setTypeID($this->getReference($experimentSubType[0])->getID());
+            $omicsExperimentSubTypeString -> setType($experimentSubType);
+            // Reference to object via type string for use in LoadOmicsExperimentTypeStrings.
+            $this->addReference($experimentSubType, $omicsExperimentSubTypeString);
             $manager -> persist($omicsExperimentSubTypeString);
         }
 
@@ -39,6 +39,6 @@ class LoadOmicsExperimentTypeSubStrings extends AbstractFixture implements Order
     {
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
-        return 4;
+        return 3;
     }
 }

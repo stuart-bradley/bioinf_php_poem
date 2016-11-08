@@ -29,12 +29,11 @@ class OmicsExperimentSubTypeStrings
      */
     private $type;
 
-    /*
-     * @var integer
-     *
-     * @ORM\Column(name="typeID", type="integer")
+    /**
+     * @ORM\ManyToOne(targetEntity="OmicsExperimentTypeStrings", inversedBy="omicsExperimentSubTypeStrings")
+     * @ORM\JoinColumn(name="omics_experiment_type_strings_id", referencedColumnName="id")
      */
-    private $typeID;
+    private $omicsExperimentTypeString;
 
     /**
      * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentSubTypeString", cascade="all")
@@ -82,30 +81,6 @@ class OmicsExperimentSubTypeStrings
     }
 
     /**
-     * Set type
-     *
-     * @param integer $typeID
-     *
-     * @return OmicsExperimentSubTypeStrings
-     */
-    public function setTypeID($typeID)
-    {
-        $this->typeID = $typeID;
-
-        return $this;
-    }
-
-    /**
-     * Get typeID
-     *
-     * @return integer
-     */
-    public function getTypeID()
-    {
-        return $this->typeID;
-    }
-
-    /**
      * Add omicsExperimentSubType
      *
      * @param \AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType
@@ -138,5 +113,29 @@ class OmicsExperimentSubTypeStrings
     public function getOmicsExperimentSubTypes()
     {
         return $this->omicsExperimentSubTypes;
+    }
+
+    /**
+     * Set omicsExperimentTypeString
+     *
+     * @param \AppBundle\Entity\OmicsExperimentTypeStrings $omicsExperimentTypeString
+     *
+     * @return OmicsExperimentSubTypeStrings
+     */
+    public function setOmicsExperimentTypeString(\AppBundle\Entity\OmicsExperimentTypeStrings $omicsExperimentTypeString = null)
+    {
+        $this->omicsExperimentTypeString = $omicsExperimentTypeString;
+
+        return $this;
+    }
+
+    /**
+     * Get omicsExperimentTypeString
+     *
+     * @return \AppBundle\Entity\OmicsExperimentTypeStrings
+     */
+    public function getOmicsExperimentTypeString()
+    {
+        return $this->omicsExperimentTypeString;
     }
 }

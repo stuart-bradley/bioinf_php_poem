@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Status
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Status
 {
+
     /**
      * @var int
      *
@@ -24,7 +26,7 @@ class Status
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
     private $date;
 
@@ -39,6 +41,11 @@ class Status
      * @ORM\JoinColumn(name="status_strings_id", referencedColumnName="id")
      */
     private $statusString;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
     /**
      * Get id

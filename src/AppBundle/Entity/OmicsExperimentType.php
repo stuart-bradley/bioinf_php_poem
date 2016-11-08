@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OmicsExperimentType
@@ -35,7 +36,7 @@ class OmicsExperimentType
     private $omicsExperimentTypeString;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentType", cascade="all")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentType", cascade="all", orphanRemoval=true)
      */
     private $omicsExperimentSubTypes;
 

@@ -34,9 +34,15 @@ class MaterialTypeStrings
      */
     private $samples;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SequenceRun", mappedBy="materialTypeString", cascade="all")
+     */
+    private $sequenceRuns;
+
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->samples = new ArrayCollection();
+        $this->sequenceRuns = new ArrayCollection();
     }
 
 
@@ -107,5 +113,39 @@ class MaterialTypeStrings
     public function getSamples()
     {
         return $this->samples;
+    }
+
+    /**
+     * Add sequenceRun
+     *
+     * @param \AppBundle\Entity\SequenceRun $sequenceRun
+     *
+     * @return MaterialTypeStrings
+     */
+    public function addSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun)
+    {
+        $this->sequenceRuns[] = $sequenceRun;
+
+        return $this;
+    }
+
+    /**
+     * Remove sequenceRun
+     *
+     * @param \AppBundle\Entity\SequenceRun $sequenceRun
+     */
+    public function removeSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun)
+    {
+        $this->sequenceRuns->removeElement($sequenceRun);
+    }
+
+    /**
+     * Get sequenceRuns
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSequenceRuns()
+    {
+        return $this->sequenceRuns;
     }
 }

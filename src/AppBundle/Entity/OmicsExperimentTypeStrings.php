@@ -34,9 +34,16 @@ class OmicsExperimentTypeStrings
      */
     private $omicsExperimentTypes;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="OmicsExperimentSubTypeStrings", mappedBy="omicsExperimentTypeString", cascade="all")
+     */
+    private $omicsExperimentSubTypeStrings;
+
     public function __construct()
     {
         $this->omicsExperimentTypes = new ArrayCollection();
+        $this->omicsExperimentSubTypeStrings = new ArrayCollection();
     }
 
     /**
@@ -106,5 +113,39 @@ class OmicsExperimentTypeStrings
     public function getOmicsExperimentTypes()
     {
         return $this->omicsExperimentTypes;
+    }
+
+    /**
+     * Add omicsExperimentSubTypeString
+     *
+     * @param \AppBundle\Entity\OmicsExperimentSubTypeStrings $omicsExperimentSubTypeString
+     *
+     * @return OmicsExperimentTypeStrings
+     */
+    public function addOmicsExperimentSubTypeString(\AppBundle\Entity\OmicsExperimentSubTypeStrings $omicsExperimentSubTypeString)
+    {
+        $this->omicsExperimentSubTypeStrings[] = $omicsExperimentSubTypeString;
+        $omicsExperimentSubTypeString->setOmicsExperimentTypeString($this);
+        return $this;
+    }
+
+    /**
+     * Remove omicsExperimentSubTypeString
+     *
+     * @param \AppBundle\Entity\OmicsExperimentSubTypeStrings $omicsExperimentSubTypeString
+     */
+    public function removeOmicsExperimentSubTypeString(\AppBundle\Entity\OmicsExperimentSubTypeStrings $omicsExperimentSubTypeString)
+    {
+        $this->omicsExperimentSubTypeStrings->removeElement($omicsExperimentSubTypeString);
+    }
+
+    /**
+     * Get omicsExperimentSubTypeStrings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOmicsExperimentSubTypeStrings()
+    {
+        return $this->omicsExperimentSubTypeStrings;
     }
 }
