@@ -6,12 +6,24 @@
         <h1>Omics Experiments</h1>
         <table class="table table-bordered">
             <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Author</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th></th>
             </tr>
             {% for exp in omics_experiments %}
                 <tr>
+                    <td>
+                        {{exp.id}}
+                    </td>
+                    <td>
+                        {{exp.requestedDate|date('Y-m-d')}}
+                    </td>
+                    <td>
+                        {{exp.requestedBy}}
+                    </td>
                     <td>
                         {{exp.projectName}}
                     </td>
