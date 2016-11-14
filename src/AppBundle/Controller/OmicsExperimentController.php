@@ -40,7 +40,7 @@ class OmicsExperimentController extends Controller {
         if ($form->isValid()) {
             $em->persist($omics_experiment);
             $em->flush();
-            return $this->redirectToRoute('omics_experiment_new');
+            return $this->redirectToRoute('omics_experiment_index');
         }
 
         return $this->render('omics_experiment/form.html.twig', array('form' => $form->createView(), 'select_relations' =>  $exp_type_relations));
@@ -72,7 +72,7 @@ class OmicsExperimentController extends Controller {
         if ($form->isValid()) {
             $em->persist($omics_experiment);
             $em->flush();
-            return $this->redirectToRoute('omics_experiment_new');
+            return $this->redirectToRoute('omics_experiment_index');
         }
 
         return $this->render('omics_experiment/form.html.twig', array('form' => $form->createView(), 'select_relations' =>  $exp_type_relations));

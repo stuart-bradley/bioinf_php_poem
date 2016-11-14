@@ -1,0 +1,29 @@
+{# app/Resources/views/experiment/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="experiment-index-div">
+        <h1>Omics Experiments</h1>
+        <table class="table table-bordered">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            {% for exp in omics_experiments %}
+                <tr>
+                    <td>
+                        {{exp.projectName}}
+                    </td>
+                    <td>
+                        {{ exp.description }}
+                    </td>
+                    <td align="center" valign="middle" style="width:10%">
+                        <a href="{{ path('omics_experiment_edit', {'id': exp.id}) }}" class="btn btn-default">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ path('omics_experiment_new') }}" class="btn btn-primary btn-lg btn-block">New Experiment</a>
+    </div>
+{% endblock %}
