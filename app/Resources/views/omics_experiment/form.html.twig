@@ -12,38 +12,45 @@
     </div>
     <h1>Omics Experiment</h1>
     {{ form_start(form) }}
-        {{ form_row(form.projectName) }}
-        {{ form_row(form.requestedBy) }}
-        {{ form_row(form.requestedDate) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.questions) }}
-        {{ form_row(form.requestedEndDate) }}
+    {{ form_row(form.projectName) }}
+    {{ form_row(form.requestedBy) }}
+    {{ form_row(form.requestedDate) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.questions) }}
+    {{ form_row(form.requestedEndDate) }}
 
-        <h3>Statuses</h3>
-        <ul style="list-style-type: none;" class="col-statuses">
-            {% for status in form.statuses %}
+    <h3>Statuses</h3>
+    <ul style="list-style-type: none;" class="col-statuses">
+        {% for status in form.statuses %}
+            <li>
                 {{ form_row(status) }}
-            {% endfor %}
-        </ul>
-        <button type="button" class="btn btn-statuses btn-success">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Status
-        </button>
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="btn btn-statuses btn-success">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Status
+    </button>
 
-        <h3>Omics Experiment Types</h3>
-        <ul style="list-style-type: none;" class="col-omics_experiment_types">
-            {% for omics_experiment_type in form.omicsExperimentTypes %}
+    <h3>Omics Experiment Types</h3>
+    <ul style="list-style-type: none;" class="col-omics_experiment_types">
+        {% for omics_experiment_type in form.omicsExperimentTypes %}
+            <li>
                 {{ form_row(omics_experiment_type) }}
                 <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
                     {% for omics_experiment_sub_type in omics_experiment_type.omicsExperimentSubTypes %}
-                        {{ form_row(omics_experiment_sub_type) }}
-                        <ul style="list-style-type: none;" class="col-samples">
-                            {% for sample in omics_experiment_sub_type.samples %}
-                                {{ form_row(sample) }}
-                            {% endfor %}
-                            <button type="button" class="btn btn-samples btn-success">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sample
-                            </button>
-                        </ul>
+                        <li>
+                            {{ form_row(omics_experiment_sub_type) }}
+                            <ul style="list-style-type: none;" class="col-samples">
+                                {% for sample in omics_experiment_sub_type.samples %}
+                                    <li>
+                                        {{ form_row(sample) }}
+                                    </li>
+                                {% endfor %}
+                                <button type="button" class="btn btn-samples btn-success">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sample
+                                </button>
+                            </ul>
+                        </li>
                     {% else %}
                         <ul style="list-style-type: none;" class="col-samples"></ul>
                     {% endfor %}
@@ -51,14 +58,16 @@
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Sub-Type
                     </button>
                 </ul>
-            {% else %}
-                <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
-                    <ul style="list-style-type: none;" class="col-samples">
-                    </ul>
+            </li>
+        {% else %}
+            <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
+                <ul style="list-style-type: none;" class="col-samples">
                 </ul>
-            {% endfor %}
+            </ul>
+        {% endfor %}
 
-        </ul>
+
+    </ul>
     <button type="button" class="btn btn-omics_experiment_types btn-success">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Type
     </button><br><br>

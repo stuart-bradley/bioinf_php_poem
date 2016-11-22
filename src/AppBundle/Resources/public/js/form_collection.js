@@ -64,6 +64,7 @@ function FormCollections(collection_classes) {
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
         var newForm = $(prototype.replace(/__name__/g, index));
+        newForm.wrap("<li></li>")
         // increase the index with one for the next item
         parent_ul.data('index', index + 1);
         var new_button = $();
@@ -86,8 +87,8 @@ function FormCollections(collection_classes) {
         }
 
         // add a delete link to the new form
-        self.addDeleteLink(newForm);
         newForm.append(new_button);
+        self.addDeleteLink(newForm);
 
         parent_ul.append(newForm);
 

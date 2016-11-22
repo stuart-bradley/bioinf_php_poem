@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 // TODO: deleteAction should be implemented.
 
@@ -78,4 +79,40 @@ class OmicsExperimentController extends Controller {
         return $this->render('omics_experiment/form.html.twig', array('form' => $form->createView(), 'select_relations' =>  $exp_type_relations));
     }
 
+    /**
+     * @Route("omics_experiment/delete/{id}", name="omics_experiment_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
+        $omics_experiment = $repository->find($id);
+
+        $form = $this->createDeleteForm($omics_experiment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($omics_experiment);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('omics_experiment_index');
+    }
+
+    /**
+     * Creates a form to delete a testing entity.
+     *
+     * @param OmicsExperiment $omicsExperiment
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(OmicsExperiment $omicsExperiment)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('omics_experiment_delete', array('id' => $omicsExperiment->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
+    }
 }
