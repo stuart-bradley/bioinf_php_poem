@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 // TODO: deleteAction should be implemented.
 
@@ -81,24 +82,65 @@ class OmicsExperimentController extends Controller {
 
     /**
      * @Route("omics_experiment/delete/{id}", name="omics_experiment_delete")
-     * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
+        $omics_experiment = $repository->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($omics_experiment);
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            '"' . $omics_experiment->getProjectName() . '" has successfully been deleted.'
+        );
+
+        return $this->redirectToRoute('omics_experiment_index');
+    }
+
+    /**
+     * @Route("omics_experiment/delete/{id}", name="omics_experiment_delete")
+     * @Method({"DELETE","GET"})
+     *
+    public function deleteAction(Request $request, $id) {
+
+        $response = array(
+            'success' => true,
+            'message' => '',
+            'html' => '',
+        );
+
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiment = $repository->find($id);
 
         $form = $this->createDeleteForm($omics_experiment);
-        $form->handleRequest($request);
+        if ($request->getMethod() == 'DELETE') {
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($omics_experiment);
-            $em->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($omics_experiment);
+                $em->flush();
+
+                // Get response ready as per your need.
+                $response['success'] = true;
+                $response['message'] = 'Deleted Successfully!';
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'Sorry category could not be deleted!';
+            }
+            return new JsonResponse($response);
         }
+
+        $render = $this->render('omics_experiment/delete_confirm.html.twig', array(
+            'delete_form' => $form->createView(),
+            'omics_experiment' => $omics_experiment,
+        ));
 
         return $this->redirectToRoute('omics_experiment_index');
     }
+     */
 
     /**
      * Creates a form to delete a testing entity.
