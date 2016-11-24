@@ -96,7 +96,12 @@ function FormCollections(collection_classes) {
     };
 
     self.addDeleteLink = function (row) {
-        var removeFormA = $('<br><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button><br><br>');
+        // Correctly handle button vs form-control spacing.
+        if ($(row).children().last().prop('tagName') == 'DIV') {
+            var removeFormA = $('<br><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button><br><br>');
+        } else {
+            var removeFormA = $('<br><br><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button><br><br>');
+        }
         row.append(removeFormA);
         removeFormA.on('click', function(e) {
             // prevent the link from creating a "#" on the URL
