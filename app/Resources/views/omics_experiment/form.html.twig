@@ -10,7 +10,11 @@
         <div id="proto-omics_experiment_types" data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype)|e }}"></div>
         <div id="proto-statuses" data-prototype="{{ form_row(form.statuses.vars.prototype)|e }}"></div>
     </div>
-    <h1>Omics Experiment</h1>
+    {%  if edit %}
+        <h1> Edit {{ form.vars.value.projectName }} </h1>
+    {%  else %}
+        <h1>New Omics Experiment</h1>
+    {% endif %}
     {{ form_start(form) }}
     {{ form_row(form.projectName) }}
     {{ form_row(form.requestedBy) }}
@@ -72,6 +76,9 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Type
     </button><br><br>
     {{ form_widget(form.save) }}
+    {% if edit %}
+        <a href="{{ path('omics_experiment_delete', {'id': form.vars.value.id}) }}" class="btn btn-default"  onclick="return confirm('Are you sure you want to delete {{ form.vars.value.projectName }}?')">Delete</a>
+    {% endif %}
     <div style="display: none;">{{ form_rest(form) }}</div>
     {{ form_end(form)}}
 {% endblock %}

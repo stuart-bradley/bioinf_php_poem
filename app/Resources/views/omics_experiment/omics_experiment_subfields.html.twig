@@ -1,19 +1,26 @@
 {# app/Resources/views/omics_experiment/omics_experiment_subfields.html.twig #}
 
 {% block _omics_experiment_statuses_entry_row %}
-        {{ form_row(form.statusString) }}
-        {{ form_row(form.date) }}
+        <li>
+            {{ form_row(form.statusString) }}
+            {{ form_row(form.date) }}
+        </li>
 {% endblock %}
 
 {% block _omics_experiment_omicsExperimentTypes_entry_row %}
-        {{ form_row(form.omicsExperimentTypeString) }}
+        <li>
+            {{ form_row(form.omicsExperimentTypeString) }}
+        </li>
 {% endblock %}
 
 {% block _omics_experiment_omicsExperimentTypes_entry_omicsExperimentSubTypes_entry_row %}
-        {{ form_row(form.omicsExperimentSubTypeString) }}
+        <li>
+            {{ form_row(form.omicsExperimentSubTypeString) }}
+        </li>
 {% endblock %}
 
 {% block _omics_experiment_omicsExperimentTypes_entry_omicsExperimentSubTypes_entry_samples_entry_row %}
+    <li>
         {{ form_row(form.BCExperimentID) }}
         {{ form_row(form.BCSampleID) }}
         {{ form_row(form.BCRunID) }}
@@ -21,4 +28,5 @@
         {{ form_row(form.sampledBy) }}
         {{ form_row(form.RNALaterTreated) }}
         {{ form_row(form.materialTypeString) }}
+    </li>
 {% endblock %}

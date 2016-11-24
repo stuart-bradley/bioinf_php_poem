@@ -10,7 +10,7 @@
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
+    <body style="margin-left: 10px;margin-right: 10px;margin-top: 10px;margin-bottom: 10px;">
     {% for type, flashes in app.session.flashbag.all %}
         {% for flash in flashes %}
             <div class="alert alert-{{ type }} fade in bg-info">

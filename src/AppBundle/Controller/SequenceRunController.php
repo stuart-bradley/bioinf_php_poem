@@ -41,7 +41,7 @@ class SequenceRunController extends Controller {
             return $this->redirectToRoute('sequence_run_index');
         }
 
-        return $this->render('sequence_run/form.html.twig', array('form' => $form->createView()));
+        return $this->render('sequence_run/form.html.twig', array('form' => $form->createView(), 'edit' => False));
     }
 
     /**
@@ -72,7 +72,26 @@ class SequenceRunController extends Controller {
             return $this->redirectToRoute('sequence_run_index');
         }
 
-        return $this->render('sequence_run/form.html.twig', array('form' => $form->createView()));
+        return $this->render('sequence_run/form.html.twig', array('form' => $form->createView(), 'edit' => True));
+    }
+
+    /**
+     * @Route("sequence_run/delete/{id}", name="sequence_run_delete")
+     */
+    public function deleteAction(Request $request, $id) {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:SequenceRun');
+        $sequence_run = $repository->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($sequence_run);
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            '"' . $sequence_run->getId() . '" has successfully been deleted.'
+        );
+
+        return $this->redirectToRoute('sequence_run_index');
     }
 
 }

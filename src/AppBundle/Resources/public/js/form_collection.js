@@ -13,7 +13,7 @@ function FormCollections(collection_classes) {
     self.relations['omics_experiment_sub_types'] = 'samples';
 
     // Ul classes for nested relations.
-    self.ul_classes = {}
+    self.ul_classes = {};
     self.ul_classes['omics_experiment_sub_types'] = '<ul style="list-style-type: none;" class="col-omics_experiment_sub_types"></ul>';
     self.ul_classes['samples'] = '<ul style="list-style-type: none;" class="col-samples"></ul>';
 
@@ -24,7 +24,8 @@ function FormCollections(collection_classes) {
             // Add delete links to every LI group on the page.
             group.each(function () {
               $(this).children().each(function() {
-                  if ($(this).prop('tagName') == "LI") {
+                  // Check if tag is LI AND is NOT empty.
+                  if ($(this).prop('tagName') == "LI" && $(this).children().length > 0) {
                       self.addDeleteLink($(this));
                   }
               });
@@ -64,7 +65,6 @@ function FormCollections(collection_classes) {
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
         var newForm = $(prototype.replace(/__name__/g, index));
-        newForm.wrap("<li></li>")
         // increase the index with one for the next item
         parent_ul.data('index', index + 1);
         var new_button = $();
