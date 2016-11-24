@@ -24,11 +24,9 @@
     {{ form_row(form.requestedEndDate) }}
 
     <h3>Statuses</h3>
-    <ul style="list-style-type: none;" class="col-statuses">
+    <ul style="list-style-type:none;padding-left:0;" class="col-statuses">
         {% for status in form.statuses %}
-            <li>
                 {{ form_row(status) }}
-            </li>
         {% endfor %}
     </ul>
     <button type="button" class="btn btn-statuses btn-success">
@@ -36,25 +34,20 @@
     </button>
 
     <h3>Omics Experiment Types</h3>
-    <ul style="list-style-type: none;" class="col-omics_experiment_types">
+    <ul style="list-style-type:none;padding-left:0;" class="col-omics_experiment_types">
         {% for omics_experiment_type in form.omicsExperimentTypes %}
-            <li>
                 {{ form_row(omics_experiment_type) }}
-                <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
+            <ul style="list-style-type:none;" class="col-omics_experiment_sub_types">
                     {% for omics_experiment_sub_type in omics_experiment_type.omicsExperimentSubTypes %}
-                        <li>
                             {{ form_row(omics_experiment_sub_type) }}
                             <ul style="list-style-type: none;" class="col-samples">
                                 {% for sample in omics_experiment_sub_type.samples %}
-                                    <li>
                                         {{ form_row(sample) }}
-                                    </li>
                                 {% endfor %}
                                 <button type="button" class="btn btn-samples btn-success">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sample
                                 </button>
                             </ul>
-                        </li>
                     {% else %}
                         <ul style="list-style-type: none;" class="col-samples"></ul>
                     {% endfor %}
@@ -62,7 +55,6 @@
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Sub-Type
                     </button>
                 </ul>
-            </li>
         {% else %}
             <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
                 <ul style="list-style-type: none;" class="col-samples">

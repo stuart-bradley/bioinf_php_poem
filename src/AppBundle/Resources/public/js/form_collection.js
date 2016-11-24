@@ -98,9 +98,9 @@ function FormCollections(collection_classes) {
     self.addDeleteLink = function (row) {
         // Correctly handle button vs form-control spacing.
         if ($(row).children().last().prop('tagName') == 'DIV') {
-            var removeFormA = $('<br><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button><br><br>');
+            var removeFormA = $('<br><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button><br>');
         } else {
-            var removeFormA = $('<br><br><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button><br><br>');
+            var removeFormA = $('<br><br><button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</button><br>');
         }
         row.append(removeFormA);
         removeFormA.on('click', function(e) {
