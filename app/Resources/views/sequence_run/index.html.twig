@@ -1,0 +1,43 @@
+{# app/Resources/views/sequence_run/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="sequence-index-div">
+        <h1>Sequence Runs</h1>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Start/End Dates</th>
+                <th>Author</th>
+                <th>Kit</th>
+                <th>Material</th>
+                <th></th>
+            </tr>
+            {% for seq in sequence_runs %}
+                <tr>
+                    <td>
+                        {{ seq.id }}
+                    </td>
+                    <td>
+                        {{ seq.startDate|date('Y-m-d') }} / {{ exp.endDate|date('Y-m-d') }}
+                    </td>
+                    <td>
+                        {{ seq.runBy }}
+                    </td>
+                    <td>
+                        {{ seq.kit }}
+                    </td>
+                    <td>
+                        {{ seq.materialTypeString }}
+                    </td>
+                    <td align="center" valign="middle" style="width:10%">
+                        <a href="{{ path('sequence_run_edit', {'id': seq.id}) }}" class="btn btn-default">Edit</a>
+                        <a href="{{ path('sequence_run_delete', {'id': seq.id}) }}" class="btn btn-default"
+                           onclick="return confirm('Are you sure you want to delete Sequence Run {{ seq.id }}?')">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ path('sequence_run_new') }}" class="btn btn-primary btn-lg btn-block">New Sequence Run</a>
+    </div>
+{% endblock %}
