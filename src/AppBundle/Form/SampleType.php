@@ -31,7 +31,8 @@ class SampleType extends AbstractType
             // Change to EntityType when User table is added.
             ->add('sampledBy', TextType::class)
             ->add('RNALaterTreated',CheckboxType::class,array(
-                'label'=>'Treated?'))
+                'label' => 'Treated?',
+                'required' => false))
             ->add('materialTypeString', EntityType::class, array(
                 'class' => 'AppBundle:MaterialTypeStrings',
                 'choice_label' => 'type'))
