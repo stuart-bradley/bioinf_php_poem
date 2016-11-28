@@ -1,0 +1,13 @@
+{# app/Resources/views/omics_experiment/omics_experiment_subfields.html.twig #}
+
+{% block _sequence_run_samples_entry_row %}
+    <li class="panel panel-body panel-default">
+        {{ form_row(form.BCExperimentID) }}
+        {{ form_row(form.BCSampleID) }}
+        {{ form_row(form.BCRunID) }}
+        {{ form_row(form.sampledDateTime) }}
+        {{ form_row(form.sampledBy) }}
+        {{ form_row(form.RNALaterTreated) }}
+        {{ form_row(form.materialTypeString) }}
+    </li>
+{% endblock %}

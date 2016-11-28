@@ -258,6 +258,7 @@ class SequenceRun
     public function addSample(\AppBundle\Entity\Sample $sample)
     {
         $this->samples[] = $sample;
+        $sample->setSequenceRun($this);
 
         return $this;
     }

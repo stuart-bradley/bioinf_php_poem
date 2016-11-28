@@ -73,7 +73,6 @@ class Sample
      *
      * @ORM\Column(name="rnalater_treated", type="boolean")
      *
-     * @Assert\NotBlank()
      */
     private $RNALaterTreated;
 
@@ -91,7 +90,7 @@ class Sample
 
     /**
      * @ORM\ManyToOne(targetEntity="SequenceRun", inversedBy="samples")
-     * @ORM\JoinColumn(name="sequencing_run_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="sequence_run_id", referencedColumnName="id")
      */
     private $sequenceRun;
 

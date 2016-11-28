@@ -19,7 +19,7 @@
                         {{ seq.id }}
                     </td>
                     <td>
-                        {{ seq.startDate|date('Y-m-d') }} / {{ exp.endDate|date('Y-m-d') }}
+                        {{ seq.startDate|date('Y-m-d') }} / {{ seq.endDate|date('Y-m-d') }}
                     </td>
                     <td>
                         {{ seq.runBy }}
@@ -28,7 +28,7 @@
                         {{ seq.kit }}
                     </td>
                     <td>
-                        {{ seq.materialTypeString }}
+                        {{ seq.materialTypeString.type }}
                     </td>
                     <td align="center" valign="middle" style="width:10%">
                         <a href="{{ path('sequence_run_edit', {'id': seq.id}) }}" class="btn btn-default">Edit</a>
