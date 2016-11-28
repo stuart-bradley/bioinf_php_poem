@@ -20,8 +20,12 @@ class SequenceRunType extends AbstractType
         $builder
             // Change to EntityType for Users.
             ->add('runBy', TextType::class)
-            ->add('startDate', DateType::class)
-            ->add('endDate', DateType::class)
+            ->add('startDate', DateType::class, array(
+                'data' => new \DateTime(),
+            ))
+            ->add('endDate', DateType::class, array(
+                'data' => new \DateTime(),
+            ))
             ->add('kit', TextType::class)
             ->add('materialTypeString', EntityType::class, array(
                 'class' => 'AppBundle:MaterialTypeStrings',
