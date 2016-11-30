@@ -4,10 +4,10 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\OmicsExperimentSubTypeStrings;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\OmicsExperimentSubTypeStrings;
 
 class LoadOmicsExperimentTypeSubStrings extends AbstractFixture implements OrderedFixtureInterface
 {

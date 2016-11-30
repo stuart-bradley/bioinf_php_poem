@@ -4,10 +4,10 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\MaterialTypeStrings;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\MaterialTypeStrings;
 
 class LoadMaterialTypeStrings extends AbstractFixture implements OrderedFixtureInterface
 {

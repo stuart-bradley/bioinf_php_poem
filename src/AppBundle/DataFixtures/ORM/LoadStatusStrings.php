@@ -4,10 +4,10 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\StatusStrings;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\StatusStrings;
 
 class LoadStatusStrings extends AbstractFixture implements OrderedFixtureInterface {
     public function load(ObjectManager $manager)

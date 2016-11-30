@@ -2,15 +2,15 @@
 // src/AppBundle/Form/OmicsExperimentType.php
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Status;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class OmicsExperimentType extends AbstractType
 {
@@ -31,14 +31,15 @@ class OmicsExperimentType extends AbstractType
                 'allow_delete' => true,
                 'prototype' => true,
                 'prototype_name' => '__status_prot__',
-            ))
+                'constraints' => new Valid()))
             ->add('omicsExperimentTypes', CollectionType::class, array(
                 'entry_type' => OmicsExperimentTypeType::class,
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
                 'prototype' => true,
-                'prototype_name' => '__exptype_prot__'))
+                'prototype_name' => '__exptype_prot__',
+                'constraints' => new Valid()))
             ->add('save', SubmitType::class, array('label' => 'Create Experiment'))
         ;
     }

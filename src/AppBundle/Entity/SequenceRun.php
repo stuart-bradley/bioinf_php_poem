@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -80,6 +80,8 @@ class SequenceRun
      * @var int
      *
      * @ORM\Column(name="read_length", type="integer")
+     *
+     * @Assert\NotBlank()
      */
     private $readLength;
 
@@ -105,6 +107,16 @@ class SequenceRun
     }
 
     /**
+     * Get runBy
+     *
+     * @return string
+     */
+    public function getRunBy()
+    {
+        return $this->runBy;
+    }
+
+    /**
      * Set runBy
      *
      * @param string $runBy
@@ -119,13 +131,13 @@ class SequenceRun
     }
 
     /**
-     * Get runBy
+     * Get startDate
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getRunBy()
+    public function getStartDate()
     {
-        return $this->runBy;
+        return $this->startDate;
     }
 
     /**
@@ -143,13 +155,13 @@ class SequenceRun
     }
 
     /**
-     * Get startDate
+     * Get endDate
      *
      * @return \DateTime
      */
-    public function getStartDate()
+    public function getEndDate()
     {
-        return $this->startDate;
+        return $this->endDate;
     }
 
     /**
@@ -167,13 +179,13 @@ class SequenceRun
     }
 
     /**
-     * Get endDate
+     * Get kit
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getEndDate()
+    public function getKit()
     {
-        return $this->endDate;
+        return $this->kit;
     }
 
     /**
@@ -191,13 +203,13 @@ class SequenceRun
     }
 
     /**
-     * Get kit
+     * Get runCoverageTarget
      *
-     * @return string
+     * @return int
      */
-    public function getKit()
+    public function getRunCoverageTarget()
     {
-        return $this->kit;
+        return $this->runCoverageTarget;
     }
 
     /**
@@ -215,13 +227,13 @@ class SequenceRun
     }
 
     /**
-     * Get runCoverageTarget
+     * Get readLength
      *
      * @return int
      */
-    public function getRunCoverageTarget()
+    public function getReadLength()
     {
-        return $this->runCoverageTarget;
+        return $this->readLength;
     }
 
     /**
@@ -236,16 +248,6 @@ class SequenceRun
         $this->readLength = $readLength;
 
         return $this;
-    }
-
-    /**
-     * Get readLength
-     *
-     * @return int
-     */
-    public function getReadLength()
-    {
-        return $this->readLength;
     }
 
     /**
@@ -284,6 +286,16 @@ class SequenceRun
     }
 
     /**
+     * Get materialTypeString
+     *
+     * @return \AppBundle\Entity\MaterialTypeStrings
+     */
+    public function getMaterialTypeString()
+    {
+        return $this->materialTypeString;
+    }
+
+    /**
      * Set materialTypeString
      *
      * @param \AppBundle\Entity\MaterialTypeStrings $materialTypeString
@@ -295,15 +307,5 @@ class SequenceRun
         $this->materialTypeString = $materialTypeString;
 
         return $this;
-    }
-
-    /**
-     * Get materialTypeString
-     *
-     * @return \AppBundle\Entity\MaterialTypeStrings
-     */
-    public function getMaterialTypeString()
-    {
-        return $this->materialTypeString;
     }
 }

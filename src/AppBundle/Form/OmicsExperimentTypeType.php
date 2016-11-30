@@ -2,11 +2,12 @@
 // src/AppBundle/Form/OmicsExperimentTypeType.php
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class OmicsExperimentTypeType extends AbstractType
 {
@@ -23,7 +24,8 @@ class OmicsExperimentTypeType extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'prototype' => true,
-                'prototype_name' => '__expsubtype_prot__'))
+                'prototype_name' => '__expsubtype_prot__',
+                'constraints' => new Valid()))
         ;
     }
 

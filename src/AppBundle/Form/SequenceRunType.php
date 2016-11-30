@@ -2,16 +2,16 @@
 // src/AppBundle/Form/SequenceRunType.php
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Status;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class SequenceRunType extends AbstractType
 {
@@ -39,7 +39,8 @@ class SequenceRunType extends AbstractType
                 'by_reference' => false,
                 'allow_delete' => true,
                 'prototype' => true,
-                'prototype_name' => '__samples_prot__'))
+                'prototype_name' => '__samples_prot__',
+                'constraints' => new Valid()))
             ->add('save', SubmitType::class, array('label' => 'Create Sequence Run'))
         ;
     }

@@ -4,11 +4,10 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\OmicsExperimentTypeStrings;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\OmicsExperimentTypeStrings;
-use Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener;
 
 class LoadOmicsExperimentTypeStrings extends AbstractFixture implements OrderedFixtureInterface
 {
