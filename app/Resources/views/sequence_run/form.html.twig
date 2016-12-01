@@ -24,7 +24,15 @@
     <h3>Samples</h3>
     <ul style="list-style-type:none;padding-left:0;" class="col-samples">
         {% for sample in form.samples %}
-            {{ form_row(sample) }}
+            <li class="panel panel-body panel-default">
+                {{ form_row(sample.BCExperimentID) }}
+                {{ form_row(sample.BCSampleID) }}
+                {{ form_row(sample.BCRunID) }}
+                {{ form_row(sample.sampledDateTime) }}
+                {{ form_row(sample.sampledBy) }}
+                {{ form_row(sample.RNALaterTreated) }}
+                {{ form_row(sample.materialTypeString) }}
+            </li>
         {% endfor %}
     </ul>
     <button type="button" class="btn btn-samples btn-success">
