@@ -54,18 +54,18 @@
                                         {{ form_row(sample.materialTypeString) }}
                                     </li>
                                 {% endfor %}
-                                <button type="button" class="btn btn-samples btn-success">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sample
-                                </button>
                             </ul>
+                            <button type="button" class="btn btn-samples btn-success">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sample
+                            </button>
                         </li>
                     {% else %}
                         <ul style="list-style-type: none;" class="col-samples"></ul>
                     {% endfor %}
-                    <button type="button" class="btn btn-omics_experiment_sub_types btn-success">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Sub-Type
-                    </button>
                 </ul>
+                <button type="button" class="btn btn-omics_experiment_sub_types btn-success">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Sub-Type
+                </button>
             </li>
         {% else %}
             <ul style="list-style-type: none;" class="col-omics_experiment_sub_types">
@@ -73,8 +73,6 @@
                 </ul>
             </ul>
         {% endfor %}
-
-
     </ul>
     <button type="button" class="btn btn-omics_experiment_types btn-success">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Type

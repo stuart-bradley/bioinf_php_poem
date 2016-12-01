@@ -33,21 +33,7 @@ function FormCollections(collection_classes) {
 
             // Add addNew events to every Add button the page.
             $(".btn-"+ val).each(function () {
-                // If the button is top level, they'll only be one UL so buttons
-                // can be placed outside it and the UL can be hardcoded.
-                if (val == "omics_experiment_types") {
-                    var parent_ul = $("ul.col-omics_experiment_types").first();
-                } else if (val == "statuses") {
-                    var parent_ul = $("ul.col-statuses").first();
-                    // Nested relations require automated search.
-                } else {
-                    // Handles Sequence Run case for samples being top-level.
-                    if (collection_classes.length == 1) {
-                        var parent_ul = $("ul.col-samples").first()
-                    } else {
-                        var parent_ul = $(this).closest('ul');
-                    }
-                }
+                var parent_ul = $(this).prev('ul');
                 var div_name = val;
                 $(this).on("click", function(e) {
                     e.preventDefault();
