@@ -3,14 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OmicsExperiment;
-use AppBundle\Entity\Status;
 use AppBundle\Form\OmicsExperimentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Doctrine\Common\Collections\ArrayCollection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 // TODO: deleteAction should be implemented.
 
@@ -53,7 +48,9 @@ class OmicsExperimentController extends Controller {
      * TODO: Not sure if nessesary (wasn't in last system).
      */
     public function showAction($id) {
-        return $this->render('omics_experiment/show.html.twig');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
+        $omics_experiment = $repository->find($id);
+        return $this->render('omics_experiment/show.html.twig', array('omics_experiment' => $omics_experiment));
     }
 
     /**
