@@ -1,0 +1,131 @@
+{# src/AppBundle/Resources/views/sequence_run/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1> Sequence Run: {{ sequence_run.id }} </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Run by</strong>
+            <p>{{ sequence_run.runBy }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Start Date</strong>
+            <p>{{ sequence_run.startDate|date('Y-m-d') }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>End Date</strong>
+            <p>{{ sequence_run.endDate|date('Y-m-d') }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Kit</strong>
+            <p>{{ sequence_run.kit }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Material Type</strong>
+            <p>{{ sequence_run.materialTypeString.type }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Run coverage target</strong>
+            <p>{{ sequence_run.runCoverageTarget }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Read Length</strong>
+            <p>{{ sequence_run.runCoverageTarget }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Samples</h3>
+            <ul style="list-style-type:none;padding-left:0;" class="col-samples">
+                {% for sample in sequence_run.samples %}
+                    <li class="panel panel-body panel-default">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>BioControl experiment
+                                    ID</strong>
+                                <p>{{ sample.BCExperimentID }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>BioControl sample
+                                    ID</strong>
+                                <p>{{ sample.BCSampleID }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>BioControl run
+                                    ID</strong>
+                                <p>{{ sample.BCRunID }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>Sampled date
+                                    time</strong>
+                                <p>{{ sample.sampledDateTime|date('Y-m-d H:i:s') }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>Sampled by</strong>
+                                <p>{{ sample.sampledBy }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>Treated?</strong>
+                                <p>
+                                    {% if sample.RNALaterTreated is empty %}
+                                        False
+                                    {% else %}
+                                        True
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>Material type
+                                    string</strong>
+                                <p>{{ sample.materialTypeString.type }}</p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <a href="{{ path('sequence_run_edit', {'id': sequence_run.id}) }}" class="btn btn-default">Edit</a>
+    <a href="{{ path('sequence_run_delete', {'id': sequence_run.id}) }}" class="btn btn-default"
+       onclick="return confirm('Are you sure you want to delete {{ sequence_run.id }}?')">Delete</a>
+
+{% endblock %}

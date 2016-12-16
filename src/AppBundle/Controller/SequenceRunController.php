@@ -49,7 +49,9 @@ class SequenceRunController extends Controller {
      * TODO: Not sure if nessesary (wasn't in last system).
      */
     public function showAction($id) {
-        return $this->render('sequence_run/show.html.twig');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:SequenceRun');
+        $sequence_run = $repository->find($id);
+        return $this->render('sequence_run/show.html.twig', array('sequence_run' => $sequence_run));
     }
 
     /**
