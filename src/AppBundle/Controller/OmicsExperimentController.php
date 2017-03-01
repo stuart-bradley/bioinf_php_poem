@@ -46,7 +46,6 @@ class OmicsExperimentController extends Controller {
 
     /**
      * @Route("/omics_experiment/show/{id}", name="omics_experiment_show")
-     * TODO: Not sure if nessesary (wasn't in last system).
      */
     public function showAction($id) {
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
