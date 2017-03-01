@@ -9,7 +9,8 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadStatusStrings extends AbstractFixture implements OrderedFixtureInterface {
+class LoadStatusStrings extends AbstractFixture implements OrderedFixtureInterface
+{
     public function load(ObjectManager $manager)
     {
         $statuses = [
@@ -26,10 +27,11 @@ class LoadStatusStrings extends AbstractFixture implements OrderedFixtureInterfa
             "On hold",
             "Stopped"
         ];
-        foreach($statuses as $status) {
+        foreach ($statuses as $status) {
             $statusString = new StatusStrings();
-            $statusString -> setType($status);
-            $manager -> persist($statusString);
+            $statusString->setType($status);
+            $this->addReference($status, $statusString);
+            $manager->persist($statusString);
         }
         $manager->flush();
     }

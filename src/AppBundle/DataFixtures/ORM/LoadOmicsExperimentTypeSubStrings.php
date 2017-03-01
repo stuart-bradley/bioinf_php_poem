@@ -23,12 +23,12 @@ class LoadOmicsExperimentTypeSubStrings extends AbstractFixture implements Order
         ];
 
 
-        foreach($omicsExperimentSubTypes as $experimentSubType) {
+        foreach ($omicsExperimentSubTypes as $experimentSubType) {
             $omicsExperimentSubTypeString = new OmicsExperimentSubTypeStrings();
-            $omicsExperimentSubTypeString -> setType($experimentSubType);
+            $omicsExperimentSubTypeString->setType($experimentSubType);
             // Reference to object via type string for use in LoadOmicsExperimentTypeStrings.
             $this->addReference($experimentSubType, $omicsExperimentSubTypeString);
-            $manager -> persist($omicsExperimentSubTypeString);
+            $manager->persist($omicsExperimentSubTypeString);
         }
 
         $manager->flush();

@@ -15,18 +15,19 @@ class LoadOmicsExperimentTypeStrings extends AbstractFixture implements OrderedF
     {
         $omicsExperimentTypes = [
             "Transcriptomics" => ["Mutation Analysis", "Contamination Analysis", "Genome Assembly"],
-            "Proteomics" => ["Time Course","Differential Expression"],
+            "Proteomics" => ["Time Course", "Differential Expression"],
             "Metabolomics" => [],
             "Genomics" => []
         ];
 
-        foreach($omicsExperimentTypes as $experimentType => $children) {
+        foreach ($omicsExperimentTypes as $experimentType => $children) {
             $omicsExperimentTypeString = new OmicsExperimentTypeStrings();
-            $omicsExperimentTypeString -> setType($experimentType);
-            foreach($children as $child) {
-                $omicsExperimentTypeString-> addOmicsExperimentSubTypeString($this->getReference($child));
+            $omicsExperimentTypeString->setType($experimentType);
+            foreach ($children as $child) {
+                $omicsExperimentTypeString->addOmicsExperimentSubTypeString($this->getReference($child));
             }
-            $manager -> persist($omicsExperimentTypeString);
+            $this->addReference($experimentType, $omicsExperimentTypeString);
+            $manager->persist($omicsExperimentTypeString);
         }
         $manager->flush();
     }
