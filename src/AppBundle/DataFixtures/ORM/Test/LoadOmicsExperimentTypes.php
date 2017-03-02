@@ -13,7 +13,14 @@ class LoadOmicsExperimentTypes extends AbstractFixture implements OrderedFixture
 {
     public function load(ObjectManager $manager)
     {
+        $omicsExperimentType = new OmicsExperimentType();
+        $omicsExperimentType->setOmicsExperimentTypeString($this->getReference("Transcriptomics"));
+        $omicsExperimentType->addOmicsExperimentSubType($this->getReference("omics_experiment_sub_type"));
+        $this->addReference("omics_experiment_type", $omicsExperimentType);
 
+        $manager->persist($omicsExperimentType);
+
+        $manager->flush();
     }
 
     public function getOrder()

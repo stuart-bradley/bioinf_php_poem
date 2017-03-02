@@ -27,6 +27,7 @@ class LoadStatusStrings extends AbstractFixture implements OrderedFixtureInterfa
             "On hold",
             "Stopped"
         ];
+
         foreach ($statuses as $status) {
             $statusString = new StatusStrings();
             $statusString->setType($status);

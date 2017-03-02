@@ -93,6 +93,8 @@ class SequenceRun
     public function __construct()
     {
         $this->samples = new ArrayCollection();
+        $this->startDate = new \DateTime();
+        $this->endDate = new \DateTime();
     }
 
 

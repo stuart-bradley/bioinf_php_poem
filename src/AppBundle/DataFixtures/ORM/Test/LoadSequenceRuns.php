@@ -13,7 +13,17 @@ class LoadSequenceRuns extends AbstractFixture implements OrderedFixtureInterfac
 {
     public function load(ObjectManager $manager)
     {
+        $sequence_run = new SequenceRun();
+        $sequence_run->setRunBy("stuart.bradley");
+        $sequence_run->setKit("Illumina");
+        $sequence_run->setReadLength(100);
+        $sequence_run->setRunCoverageTarget(100);
+        $sequence_run->addSample($this->getReference("sample_sequencing_run"));
+        $sequence_run->setMaterialTypeString($this->getReference("DNA"));
+        $this->setReference("sequence_run_1", $sequence_run);
+        $manager->persist($sequence_run);
 
+        $manager->flush();
     }
 
     public function getOrder()

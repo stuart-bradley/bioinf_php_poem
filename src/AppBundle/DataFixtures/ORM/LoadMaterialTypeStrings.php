@@ -19,6 +19,7 @@ class LoadMaterialTypeStrings extends AbstractFixture implements OrderedFixtureI
             "Protein",
             "Biomass"
         ];
+
         foreach ($materialTypes as $materialType) {
             $materialTypeString = new MaterialTypeStrings();
             $materialTypeString->setType($materialType);

@@ -13,7 +13,27 @@ class LoadSamples extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+        $sample = new Sample();
+        $sample->setBCExperimentID(1);
+        $sample->setBCSampleID(1);
+        $sample->setBCRunID(1);
+        $sample->setSampledBy("stuart.bradley");
+        $sample->setRNALaterTreated(true);
+        $sample->setMaterialTypeString($this->getReference("DNA"));
+        $this->addReference("sample_sequencing_run", $sample);
+        $manager->persist($sample);
 
+        $sample = new Sample();
+        $sample->setBCExperimentID(1);
+        $sample->setBCSampleID(1);
+        $sample->setBCRunID(1);
+        $sample->setSampledBy("stuart.bradley");
+        $sample->setRNALaterTreated(true);
+        $sample->setMaterialTypeString($this->getReference("DNA"));
+        $this->addReference("sample_omics_experiment", $sample);
+        $manager->persist($sample);
+
+        $manager->flush();
     }
 
     public function getOrder()

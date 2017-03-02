@@ -13,7 +13,12 @@ class LoadStatus extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+        $status = new Status();
+        $status->setStatusString($this->getReference("Waiting for approval"));
+        $this->addReference("status_omics_experiment", $status);
+        $manager->persist($status);
 
+        $manager->flush();
     }
 
     public function getOrder()

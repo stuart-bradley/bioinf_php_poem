@@ -6,8 +6,10 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class OmicsExperimentControllerControllerTest extends WebTestCase
 {
-    public function setUp()
+
+    public function testIndex()
     {
+
         $this->loadFixtures(array(
             'AppBundle\DataFixtures\ORM\LoadMaterialTypeStrings',
             'AppBundle\DataFixtures\ORM\LoadStatusStrings',
@@ -20,13 +22,10 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
             'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperimentTypes',
             'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperiments',
         ));
-    }
-
-    public function testIndex()
-    {
 
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/omics_experiment/index');
         $this->assertStatusCode(200, $client);
+        $this->assertGreaterThan(1, $crawler->filter('tr')->count());
     }
 }

@@ -13,7 +13,14 @@ class LoadOmicsExperimentSubTypes extends AbstractFixture implements OrderedFixt
 {
     public function load(ObjectManager $manager)
     {
+        $omicsExperimentSubType = new OmicsExperimentSubType();
+        $omicsExperimentSubType->setOmicsExperimentSubTypeString($this->getReference("Mutation Analysis"));
+        $omicsExperimentSubType->addSample($this->getReference("sample_omics_experiment"));
+        $this->addReference("omics_experiment_sub_type", $omicsExperimentSubType);
 
+        $manager->persist($omicsExperimentSubType);
+
+        $manager->flush();
     }
 
     public function getOrder()
