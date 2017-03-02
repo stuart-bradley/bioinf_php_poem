@@ -10,7 +10,17 @@ class SequenceRunControllerTest extends WebTestCase
 
     public function testIndex()
     {
-        $this->loadFixtures(array(
+        $this->loadTestFixtures();
+
+        $client = $this->makeClient();
+        $crawler = $client->request('GET', '/sequence_run/index');
+        $this->assertStatusCode(200, $client);
+        $this->assertEquals(2, $crawler->filter('tr')->count());
+    }
+
+    public function loadTestFixtures()
+    {
+        $this->fixtures = $this->loadFixtures(array(
             'AppBundle\DataFixtures\ORM\LoadMaterialTypeStrings',
             'AppBundle\DataFixtures\ORM\LoadStatusStrings',
             'AppBundle\DataFixtures\ORM\LoadOmicsExperimentSubTypeStrings',
@@ -21,11 +31,19 @@ class SequenceRunControllerTest extends WebTestCase
             'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperimentSubTypes',
             'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperimentTypes',
             'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperiments',
-        ));
+        ))->getReferenceRepository();
+    }
+
+    public function testShow()
+    {
+        $this->loadTestFixtures();
 
         $client = $this->makeClient();
-        $crawler = $client->request('GET', '/sequence_run/index');
+        $sequenceRunId = $this->fixtures->getReference("sequence_run_1")->getId();
+        $crawler = $client->request('GET', "/sequence_run/show/$sequenceRunId");
         $this->assertStatusCode(200, $client);
-        $this->assertGreaterThan(1, $crawler->filter('tr')->count());
+
+        $this->assertEquals(2, $crawler->filter('strong:contains("Material")')->count());
+        $this->assertEquals(2, $crawler->filter('p:contains("DNA")')->count());
     }
 }

@@ -24,7 +24,7 @@ class LoadSamples extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($sample);
 
         $sample = new Sample();
-        $sample->setBCExperimentID(1);
+        $sample->setBCExperimentID(123);
         $sample->setBCSampleID(1);
         $sample->setBCRunID(1);
         $sample->setSampledBy("stuart.bradley");
