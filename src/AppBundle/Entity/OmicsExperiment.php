@@ -108,6 +108,16 @@ class OmicsExperiment
     }
 
     /**
+     * Get projectName
+     *
+     * @return string
+     */
+    public function getProjectName()
+    {
+        return $this->projectName;
+    }
+
+    /**
      * Set projectName
      *
      * @param string $projectName
@@ -122,13 +132,13 @@ class OmicsExperiment
     }
 
     /**
-     * Get projectName
+     * Get requestedBy
      *
      * @return string
      */
-    public function getProjectName()
+    public function getRequestedBy()
     {
-        return $this->projectName;
+        return $this->requestedBy;
     }
 
     /**
@@ -146,13 +156,13 @@ class OmicsExperiment
     }
 
     /**
-     * Get requestedBy
+     * Get requestedDate
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getRequestedBy()
+    public function getRequestedDate()
     {
-        return $this->requestedBy;
+        return $this->requestedDate;
     }
 
     /**
@@ -170,13 +180,13 @@ class OmicsExperiment
     }
 
     /**
-     * Get requestedDate
+     * Get description
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getRequestedDate()
+    public function getDescription()
     {
-        return $this->requestedDate;
+        return $this->description;
     }
 
     /**
@@ -194,13 +204,13 @@ class OmicsExperiment
     }
 
     /**
-     * Get description
+     * Get questions
      *
      * @return string
      */
-    public function getDescription()
+    public function getQuestions()
     {
-        return $this->description;
+        return $this->questions;
     }
 
     /**
@@ -218,13 +228,13 @@ class OmicsExperiment
     }
 
     /**
-     * Get questions
+     * Get requestedEndDate
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getQuestions()
+    public function getRequestedEndDate()
     {
-        return $this->questions;
+        return $this->requestedEndDate;
     }
 
     /**
@@ -239,16 +249,6 @@ class OmicsExperiment
         $this->requestedEndDate = $requestedEndDate;
 
         return $this;
-    }
-
-    /**
-     * Get requestedEndDate
-     *
-     * @return \DateTime
-     */
-    public function getRequestedEndDate()
-    {
-        return $this->requestedEndDate;
     }
 
     /**
@@ -274,6 +274,7 @@ class OmicsExperiment
     public function removeStatus(\AppBundle\Entity\Status $status)
     {
         $this->statuses->removeElement($status);
+        $status->setOmicsExperiment(null);
     }
 
     /**
@@ -309,6 +310,7 @@ class OmicsExperiment
     public function removeOmicsExperimentType(\AppBundle\Entity\OmicsExperimentType $omicsExperimentType)
     {
         $this->omicsExperimentTypes->removeElement($omicsExperimentType);
+        $omicsExperimentType->setOmicsExperiment(null);
     }
 
     /**

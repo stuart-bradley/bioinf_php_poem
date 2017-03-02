@@ -56,6 +56,16 @@ class OmicsExperimentType
     }
 
     /**
+     * Get omicsExperiment
+     *
+     * @return \AppBundle\Entity\OmicsExperiment
+     */
+    public function getOmicsExperiment()
+    {
+        return $this->omicsExperiment;
+    }
+
+    /**
      * Set omicsExperiment
      *
      * @param \AppBundle\Entity\OmicsExperiment $omicsExperiment
@@ -67,16 +77,6 @@ class OmicsExperimentType
         $this->omicsExperiment = $omicsExperiment;
 
         return $this;
-    }
-
-    /**
-     * Get omicsExperiment
-     *
-     * @return \AppBundle\Entity\OmicsExperiment
-     */
-    public function getOmicsExperiment()
-    {
-        return $this->omicsExperiment;
     }
 
     /**
@@ -102,6 +102,7 @@ class OmicsExperimentType
     public function removeOmicsExperimentSubType(\AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType)
     {
         $this->omicsExperimentSubTypes->removeElement($omicsExperimentSubType);
+        $omicsExperimentSubType->setOmicsExperimentType(null);
     }
 
     /**
@@ -112,6 +113,16 @@ class OmicsExperimentType
     public function getOmicsExperimentSubTypes()
     {
         return $this->omicsExperimentSubTypes;
+    }
+
+    /**
+     * Get omicsExperimentTypeString
+     *
+     * @return \AppBundle\Entity\OmicsExperimentTypeStrings
+     */
+    public function getOmicsExperimentTypeString()
+    {
+        return $this->omicsExperimentTypeString;
     }
 
     /**
@@ -126,15 +137,5 @@ class OmicsExperimentType
         $this->omicsExperimentTypeString = $omicsExperimentTypeString;
 
         return $this;
-    }
-
-    /**
-     * Get omicsExperimentTypeString
-     *
-     * @return \AppBundle\Entity\OmicsExperimentTypeStrings
-     */
-    public function getOmicsExperimentTypeString()
-    {
-        return $this->omicsExperimentTypeString;
     }
 }

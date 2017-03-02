@@ -275,6 +275,7 @@ class SequenceRun
     public function removeSample(\AppBundle\Entity\Sample $sample)
     {
         $this->samples->removeElement($sample);
+        $sample->setSequenceRun(null);
     }
 
     /**
