@@ -1,6 +1,6 @@
 <?php
 
-// src/AppBundle/DataFixtures/ORM/LoadOmicsExperimentTypeSubStrings.php
+// src/AppBundle/DataFixtures/ORM/LoadOmicsExperimentSubTypeStrings.php
 
 namespace AppBundle\DataFixtures\ORM;
 
@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadOmicsExperimentTypeSubStrings extends AbstractFixture implements OrderedFixtureInterface
+class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {

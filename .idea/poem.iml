@@ -22,9 +22,31 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/kriswallsmith/assetic" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/liip/functional-test-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpspec/prophecy" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/php-token-stream" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpunit/phpunit-mock-objects" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/resource-operations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sebastian/version" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/generator-bundle" />
@@ -43,6 +65,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/symfony" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/twbs/bootstrap" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/twig/twig" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -50,11 +73,13 @@
       <library name="PHARS">
         <CLASSES>
           <root url="phar://$MODULE_DIR$/composer.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
         </CLASSES>
         <SOURCES>
           <root url="phar://$MODULE_DIR$/composer.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Tests/Fixtures/includes/ProjectWithXsdExtensionInPhar.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/twig/twig/test/Twig/Tests/Loader/Fixtures/phar/phar-sample.phar/" />
         </SOURCES>
@@ -83,9 +108,31 @@
           <root url="file://$MODULE_DIR$/vendor/kriswallsmith/assetic" />
           <root url="file://$MODULE_DIR$/vendor/liip/functional-test-bundle" />
           <root url="file://$MODULE_DIR$/vendor/monolog/monolog" />
+          <root url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
           <root url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
+          <root url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
+          <root url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-docblock" />
+          <root url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
+          <root url="file://$MODULE_DIR$/vendor/phpspec/prophecy" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-token-stream" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/phpunit" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/phpunit-mock-objects" />
           <root url="file://$MODULE_DIR$/vendor/psr/cache" />
           <root url="file://$MODULE_DIR$/vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/diff" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/environment" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/exporter" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/global-state" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/object-enumerator" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/recursion-context" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/resource-operations" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/version" />
           <root url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
           <root url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
           <root url="file://$MODULE_DIR$/vendor/sensio/generator-bundle" />
@@ -104,6 +151,7 @@
           <root url="file://$MODULE_DIR$/vendor/symfony/symfony" />
           <root url="file://$MODULE_DIR$/vendor/twbs/bootstrap" />
           <root url="file://$MODULE_DIR$/vendor/twig/twig" />
+          <root url="file://$MODULE_DIR$/vendor/webmozart/assert" />
         </CLASSES>
         <SOURCES>
           <root url="file://$MODULE_DIR$/vendor/components/jquery" />
@@ -126,9 +174,31 @@
           <root url="file://$MODULE_DIR$/vendor/kriswallsmith/assetic" />
           <root url="file://$MODULE_DIR$/vendor/liip/functional-test-bundle" />
           <root url="file://$MODULE_DIR$/vendor/monolog/monolog" />
+          <root url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
           <root url="file://$MODULE_DIR$/vendor/paragonie/random_compat" />
+          <root url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
+          <root url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-docblock" />
+          <root url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
+          <root url="file://$MODULE_DIR$/vendor/phpspec/prophecy" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-code-coverage" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-file-iterator" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-text-template" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-timer" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/php-token-stream" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/phpunit" />
+          <root url="file://$MODULE_DIR$/vendor/phpunit/phpunit-mock-objects" />
           <root url="file://$MODULE_DIR$/vendor/psr/cache" />
           <root url="file://$MODULE_DIR$/vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/comparator" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/diff" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/environment" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/exporter" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/global-state" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/object-enumerator" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/recursion-context" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/resource-operations" />
+          <root url="file://$MODULE_DIR$/vendor/sebastian/version" />
           <root url="file://$MODULE_DIR$/vendor/sensio/distribution-bundle" />
           <root url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
           <root url="file://$MODULE_DIR$/vendor/sensio/generator-bundle" />
@@ -147,6 +217,7 @@
           <root url="file://$MODULE_DIR$/vendor/symfony/symfony" />
           <root url="file://$MODULE_DIR$/vendor/twbs/bootstrap" />
           <root url="file://$MODULE_DIR$/vendor/twig/twig" />
+          <root url="file://$MODULE_DIR$/vendor/webmozart/assert" />
         </SOURCES>
       </library>
     </orderEntry>
