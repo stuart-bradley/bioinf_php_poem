@@ -10,7 +10,8 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
     public function testIndex()
     {
 
-        $this->loadTestFixtures();
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
 
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/omics_experiment/index');
@@ -18,28 +19,13 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $this->assertGreaterThan(1, $crawler->filter('tr')->count());
     }
 
-    public function loadTestFixtures()
-    {
-        $this->fixtures = $this->loadFixtures(array(
-            'AppBundle\DataFixtures\ORM\LoadMaterialTypeStrings',
-            'AppBundle\DataFixtures\ORM\LoadStatusStrings',
-            'AppBundle\DataFixtures\ORM\LoadOmicsExperimentSubTypeStrings',
-            'AppBundle\DataFixtures\ORM\LoadOmicsExperimentTypeStrings',
-            'AppBundle\DataFixtures\ORM\Test\LoadSamples',
-            'AppBundle\DataFixtures\ORM\Test\LoadStatus',
-            'AppBundle\DataFixtures\ORM\Test\LoadSequenceRuns',
-            'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperimentSubTypes',
-            'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperimentTypes',
-            'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperiments',
-        ))->getReferenceRepository();
-    }
-
     public function testShow()
     {
-        $this->loadTestFixtures();
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
 
         $client = $this->makeClient();
-        $sequenceRunId = $this->fixtures->getReference("omics_experiment_1")->getId();
+        $sequenceRunId = $helper->fixtures->getReference("omics_experiment_1")->getId();
         $crawler = $client->request('GET', "/omics_experiment/show/$sequenceRunId");
         $this->assertStatusCode(200, $client);
 
@@ -62,5 +48,37 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         //Test Sample.
         $this->assertEquals(1, $crawler->filter('strong:contains("Material")')->count());
         $this->assertEquals(1, $crawler->filter('p:contains("DNA")')->count());
+    }
+
+    public function testCreate()
+    {
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
+
+        $client = $this->makeClient();
+        $crawler = $client->request('POST', "/omics_experiment/new");
+
+        $form = $crawler->selectButton("Create Experiment")->form();
+        $values = $form->getPhpValues();
+
+        $values['omics_experiment']['projectName'] = 'test experiment';
+        $values['omics_experiment']['requestedBy'] = 'stuart.bradley';
+        $values['omics_experiment']['description'] = 'description';
+        $values['omics_experiment']['questions'] = 'questions';
+
+        $values['omics_experiment']['statuses'] = [];
+        $values['omics_experiment']['statuses'][0] = $helper->createStatus();
+
+        $values['omics_experiment']['omicsExperimentTypes'] = [];
+        $values['omics_experiment']['omicsExperimentTypes'][0] = $helper->createOmicsExperimentType();
+
+        $values['omics_experiment']['omicsExperimentTypes'][0]['omicsExperimentSubTypes'][0] = $helper->createOmicsExperimentSubType();
+
+
+        $values['omics_experiment']['omicsExperimentTypes'][0]['omicsExperimentSubTypes'][0]['samples'][0] = $helper->createSample();
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
+            $form->getPhpFiles());
+        $crawler = $client->followRedirect();
+        $this->assertEquals(3, $crawler->filter('tr')->count());
     }
 }

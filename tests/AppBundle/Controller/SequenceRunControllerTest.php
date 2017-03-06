@@ -10,7 +10,8 @@ class SequenceRunControllerTest extends WebTestCase
 
     public function testIndex()
     {
-        $this->loadTestFixtures();
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
 
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/sequence_run/index');
@@ -18,28 +19,13 @@ class SequenceRunControllerTest extends WebTestCase
         $this->assertEquals(2, $crawler->filter('tr')->count());
     }
 
-    public function loadTestFixtures()
-    {
-        $this->fixtures = $this->loadFixtures(array(
-            'AppBundle\DataFixtures\ORM\LoadMaterialTypeStrings',
-            'AppBundle\DataFixtures\ORM\LoadStatusStrings',
-            'AppBundle\DataFixtures\ORM\LoadOmicsExperimentSubTypeStrings',
-            'AppBundle\DataFixtures\ORM\LoadOmicsExperimentTypeStrings',
-            'AppBundle\DataFixtures\ORM\Test\LoadSamples',
-            'AppBundle\DataFixtures\ORM\Test\LoadStatus',
-            'AppBundle\DataFixtures\ORM\Test\LoadSequenceRuns',
-            'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperimentSubTypes',
-            'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperimentTypes',
-            'AppBundle\DataFixtures\ORM\Test\LoadOmicsExperiments',
-        ))->getReferenceRepository();
-    }
-
     public function testShow()
     {
-        $this->loadTestFixtures();
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
 
         $client = $this->makeClient();
-        $sequenceRunId = $this->fixtures->getReference("sequence_run_1")->getId();
+        $sequenceRunId = $helper->fixtures->getReference("sequence_run_1")->getId();
         $crawler = $client->request('GET', "/sequence_run/show/$sequenceRunId");
         $this->assertStatusCode(200, $client);
 
@@ -49,7 +35,8 @@ class SequenceRunControllerTest extends WebTestCase
 
     public function testCreate()
     {
-        $this->loadTestFixtures();
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
 
         $client = $this->makeClient();
         $crawler = $client->request('POST', "/sequence_run/new");
@@ -64,26 +51,7 @@ class SequenceRunControllerTest extends WebTestCase
         $values['sequence_run']['readLength'] = 10;
 
         $values['sequence_run']['samples'] = [];
-        $values['sequence_run']['samples'][0] = [];
-
-        $values['sequence_run']['samples'][0]['BCExperimentID'] = 10;
-        $values['sequence_run']['samples'][0]['BCSampleID'] = 10;
-        $values['sequence_run']['samples'][0]['BCRunID'] = 10;
-        $values['sequence_run']['samples'][0]['sampledBy'] = 10;
-        $values['sequence_run']['samples'][0]['sampledBy'] = 10;
-        $values['sequence_run']['samples'][0]['materialTypeString'] = 1;
-        $values['sequence_run']['samples'][0]['RNALaterTreated'] = 1;
-
-        $values['sequence_run']['samples'][0]['sampledDateTime'] = [];
-        $values['sequence_run']['samples'][0]['sampledDateTime']['time'] = [];
-        $values['sequence_run']['samples'][0]['sampledDateTime']['date'] = [];
-
-        $values['sequence_run']['samples'][0]['sampledDateTime']['date']['year'] = 2012;
-        $values['sequence_run']['samples'][0]['sampledDateTime']['date']['month'] = 1;
-        $values['sequence_run']['samples'][0]['sampledDateTime']['date']['day'] = 1;
-
-        $values['sequence_run']['samples'][0]['sampledDateTime']['time']['hour'] = 00;
-        $values['sequence_run']['samples'][0]['sampledDateTime']['time']['minute'] = 00;
+        $values['sequence_run']['samples'][0] = $helper->createSample();
 
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
