@@ -15,10 +15,10 @@ class ControllerHelperMethods extends WebTestCase
     public function loadTestFixtures()
     {
         $this->fixtures = $this->loadFixtures(array(
-            'AppBundle\DataFixtures\ORM\LoadMaterialTypeStrings',
-            'AppBundle\DataFixtures\ORM\LoadStatusStrings',
-            'AppBundle\DataFixtures\ORM\LoadOmicsExperimentSubTypeStrings',
-            'AppBundle\DataFixtures\ORM\LoadOmicsExperimentTypeStrings',
+            'AppBundle\DataFixtures\ORM\Real\LoadMaterialTypeStrings',
+            'AppBundle\DataFixtures\ORM\Real\LoadStatusStrings',
+            'AppBundle\DataFixtures\ORM\Real\LoadOmicsExperimentSubTypeStrings',
+            'AppBundle\DataFixtures\ORM\Real\LoadOmicsExperimentTypeStrings',
             'AppBundle\DataFixtures\ORM\Test\LoadSamples',
             'AppBundle\DataFixtures\ORM\Test\LoadStatus',
             'AppBundle\DataFixtures\ORM\Test\LoadSequenceRuns',

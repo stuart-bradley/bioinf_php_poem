@@ -1,8 +1,8 @@
 <?php
 
-// src/AppBundle/DataFixtures/ORM/LoadOmicsExperimentTypeStrings.php
+// src/AppBundle/DataFixtures/ORM/Real/LoadOmicsExperimentTypeStrings.php
 
-namespace AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM\Real;
 
 use AppBundle\Entity\OmicsExperimentTypeStrings;
 use Doctrine\Common\DataFixtures\AbstractFixture;

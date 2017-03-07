@@ -1,8 +1,8 @@
 <?php
 
-// src/AppBundle/DataFixtures/ORM/LoadStatusStrings.php
+// src/AppBundle/DataFixtures/ORM/Real/LoadStatusStrings.php
 
-namespace AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM\Real;
 
 use AppBundle\Entity\StatusStrings;
 use Doctrine\Common\DataFixtures\AbstractFixture;

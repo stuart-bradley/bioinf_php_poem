@@ -1,8 +1,8 @@
 <?php
 
-// src/AppBundle/DataFixtures/ORM/LoadMaterialTypeStrings.php
+// src/AppBundle/DataFixtures/ORM/Real/LoadMaterialTypeStrings.php
 
-namespace AppBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM\Real;
 
 use AppBundle\Entity\MaterialTypeStrings;
 use Doctrine\Common\DataFixtures\AbstractFixture;
