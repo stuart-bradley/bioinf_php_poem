@@ -77,9 +77,11 @@
     <button type="button" class="btn btn-omics_experiment_types btn-success">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Type
     </button><br><br>
-    {{ form_widget(form.save) }}
     {% if edit %}
+        {{ form_widget(form.save, { 'label': 'Edit Experiment' }) }}
         <a href="{{ path('omics_experiment_delete', {'id': form.vars.value.id}) }}" class="btn btn-default"  onclick="return confirm('Are you sure you want to delete {{ form.vars.value.projectName }}?')">Delete</a>
+    {% else %}
+        {{ form_widget(form.save, { 'label': 'Create Experiment' }) }}
     {% endif %}
     <div style="display: none;">{{ form_rest(form) }}</div>
     {{ form_end(form)}}

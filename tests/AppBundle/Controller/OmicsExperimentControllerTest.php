@@ -81,4 +81,24 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
         $this->assertEquals(3, $crawler->filter('tr')->count());
     }
+
+    public function testUpdate()
+    {
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
+
+        $client = $this->makeClient();
+        $sequenceRunId = $helper->fixtures->getReference("omics_experiment_1")->getId();
+        $client = $this->makeClient();
+        $crawler = $client->request('PATCH', "/omics_experiment/edit/$sequenceRunId");
+
+        $form = $crawler->selectButton("Edit Experiment")->form();
+        $values = $form->getPhpValues();
+
+        $values['omics_experiment']['projectName'] = 'test experiment - edited';
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
+            $form->getPhpFiles());
+        $crawler = $client->followRedirect();
+        $this->assertEquals(2, $crawler->filter('tr')->count());
+    }
 }

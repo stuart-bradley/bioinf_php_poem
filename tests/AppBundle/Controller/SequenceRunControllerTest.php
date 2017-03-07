@@ -58,4 +58,24 @@ class SequenceRunControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
         $this->assertEquals(3, $crawler->filter('tr')->count());
     }
+
+    public function testUpdate()
+    {
+        $helper = new ControllerHelperMethods();
+        $helper->loadTestFixtures();
+
+        $client = $this->makeClient();
+        $sequenceRunId = $helper->fixtures->getReference("sequence_run_1")->getId();
+        $client = $this->makeClient();
+        $crawler = $client->request('PATCH', "/sequence_run/edit/$sequenceRunId");
+
+        $form = $crawler->selectButton("Edit Sequence Run")->form();
+        $values = $form->getPhpValues();
+
+        $values['sequence_run']['kit'] = "IonTorrent";
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
+            $form->getPhpFiles());
+        $crawler = $client->followRedirect();
+        $this->assertEquals(2, $crawler->filter('tr')->count());
+    }
 }
