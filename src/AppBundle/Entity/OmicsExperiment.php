@@ -80,12 +80,12 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade="all", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade={"persist", "remove"})
      */
     private $statuses;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment", cascade="all", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment", cascade={"persist", "remove"})
      */
     private $omicsExperimentTypes;
 

@@ -85,6 +85,7 @@ class Sample
     /**
      * @ORM\ManyToOne(targetEntity="OmicsExperimentSubType", inversedBy="samples")
      * @ORM\JoinColumn(name="omics_experiment_sub_type_id", referencedColumnName="id")
+     * @Assert\NotNull()
      */
     private $omicsExperimentSubType;
 

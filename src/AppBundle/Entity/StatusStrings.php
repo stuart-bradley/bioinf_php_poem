@@ -31,7 +31,7 @@ class StatusStrings
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Status", mappedBy="statusString", cascade="all")
+     * @ORM\OneToMany(targetEntity="Status", mappedBy="statusString")
      */
     private $statuses;
 

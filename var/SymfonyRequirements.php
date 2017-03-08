@@ -184,6 +184,16 @@ class RequirementCollection implements IteratorAggregate
     }
 
     /**
+     * Adds a Requirement.
+     *
+     * @param Requirement $requirement A Requirement instance
+     */
+    public function add(Requirement $requirement)
+    {
+        $this->requirements[] = $requirement;
+    }
+
+    /**
      * Adds a mandatory requirement.
      *
      * @param bool        $fulfilled   Whether the requirement is fulfilled
@@ -194,16 +204,6 @@ class RequirementCollection implements IteratorAggregate
     public function addRequirement($fulfilled, $testMessage, $helpHtml, $helpText = null)
     {
         $this->add(new Requirement($fulfilled, $testMessage, $helpHtml, $helpText, false));
-    }
-
-    /**
-     * Adds a Requirement.
-     *
-     * @param Requirement $requirement A Requirement instance
-     */
-    public function add(Requirement $requirement)
-    {
-        $this->requirements[] = $requirement;
     }
 
     /**
@@ -770,6 +770,34 @@ class SymfonyRequirements extends RequirementCollection
     }
 
     /**
+     * Loads realpath_cache_size from php.ini and converts it to int.
+     *
+     * (e.g. 16k is converted to 16384 int)
+     *
+     * @return int
+     */
+    protected function getRealpathCacheSize()
+    {
+        $size = ini_get('realpath_cache_size');
+        $size = trim($size);
+        $unit = '';
+        if (!ctype_digit($size)) {
+            $unit = strtolower(substr($size, -1, 1));
+            $size = (int) substr($size, 0, -1);
+        }
+        switch ($unit) {
+            case 'g':
+                return $size * 1024 * 1024 * 1024;
+            case 'm':
+                return $size * 1024 * 1024;
+            case 'k':
+                return $size * 1024;
+            default:
+                return (int) $size;
+        }
+    }
+
+    /**
      * Defines PHP required version from Symfony version.
      *
      * @return string|false The PHP required version or false if it could not be guessed
@@ -791,33 +819,5 @@ class SymfonyRequirements extends RequirementCollection
         }
 
         return false;
-    }
-
-    /**
-     * Loads realpath_cache_size from php.ini and converts it to int.
-     *
-     * (e.g. 16k is converted to 16384 int)
-     *
-     * @return int
-     */
-    protected function getRealpathCacheSize()
-    {
-        $size = ini_get('realpath_cache_size');
-        $size = trim($size);
-        $unit = '';
-        if (!ctype_digit($size)) {
-            $unit = strtolower(substr($size, -1, 1));
-            $size = (int)substr($size, 0, -1);
-        }
-        switch ($unit) {
-            case 'g':
-                return $size * 1024 * 1024 * 1024;
-            case 'm':
-                return $size * 1024 * 1024;
-            case 'k':
-                return $size * 1024;
-            default:
-                return (int)$size;
-        }
     }
 }

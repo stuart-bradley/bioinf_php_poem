@@ -64,6 +64,7 @@ class SequenceRun
     /**
      * @ORM\ManyToOne(targetEntity="MaterialTypeStrings", inversedBy="sequenceRuns")
      * @ORM\JoinColumn(name="material_type_strings_id", referencedColumnName="id")
+     * @Assert\NotNull()
      */
     private $materialTypeString;
 
@@ -86,7 +87,7 @@ class SequenceRun
     private $readLength;
 
     /**
-     * @ORM\OneToMany(targetEntity="Sample", mappedBy="sequenceRun", cascade="all", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Sample", mappedBy="sequenceRun", cascade={"persist", "remove"})
      */
     private $samples;
 

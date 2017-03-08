@@ -32,11 +32,12 @@ class OmicsExperimentType
     /**
      * @ORM\ManyToOne(targetEntity="OmicsExperimentTypeStrings", inversedBy="omicsExperimentTypes")
      * @ORM\JoinColumn(name="omics_experiment_type_strings_id", referencedColumnName="id")
+     * @Assert\NotNull()
      */
     private $omicsExperimentTypeString;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentType", cascade="all", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="OmicsExperimentSubType", mappedBy="omicsExperimentType", cascade={"persist", "remove"})
      */
     private $omicsExperimentSubTypes;
 

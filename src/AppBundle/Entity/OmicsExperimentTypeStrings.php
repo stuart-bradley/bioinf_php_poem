@@ -30,13 +30,13 @@ class OmicsExperimentTypeStrings
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperimentTypeString", cascade="all")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperimentTypeString")
      */
     private $omicsExperimentTypes;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperimentSubTypeStrings", mappedBy="omicsExperimentTypeString", cascade="all")
+     * @ORM\OneToMany(targetEntity="OmicsExperimentSubTypeStrings", mappedBy="omicsExperimentTypeString")
      */
     private $omicsExperimentSubTypeStrings;
 

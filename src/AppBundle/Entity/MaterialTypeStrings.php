@@ -30,12 +30,12 @@ class MaterialTypeStrings
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Sample", mappedBy="materialTypeString", cascade="all")
+     * @ORM\OneToMany(targetEntity="Sample", mappedBy="materialTypeString")
      */
     private $samples;
 
     /**
-     * @ORM\OneToMany(targetEntity="SequenceRun", mappedBy="materialTypeString", cascade="all")
+     * @ORM\OneToMany(targetEntity="SequenceRun", mappedBy="materialTypeString")
      */
     private $sequenceRuns;
 

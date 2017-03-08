@@ -37,6 +37,7 @@ class OmicsExperimentController extends Controller {
         // On submission.
         if ($form->isValid()) {
             $em->persist($omics_experiment);
+
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');
         }

@@ -39,6 +39,7 @@ class Status
     /**
      * @ORM\ManyToOne(targetEntity="StatusStrings", inversedBy="statuses")
      * @ORM\JoinColumn(name="status_strings_id", referencedColumnName="id")
+     * @Assert\NotNull()
      */
     private $statusString;
 
