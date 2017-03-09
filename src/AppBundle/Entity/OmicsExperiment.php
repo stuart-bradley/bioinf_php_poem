@@ -80,9 +80,9 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="reference_sequence", type="string")
+     * @ORM\Column(name="reference_sequence", type="array")
      */
     private $referenceSequence;
 

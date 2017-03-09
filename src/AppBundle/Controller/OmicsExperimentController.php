@@ -33,7 +33,6 @@ class OmicsExperimentController extends Controller {
         $form = $this->createForm(OmicsExperimentType::class, $omics_experiment);
 
         $form->handleRequest($request);
-
         // On submission.
         if ($form->isValid()) {
             $em->persist($omics_experiment);

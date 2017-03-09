@@ -20,7 +20,6 @@ class ReferenceSequenceUploadListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-
         $this->uploadFile($entity);
     }
 
@@ -38,14 +37,17 @@ class ReferenceSequenceUploadListener
             return;
         }
 
-        $file = $entity->getReferenceSequence();
+        $files = $entity->getReferenceSequence();
 
-        // only upload new files
-        if (!$file instanceof UploadedFile) {
-            return;
+        $base_array = [];
+
+        foreach ($files as $f) {
+            dump($f);
+            $fileName = $this->uploader->upload($f);
+            array_push ($base_array, $fileName);
+            unset($f);
         }
+        $entity->setReferenceSequence($base_array);
 
-        $fileName = $this->uploader->upload($file);
-        $entity->setReferenceSequence($fileName);
     }
 }
