@@ -80,6 +80,13 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="reference_sequence", type="string")
+     */
+    private $referenceSequence;
+
+    /**
      * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade={"persist", "remove"})
      */
     private $statuses;
@@ -247,6 +254,30 @@ class OmicsExperiment
     public function setRequestedEndDate($requestedEndDate)
     {
         $this->requestedEndDate = $requestedEndDate;
+
+        return $this;
+    }
+
+    /**
+     * Get referenceSequence
+     *
+     * @return string
+     */
+    public function getReferenceSequence()
+    {
+        return $this->referenceSequence;
+    }
+
+    /**
+     * Set referenceSequence
+     *
+     * @param string $referenceSequence
+     *
+     * @return OmicsExperiment
+     */
+    public function setReferenceSequence($referenceSequence)
+    {
+        $this->referenceSequence = $referenceSequence;
 
         return $this;
     }

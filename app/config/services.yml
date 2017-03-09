@@ -7,3 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  app.reference_sequence_uploader:
+          class: AppBundle\Uploader\FileUploader
+          arguments: ['%reference_sequences_directory%']
+  app.doctrine_reference_sequence_listener:
+          class: AppBundle\EventListener\ReferenceSequenceUploadListener
+          arguments: ['@app.reference_sequence_uploader']
+          tags:
+              - { name: doctrine.event_listener, event: prePersist }
+              - { name: doctrine.event_listener, event: preUpdate }

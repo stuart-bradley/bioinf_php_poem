@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -24,6 +25,7 @@ class OmicsExperimentType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('questions', TextareaType::class, array('label' => 'Questions to be answered'))
             ->add('requestedEndDate', DateType::class)
+            ->add('referenceSequence', FileType::class, array('label' => 'Reference Sequence'))
             ->add('statuses', CollectionType::class, array(
                 'entry_type' => StatusType::class,
                 'allow_add' => true,

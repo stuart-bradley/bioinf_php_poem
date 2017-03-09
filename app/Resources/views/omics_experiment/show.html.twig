@@ -53,6 +53,13 @@
 
     <div class="row">
         <div class="col-md-12">
+            <strong>Reference Sequence</strong>
+            <p><a href="{{ asset('uploads/reference_sequences/' ~ omics_experiment.referenceSequence) }}">Get Reference Sequence</a></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <h3>Statuses</h3>
             <ul style="list-style-type:none;padding-left:0;" class="col-statuses">
                 {% for status in omics_experiment.statuses %}
