@@ -87,6 +87,14 @@ class OmicsExperiment
     private $uploadedFiles;
 
     /**
+     * @var File
+     *
+     * @ORM\OneToMany(targetEntity="File", mappedBy="omicsExperiment", cascade={"persist", "remove"})
+     *
+     */
+    private $files;
+
+    /**
      * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade={"persist", "remove"})
      */
     private $statuses;
@@ -100,6 +108,7 @@ class OmicsExperiment
     {
         $this->statuses = new ArrayCollection();
         $this->omicsExperimentTypes = new ArrayCollection();
+        $this->files = new ArrayCollection();
         $this->requestedDate = new \DateTime();
         $this->requestedEndDate = new \DateTime();
     }
@@ -352,5 +361,41 @@ class OmicsExperiment
     public function getOmicsExperimentTypes()
     {
         return $this->omicsExperimentTypes;
+    }
+
+    /**
+     * Add file
+     *
+     * @param \AppBundle\Entity\File $file
+     *
+     * @return OmicsExperiment
+     */
+    public function addFile(\AppBundle\Entity\File $file)
+    {
+        $this->files[] = $file;
+        $file->setOmicsExperiment($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \AppBundle\Entity\File $file
+     */
+    public function removeFile(\AppBundle\Entity\File $file)
+    {
+        $this->files->removeElement($file);
+        $file->setOmicsExperiment(null);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }
