@@ -32,7 +32,7 @@ class ReferenceSequenceUploadListener
 
     private function uploadFile($entity)
     {
-        // upload only works for Product entities
+        // upload only works for OmicsExperiment entities
         if (!$entity instanceof OmicsExperiment) {
             return;
         }

@@ -1,18 +1,21 @@
 {# src/AppBundle/Resources/views/omic_experiment/new.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% form_theme form 'omics_experiment/omics_experiment_subfields.html.twig'%}
+{% form_theme form 'omics_experiment/omics_experiment_subfields.html.twig' %}
 
-{%  block body %}
+{% block body %}
     <div id="prototypes">
-        <div id="proto-samples" data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype.samples.vars.prototype)|e }}"></div>
-        <div id="proto-omics_experiment_sub_types" data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype)|e }}"></div>
-        <div id="proto-omics_experiment_types" data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype)|e }}"></div>
+        <div id="proto-samples"
+             data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype.samples.vars.prototype)|e }}"></div>
+        <div id="proto-omics_experiment_sub_types"
+             data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype)|e }}"></div>
+        <div id="proto-omics_experiment_types"
+             data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype)|e }}"></div>
         <div id="proto-statuses" data-prototype="{{ form_row(form.statuses.vars.prototype)|e }}"></div>
     </div>
-    {%  if edit %}
+    {% if edit %}
         <h1> Edit {{ form.vars.value.projectName }} </h1>
-    {%  else %}
+    {% else %}
         <h1>New Omics Experiment</h1>
     {% endif %}
     {{ form_start(form) }}
@@ -22,12 +25,20 @@
     {{ form_row(form.description) }}
     {{ form_row(form.questions) }}
     {{ form_row(form.requestedEndDate) }}
-    {{ form_row(form.referenceSequence) }}
-
+    {% if edit %}
+        {{ form_label(form.referenceSequence) }}
+        {% for seq in form.vars.value.referenceSequence %}
+            <p><a href="{{ asset('uploads/reference_sequences/' ~ seq) }}">{{ seq }}</a></p>
+        {% endfor %}
+        {{ form_errors(form.referenceSequence) }}
+        {{ form_widget(form.referenceSequence) }}
+    {% else %}
+        {{ form_row(form.referenceSequence) }}
+    {% endif %}
     <h3>Statuses</h3>
     <ul style="list-style-type:none;padding-left:0;" class="col-statuses">
         {% for status in form.statuses %}
-                {{ form_row(status) }}
+            {{ form_row(status) }}
         {% endfor %}
     </ul>
     <button type="button" class="btn btn-statuses btn-success">
@@ -39,7 +50,7 @@
         {% for omics_experiment_type in form.omicsExperimentTypes %}
             <li class="panel panel-body panel-default">
                 {{ form_row(omics_experiment_type.omicsExperimentTypeString) }}
-            <ul style="list-style-type:none;" class="col-omics_experiment_sub_types">
+                <ul style="list-style-type:none;" class="col-omics_experiment_sub_types">
                     {% for omics_experiment_sub_type in omics_experiment_type.omicsExperimentSubTypes %}
                         <li class="panel panel-body panel-default">
                             {{ form_row(omics_experiment_sub_type.omicsExperimentSubTypeString) }}
@@ -80,17 +91,18 @@
     </button><br><br>
     {% if edit %}
         {{ form_widget(form.save, { 'label': 'Edit Experiment' }) }}
-        <a href="{{ path('omics_experiment_delete', {'id': form.vars.value.id}) }}" class="btn btn-default"  onclick="return confirm('Are you sure you want to delete {{ form.vars.value.projectName }}?')">Delete</a>
+        <a href="{{ path('omics_experiment_delete', {'id': form.vars.value.id}) }}" class="btn btn-default"
+           onclick="return confirm('Are you sure you want to delete {{ form.vars.value.projectName }}?')">Delete</a>
     {% else %}
         {{ form_widget(form.save, { 'label': 'Create Experiment' }) }}
     {% endif %}
     <div style="display: none;">{{ form_rest(form) }}</div>
-    {{ form_end(form)}}
+    {{ form_end(form) }}
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        new FormCollections(['statuses','omics_experiment_types','omics_experiment_sub_types','samples']);
-        new ExpSubTypeSelectionUpdater({{ select_relations|json_encode()|raw }});
-    </script>
-{%  endblock %}
+        {% block javascripts %}
+            {{ parent() }}
+            <script type="text/javascript">
+                new FormCollections(['statuses', 'omics_experiment_types', 'omics_experiment_sub_types', 'samples']);
+                new ExpSubTypeSelectionUpdater({{ select_relations|json_encode()|raw }});
+            </script>
+        {% endblock %}
