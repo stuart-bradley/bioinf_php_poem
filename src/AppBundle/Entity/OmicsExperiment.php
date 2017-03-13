@@ -261,7 +261,7 @@ class OmicsExperiment
     /**
      * Get referenceSequence
      *
-     * @return string
+     * @return array
      */
     public function getReferenceSequence()
     {
@@ -271,7 +271,7 @@ class OmicsExperiment
     /**
      * Set referenceSequence
      *
-     * @param string $referenceSequence
+     * @param array $referenceSequence
      *
      * @return OmicsExperiment
      */
