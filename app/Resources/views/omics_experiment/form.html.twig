@@ -27,8 +27,8 @@
     {{ form_row(form.requestedEndDate) }}
     {% if edit %}
         {{ form_label(form.uploadedFiles) }}
-        {% for seq in form.vars.value.uploadedFiles %}
-            <p><a href="{{ asset('uploads/omics_experiments/' ~ seq) }}">{{ seq }}</a></p>
+        {% for seq in form.vars.value.files %}
+            <p><a href="{{ asset('uploads/omics_experiments/' ~ seq.path) }}">{{ seq.name }}</a></p>
         {% endfor %}
         {{ form_errors(form.uploadedFiles) }}
         {{ form_widget(form.uploadedFiles) }}

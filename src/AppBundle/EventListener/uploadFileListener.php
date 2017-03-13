@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use AppBundle\Entity\OmicsExperiment;
+use AppBundle\Entity\File;
 use AppBundle\Uploader\FileUploader;
 
 class uploadFileListener
@@ -37,17 +38,24 @@ class uploadFileListener
             return;
         }
 
-        $files = $entity->getUploadedFiles();
+        foreach($entity->getUploadedFiles() as $uploadedFile)
+        {
+            $file = new File();
 
-        $base_array = [];
+            /*
+             * These lines could be moved to the File Class constructor to factorize
+             * the File initialization and thus allow other classes to own Files
+             */
+            $path = sha1(uniqid(mt_rand(), true)).'-'.$uploadedFile->getClientOriginalName();
+            $file->setPath($path);
+            $file->setSize($uploadedFile->getClientSize());
+            $file->setName($uploadedFile->getClientOriginalName());
 
-        foreach ($files as $f) {
-            dump($f);
-            $fileName = $this->uploader->upload($f);
-            array_push ($base_array, $fileName);
-            unset($f);
+            $this->uploader->upload($uploadedFile, $path);
+
+            $entity->addFile($file);
+
+            unset($uploadedFile);
         }
-        $entity->setUploadedFiles($base_array);
-
     }
 }

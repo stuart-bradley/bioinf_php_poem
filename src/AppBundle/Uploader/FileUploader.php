@@ -13,13 +13,9 @@ class FileUploader
         $this->targetDir = $targetDir;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file, $path)
     {
-        $fileName = $file->getClientOriginalName();
-
-        $file->move($this->targetDir, $fileName);
-
-        return $fileName;
+        $file->move($this->targetDir, $path);
     }
 
     public function getTargetDir()

@@ -80,9 +80,8 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
-     * @var array
+     * @var ArrayCollection
      *
-     * @ORM\Column(name="uploaded_files", type="array")
      */
     private $uploadedFiles;
 
