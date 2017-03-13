@@ -26,14 +26,14 @@
     {{ form_row(form.questions) }}
     {{ form_row(form.requestedEndDate) }}
     {% if edit %}
-        {{ form_label(form.referenceSequence) }}
-        {% for seq in form.vars.value.referenceSequence %}
-            <p><a href="{{ asset('uploads/reference_sequences/' ~ seq) }}">{{ seq }}</a></p>
+        {{ form_label(form.uploadedFiles) }}
+        {% for seq in form.vars.value.uploadedFiles %}
+            <p><a href="{{ asset('uploads/omics_experiments/' ~ seq) }}">{{ seq }}</a></p>
         {% endfor %}
-        {{ form_errors(form.referenceSequence) }}
-        {{ form_widget(form.referenceSequence) }}
+        {{ form_errors(form.uploadedFiles) }}
+        {{ form_widget(form.uploadedFiles) }}
     {% else %}
-        {{ form_row(form.referenceSequence) }}
+        {{ form_row(form.uploadedFiles) }}
     {% endif %}
     <h3>Statuses</h3>
     <ul style="list-style-type:none;padding-left:0;" class="col-statuses">

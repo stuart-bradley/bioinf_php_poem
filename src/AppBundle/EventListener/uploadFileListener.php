@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/EventListener/ReferenceSequenceUploadListener.php
+// src/AppBundle/EventListener/uploadFileListener.php
 namespace AppBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -8,7 +8,7 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use AppBundle\Entity\OmicsExperiment;
 use AppBundle\Uploader\FileUploader;
 
-class ReferenceSequenceUploadListener
+class uploadFileListener
 {
     private $uploader;
 
@@ -37,7 +37,7 @@ class ReferenceSequenceUploadListener
             return;
         }
 
-        $files = $entity->getReferenceSequence();
+        $files = $entity->getUploadedFiles();
 
         $base_array = [];
 
@@ -47,7 +47,7 @@ class ReferenceSequenceUploadListener
             array_push ($base_array, $fileName);
             unset($f);
         }
-        $entity->setReferenceSequence($base_array);
+        $entity->setUploadedFiles($base_array);
 
     }
 }

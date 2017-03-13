@@ -82,9 +82,9 @@ class OmicsExperiment
     /**
      * @var array
      *
-     * @ORM\Column(name="reference_sequence", type="array")
+     * @ORM\Column(name="uploaded_files", type="array")
      */
-    private $referenceSequence;
+    private $uploadedFiles;
 
     /**
      * @ORM\OneToMany(targetEntity="Status", mappedBy="omicsExperiment", cascade={"persist", "remove"})
@@ -259,25 +259,25 @@ class OmicsExperiment
     }
 
     /**
-     * Get referenceSequence
+     * Get uploadedFiles
      *
      * @return array
      */
-    public function getReferenceSequence()
+    public function getUploadedFiles()
     {
-        return $this->referenceSequence;
+        return $this->uploadedFiles;
     }
 
     /**
-     * Set referenceSequence
+     * Set uploadedFiles
      *
-     * @param array $referenceSequence
+     * @param array $uploadedFiles
      *
      * @return OmicsExperiment
      */
-    public function setReferenceSequence($referenceSequence)
+    public function setUploadedFiles($uploadedFiles)
     {
-        $this->referenceSequence = $referenceSequence;
+        $this->uploadedFiles = $uploadedFiles;
 
         return $this;
     }
