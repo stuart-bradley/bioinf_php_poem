@@ -30,7 +30,10 @@
     <h3>Files</h3>
     <ul style="list-style-type:none;padding-left:0;" class="col-files">
         {% for file in form.files %}
-            {{ form_row(file) }}
+        <li class="panel panel-body panel-default">
+            <p><a href="{{ asset('uploads/omics_experiments/' ~ file.vars.value.path) }}">{{ file.vars.value.name }}</a></p>
+            {{ form_widget(file.file , { 'attr': {'style': 'display: none;'} }) }}
+        </li>
         {% endfor %}
     </ul>
     <button type="button" class="btn btn-files btn-success">
