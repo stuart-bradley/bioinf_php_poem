@@ -25,7 +25,14 @@ class OmicsExperimentType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('questions', TextareaType::class, array('label' => 'Questions to be answered'))
             ->add('requestedEndDate', DateType::class)
-            ->add('uploadedFiles', FileType::class, array('label' => 'Reference Sequence', 'multiple' => true))
+            ->add('files', CollectionType::class, array(
+                'entry_type' => DataFileType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+                'prototype_name' => '__file_prot__',
+                'constraints' => new Valid()))
             ->add('statuses', CollectionType::class, array(
                 'entry_type' => StatusType::class,
                 'allow_add' => true,

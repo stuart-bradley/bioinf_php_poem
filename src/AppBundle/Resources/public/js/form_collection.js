@@ -2,7 +2,8 @@ function FormCollections(collection_classes) {
 
     // Button prototypes.
     self.prototype_buttons = {};
-    self.prototype_buttons['statuses'] = '<button type="button" class="btn btn-statuses btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Status </button>'
+    self.prototype_buttons['files'] = '<button type="button" class="btn btn-statuses btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Status </button>'
+    self.prototype_buttons['statuses'] = '<button type="button" class="btn btn-files btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add File </button>'
     self.prototype_buttons['omics_experiment_types'] = '<button type="button" class="btn btn-omics_experiment_types btn-success btn-recursive"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Type </button>'
     self.prototype_buttons['omics_experiment_sub_types'] = '<button type="button" class="btn btn-omics_experiment_sub_types btn-success btn-recursive"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Experiment Sub-Type </button>'
     self.prototype_buttons['samples'] = '<button type="button" class="btn btn-samples btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sample </button>'
@@ -16,13 +17,6 @@ function FormCollections(collection_classes) {
     self.ul_classes = {};
     self.ul_classes['omics_experiment_sub_types'] = '<ul style="list-style-type: none;" class="col-omics_experiment_sub_types"></ul>';
     self.ul_classes['samples'] = '<ul style="list-style-type: none;" class="col-samples"></ul>';
-
-    self.prototype_names = {};
-    self.prototype_names['statuses'] = 'status';
-    self.prototype_names['omics_experiment_types'] = 'exptype';
-    self.prototype_names['omics_experiment_sub_types'] = 'expsubtype';
-    self.prototype_names['samples'] = 'samples';
-
 
     self.construct = function () {
         $.each(collection_classes, function (i, val) {
@@ -69,7 +63,7 @@ function FormCollections(collection_classes) {
             nested_ul.data('index', parent_ul.data('index'));
             newForm.append(nested_ul);
             var new_button = $(self.prototype_buttons[nested_name]);
-            $(new_button).data('index',0);
+            $(new_button).data('index', 0);
             new_button.on("click", function (e) {
                 // Recursive call.
                 self.addNew(new_button, nested_ul, nested_name);
@@ -110,6 +104,13 @@ function FormCollections(collection_classes) {
 
         if (div_name == "statuses") {
             find = '__' + 'status' + '_prot__';
+            re = new RegExp(find, 'g');
+            curr_index = $(button).data('index');
+            newForm = newForm.replace(re, curr_index);
+            $(button).data('index', $(button).data('index') + 1);
+            return $(newForm);
+        } else if (div_name == "files") {
+            find = '__' + 'file' + '_prot__';
             re = new RegExp(find, 'g');
             curr_index = $(button).data('index');
             newForm = newForm.replace(re, curr_index);

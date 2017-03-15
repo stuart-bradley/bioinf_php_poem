@@ -128,6 +128,30 @@ class File
     }
 
     /**
+     * Get file
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Set size
+     *
+     * @param UploadedFile $file
+     *
+     * @return File
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
      * Get size
      *
      * @return integer

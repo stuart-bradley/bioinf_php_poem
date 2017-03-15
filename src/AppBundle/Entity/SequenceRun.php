@@ -24,6 +24,13 @@ class SequenceRun
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="update_flag", type="integer")
+     */
+    private $updateFlag;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="run_by", type="string")
@@ -93,6 +100,7 @@ class SequenceRun
 
     public function __construct()
     {
+        $this->updateFlag = 0;
         $this->samples = new ArrayCollection();
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
@@ -107,6 +115,30 @@ class SequenceRun
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get update_flag
+     *
+     * @return integer
+     */
+    public function getUpdateFlag()
+    {
+        return $this->updateFlag;
+    }
+
+    /**
+     * Set updateFlag
+     *
+     * @param integer $updateFlag
+     *
+     * @return OmicsExperiment
+     */
+    public function setUpdateFlag($updateFlag)
+    {
+        $this->updateFlag = $updateFlag;
+
+        return $this;
     }
 
     /**
