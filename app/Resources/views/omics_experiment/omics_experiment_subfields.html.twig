@@ -4,7 +4,13 @@
     <li class="panel panel-body panel-default">
             {{ form_row(form.statusString) }}
             {{ form_row(form.date) }}
-        </li>
+    </li>
+{% endblock %}
+
+{% block _omics_experiment_files_entry_row %}
+    <li class="panel panel-body panel-default">
+        {{ form_row(form.file) }}
+    </li>
 {% endblock %}
 
 {% block _omics_experiment_omicsExperimentTypes_entry_row %}

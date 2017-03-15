@@ -13,49 +13,41 @@ class uploadFileListener
 {
     private $uploader;
 
-    public function __construct(FileUploader $uploader)
+    public function __construct(FileUploader $uploader, $logger)
     {
         $this->uploader = $uploader;
+        $this->logger = $logger;
     }
 
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+        $this->logger->info('persist');
         $this->uploadFile($entity);
     }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
-
         $this->uploadFile($entity);
+
+        $this->logger->info('update');
     }
 
     private function uploadFile($entity)
     {
         // upload only works for OmicsExperiment entities
-        if (!$entity instanceof OmicsExperiment) {
+        if (!$entity instanceof File) {
             return;
         }
 
-        foreach($entity->getUploadedFiles() as $uploadedFile)
-        {
-            $file = new File();
+        $uploadedFile = $entity->getFile();
 
-            /*
-             * These lines could be moved to the File Class constructor to factorize
-             * the File initialization and thus allow other classes to own Files
-             */
+        if ($uploadedFile != null) {
             $path = sha1(uniqid(mt_rand(), true)).'-'.$uploadedFile->getClientOriginalName();
-            $file->setPath($path);
-            $file->setSize($uploadedFile->getClientSize());
-            $file->setName($uploadedFile->getClientOriginalName());
-
-            $this->uploader->upload($uploadedFile, $path);
-
-            $entity->addFile($file);
-
-            unset($uploadedFile);
+            $entity->setPath($path);
+            $entity->setSize($uploadedFile->getClientSize());
+            $entity->setName($uploadedFile->getClientOriginalName());
         }
     }
 }

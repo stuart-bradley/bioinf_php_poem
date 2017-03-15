@@ -80,12 +80,6 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
-     * @var ArrayCollection
-     *
-     */
-    private $uploadedFiles;
-
-    /**
      * @var File
      *
      * @ORM\OneToMany(targetEntity="File", mappedBy="omicsExperiment", cascade={"persist", "remove"})
@@ -262,30 +256,6 @@ class OmicsExperiment
     public function setRequestedEndDate($requestedEndDate)
     {
         $this->requestedEndDate = $requestedEndDate;
-
-        return $this;
-    }
-
-    /**
-     * Get uploadedFiles
-     *
-     * @return array
-     */
-    public function getUploadedFiles()
-    {
-        return $this->uploadedFiles;
-    }
-
-    /**
-     * Set uploadedFiles
-     *
-     * @param array $uploadedFiles
-     *
-     * @return OmicsExperiment
-     */
-    public function setUploadedFiles($uploadedFiles)
-    {
-        $this->uploadedFiles = $uploadedFiles;
 
         return $this;
     }
