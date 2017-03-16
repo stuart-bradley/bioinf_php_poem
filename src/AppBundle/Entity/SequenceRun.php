@@ -24,13 +24,6 @@ class SequenceRun
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="update_flag", type="integer")
-     */
-    private $updateFlag;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="run_by", type="string")
@@ -94,14 +87,22 @@ class SequenceRun
     private $readLength;
 
     /**
+     * @var File
+     *
+     * @ORM\OneToMany(targetEntity="File", mappedBy="sequenceRun", cascade={"persist", "remove"})
+     *
+     */
+    private $files;
+
+    /**
      * @ORM\OneToMany(targetEntity="Sample", mappedBy="sequenceRun", cascade={"persist", "remove"})
      */
     private $samples;
 
     public function __construct()
     {
-        $this->updateFlag = 0;
         $this->samples = new ArrayCollection();
+        $this->files = new ArrayCollection();
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
     }
@@ -115,30 +116,6 @@ class SequenceRun
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get update_flag
-     *
-     * @return integer
-     */
-    public function getUpdateFlag()
-    {
-        return $this->updateFlag;
-    }
-
-    /**
-     * Set updateFlag
-     *
-     * @param integer $updateFlag
-     *
-     * @return OmicsExperiment
-     */
-    public function setUpdateFlag($updateFlag)
-    {
-        $this->updateFlag = $updateFlag;
-
-        return $this;
     }
 
     /**
@@ -343,5 +320,41 @@ class SequenceRun
         $this->materialTypeString = $materialTypeString;
 
         return $this;
+    }
+
+    /**
+     * Add file
+     *
+     * @param \AppBundle\Entity\File $file
+     *
+     * @return SequenceRun
+     */
+    public function addFile(\AppBundle\Entity\File $file)
+    {
+        $this->files[] = $file;
+        $file->setSequenceRun($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \AppBundle\Entity\File $file
+     */
+    public function removeFile(\AppBundle\Entity\File $file)
+    {
+        $this->files->removeElement($file);
+        $file->setSequenceRun(null);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }

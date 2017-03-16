@@ -56,6 +56,12 @@ class File
     private $omicsExperiment;
 
     /**
+     * @ORM\ManyToOne(targetEntity="SequenceRun", inversedBy="files")
+     * @ORM\JoinColumn(name="sequence_run_id", referencedColumnName="id")
+     **/
+    private $sequenceRun;
+
+    /**
      * Get id
      *
      * @return integer
@@ -183,5 +189,29 @@ class File
     public function getOmicsExperiment()
     {
         return $this->omicsExperiment;
+    }
+
+    /**
+     * Set sequenceRun
+     *
+     * @param \AppBundle\Entity\SequenceRun $sequenceRun
+     *
+     * @return File
+     */
+    public function setSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun = null)
+    {
+        $this->sequenceRun = $sequenceRun;
+
+        return $this;
+    }
+
+    /**
+     * Get sequenceRun
+     *
+     * @return \AppBundle\Entity\SequenceRun
+     */
+    public function getSequenceRun()
+    {
+        return $this->sequenceRun;
     }
 }

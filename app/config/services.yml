@@ -7,12 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-  app.omics_experiment_uploader:
+  app.file_uploader:
           class: AppBundle\Uploader\FileUploader
-          arguments: ['%omics_experiment_directory%']
+          arguments: ['%file_directory%']
   app.doctrine_reference_sequence_listener:
           class: AppBundle\EventListener\uploadFileListener
-          arguments: ['@app.omics_experiment_uploader', '@logger']
+          arguments: ['@app.file_uploader', '@logger']
           tags:
               - { name: doctrine.event_listener, event: prePersist }
               - { name: doctrine.event_listener, event: preUpdate }

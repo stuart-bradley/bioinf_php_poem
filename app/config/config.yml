@@ -7,7 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    omics_experiment_directory: '%kernel.root_dir%/../web/uploads/omics_experiments'
+    file_directory: '%kernel.root_dir%/../web/uploads'
 
 framework:
     #esi:             ~
@@ -46,7 +46,7 @@ doctrine:
         driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"
-        dbname:   "%database_name%"
+        dbname:   "%database_name_dev%"
         user:     "%database_user%"
         password: "%database_password%"
         charset:  utf8mb4

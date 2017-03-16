@@ -60,6 +60,23 @@
 
     <div class="row">
         <div class="col-md-12">
+            <h3>Files</h3>
+            <ul style="list-style-type:none;padding-left:0;" class="col-files">
+                {% for file in sequence_run.files %}
+                    <li class="panel panel-body panel-default">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <h3>Samples</h3>
             <ul style="list-style-type:none;padding-left:0;" class="col-samples">
                 {% for sample in sequence_run.samples %}
