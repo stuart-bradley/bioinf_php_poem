@@ -1,7 +1,21 @@
+/*
+ * ExpSubTypeSelectionUpdater
+ * Stuart Bradley
+ * 2017-03-19
+ *
+ * Changes omicsExperimentSubTypes based on the
+ * parent omicsExperimentType value.
+ */
 function ExpSubTypeSelectionUpdater(selection_relations) {
+    /*
+     * Creates on change events for all omicsExperimentType
+     * changes (even ones added later).
+     */
     self.construct = function () {
+        var omics_experiment_selector = $('ul.col-omics_experiment_types');
         // Monitors experiment_type selects for change.
-        $('ul.col-omics_experiment_types').on('change', 'select[id$="omicsExperimentTypeString"]', function (e) {
+        // on selector allows for selectors to be added without adding new events.
+        omics_experiment_selector.on('change', 'select[id$="omicsExperimentTypeString"]', function (e) {
             self.modify(e.target);
         });
 
@@ -10,6 +24,7 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
             mutations.forEach(function(mutation) {
                 var nodes = mutation.addedNodes[0];
                 var sub_type_select = $(nodes).find("select[id$='omicsExperimentSubTypeString']");
+                // Checks if added node is a sub_type.
                 if ($(sub_type_select).length) {
                     var sub_type_select_id = $(sub_type_select).attr('id').match(/^omics_experiment_omicsExperimentTypes_(\d+)/)[1];
                     var type_select = $('select#omics_experiment_omicsExperimentTypes_' + sub_type_select_id + '_omicsExperimentTypeString');
@@ -25,9 +40,12 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
             childList: true
         };
 
-        observer.observe($('ul.col-omics_experiment_types')[0], observerConfig);
+        observer.observe(omics_experiment_selector[0], observerConfig);
     };
 
+    /*
+     * Finds parent value and passes it to the update method.
+     */
     self.modify = function(selector) {
         var frame = $('ul.col-omics_experiment_types');
         var parent_val = $("option:selected", selector).text();
@@ -38,6 +56,9 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
         });
     };
 
+    /*
+     * Takes parent value, and finds correct options before revealing them in list.
+     */
     self.update_child = function(child_selector, parent_val) {
         // Hides ALL options.
         $(child_selector).children('option').hide();
