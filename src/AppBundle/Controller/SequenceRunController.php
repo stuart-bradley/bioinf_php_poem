@@ -35,7 +35,7 @@ class SequenceRunController extends Controller {
         $form->handleRequest($request);
 
         // On submission.
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $em->persist($sequence_run);
             $em->flush();
             return $this->redirectToRoute('sequence_run_index');
@@ -68,7 +68,7 @@ class SequenceRunController extends Controller {
         $form->handleRequest($request);
 
         // On submission.
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             $em->persist($sequence_run);
             $em->flush();
             return $this->redirectToRoute('sequence_run_index');
