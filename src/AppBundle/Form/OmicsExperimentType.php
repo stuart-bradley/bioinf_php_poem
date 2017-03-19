@@ -22,8 +22,8 @@ class OmicsExperimentType extends AbstractType
             // Needs to be changed to EntityType when Users are added.
             ->add('requestedBy', TextType::class)
             ->add('requestedDate', DateType::class)
-            ->add('description', TextareaType::class)
-            ->add('questions', TextareaType::class, array('label' => 'Questions to be answered'))
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'summernote')))
+            ->add('questions', TextareaType::class, array('label' => 'Questions to be answered', 'attr' => array('class' => 'summernote')))
             ->add('requestedEndDate', DateType::class)
             ->add('files', CollectionType::class, array(
                 'entry_type' => DataFileType::class,

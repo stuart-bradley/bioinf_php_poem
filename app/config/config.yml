@@ -114,6 +114,37 @@ assetic:
             form_collection:
                 inputs:
                   - %kernel.root_dir%/../src/AppBundle/Resources/public/js/form_collection.js
+                output: "js/form_collection.js"
             exp_sub_type_selection_updater:
                 inputs:
                   - %kernel.root_dir%/../src/AppBundle/Resources/public/js/exp_sub_type_selection_updater.js
+                output: "js/exp_sub_type_selection_updater.js"
+
+            summernote_css:
+                inputs:
+                  - %kernel.root_dir%/../src/AppBundle/Resources/public/css/summernote.css
+                output: "css/summernote.css"
+                filters: [cssrewrite]
+            summernote_js:
+                inputs:
+                  - %kernel.root_dir%/../src/AppBundle/Resources/public/js/summernote.min.js
+                output: "js/summernote.js"
+            summernote_config_js:
+                inputs:
+                  - %kernel.root_dir%/../src/AppBundle/Resources/public/js/summernote_config.js
+                output: "js/summernote_config.js"
+            summernote_eot:
+                inputs:
+                  - %kernel.root_dir%/../src/AppBundle/Resources/public/fonts/summernote.eot
+                output: "font/summernote.eot"
+            summernote_ttf:
+                inputs:
+                  - %kernel.root_dir%/../src/AppBundle/Resources/public/fonts/summernote.ttf
+                output: "font/summernote.ttf"
+            summernote_woff:
+                inputs:
+                  - %kernel.root_dir%/../src/AppBundle/Resources/public/fonts/summernote.woff
+                output: "font/summernote.woff"
+
+
+
