@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets '@bootstrap_css' filter='cssrewrite' %}
+            {% stylesheets filter='cssrewrite' '@bootstrap_css' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
@@ -25,8 +25,8 @@
             {% javascripts
                 '@jquery'
                 '@bootstrap_js'
-                '@AppBundle/Resources/public/js/form_collection.js'
-                '@AppBundle/Resources/public/js/exp_sub_type_selection_updater.js'%}
+            '@form_collection'
+            '@exp_sub_type_selection_updater' %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
