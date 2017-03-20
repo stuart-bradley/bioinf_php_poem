@@ -6,6 +6,7 @@
 {% block body %}
     <div id="prototypes">
         <div id="proto-samples" data-prototype="{{ form_row(form.samples.vars.prototype)|e }}"></div>
+        <div id="proto-files" data-prototype="{{ form_row(form.files.vars.prototype)|e }}"></div>
     </div>
     {% if edit %}
         <h1> Edit Sequence Run ({{ form.vars.value.id }}) </h1>
@@ -20,6 +21,19 @@
     {{ form_row(form.materialTypeString) }}
     {{ form_row(form.runCoverageTarget) }}
     {{ form_row(form.readLength) }}
+
+    <h3>Files</h3>
+    <ul style="list-style-type:none;padding-left:0;" class="col-files">
+        {% for file in form.files %}
+            <li class="panel panel-body panel-default">
+                <p><a href="{{ asset('uploads/' ~ file.vars.value.path) }}">{{ file.vars.value.name }}</a></p>
+                {{ form_widget(file.file , { 'attr': {'style': 'display: none;'} }) }}
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="button" class="btn btn-files btn-success">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add File
+    </button>
 
     <h3>Samples</h3>
     <ul style="list-style-type:none;padding-left:0;" class="col-samples">
@@ -55,6 +69,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        new FormCollections(['samples']);
+        new FormCollections(['samples', 'files']);
     </script>
 {% endblock %}

@@ -33,6 +33,14 @@ class SequenceRunType extends AbstractType
                 'label' => 'Material type'))
             ->add('runCoverageTarget', IntegerType::class)
             ->add('readLength', IntegerType::class)
+            ->add('files', CollectionType::class, array(
+                'entry_type' => DataFileType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+                'prototype_name' => '__file_prot__',
+                'constraints' => new Valid()))
             ->add('samples', CollectionType::class, array(
                 'entry_type' => SampleType::class,
                 'allow_add' => true,

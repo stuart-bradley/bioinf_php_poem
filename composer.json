@@ -31,8 +31,7 @@
     "incenteev/composer-parameter-handler": "^2.0",
     "doctrine/doctrine-fixtures-bundle": "2.3.0",
     "symfony/assetic-bundle": "v2.8.0",
-    "components/jquery": "3.1.1",
-    "twbs/bootstrap": "^3.3"
+    "components/jquery": "3.1.1"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

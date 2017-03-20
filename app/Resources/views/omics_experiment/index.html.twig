@@ -28,7 +28,7 @@
                         {{exp.projectName}}
                     </td>
                     <td>
-                        {{ exp.description }}
+                        {{ exp.description | raw }}
                     </td>
                     <td align="center" valign="middle" style="width:10%">
                         <a href="{{ path('omics_experiment_show', {'id': exp.id}) }}" class="btn btn-default">Show</a>
