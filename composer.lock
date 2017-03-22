@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7dfcabac79217e76943f830ec3fdbffb",
-    "content-hash": "5ef3d1e28492b31edb97493056152507",
+    "hash": "7ad7516551b08f103ad3d86ab6849fc1",
+    "content-hash": "cf63990e4862e15a5fa24768d20a3784",
     "packages": [
         {
             "name": "components/jquery",
@@ -2285,16 +2285,16 @@
     "packages-dev": [
         {
             "name": "liip/functional-test-bundle",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipFunctionalTestBundle.git",
-                "reference": "8466b71c7a923295c3045b257efb53015f432ff5"
+                "reference": "be78ee4cd9289e61e57d237f9c4053ded9033760"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/8466b71c7a923295c3045b257efb53015f432ff5",
-                "reference": "8466b71c7a923295c3045b257efb53015f432ff5",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/be78ee4cd9289e61e57d237f9c4053ded9033760",
+                "reference": "be78ee4cd9289e61e57d237f9c4053ded9033760",
                 "shasum": ""
             },
             "require": {
@@ -2359,7 +2359,7 @@
             "keywords": [
                 "Symfony2"
             ],
-            "time": "2017-01-11 18:04:59"
+            "time": "2017-03-20 16:05:12"
         },
         {
             "name": "myclabs/deep-copy",

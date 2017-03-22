@@ -55,15 +55,16 @@
         <div class="col-md-12">
             <h3>Files</h3>
             <ul style="list-style-type:none;padding-left:0;" class="col-files">
+                <li class="panel panel-body panel-default">
                 {% for file in omics_experiment.files %}
-                    <li class="panel panel-body panel-default">
+
                         <div class="row">
                             <div class="col-md-12">
                                 <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
                             </div>
                         </div>
-                    </li>
                 {% endfor %}
+                </li>
             </ul>
         </div>
     </div>
@@ -194,7 +195,9 @@
     </div>
 
     <a href="{{ path('omics_experiment_edit', {'id': omics_experiment.id}) }}" class="btn btn-default">Edit</a>
+    <a href="{{ path('omics_experiment_index') }}" class="btn btn-default">Back</a>
     <a href="{{ path('omics_experiment_delete', {'id': omics_experiment.id}) }}" class="btn btn-default"
-       onclick="return confirm('Are you sure you want to delete {{ omics_experiment.projectName }}?')">Delete</a>
+       onclick="return confirm('Are you sure you want to delete {{ omics_experiment.id }}?')">Delete</a>
+
 
 {% endblock %}

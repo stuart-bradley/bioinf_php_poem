@@ -62,15 +62,15 @@
         <div class="col-md-12">
             <h3>Files</h3>
             <ul style="list-style-type:none;padding-left:0;" class="col-files">
+                <li class="panel panel-body panel-default">
                 {% for file in sequence_run.files %}
-                    <li class="panel panel-body panel-default">
                         <div class="row">
                             <div class="col-md-12">
                                 <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
                             </div>
                         </div>
-                    </li>
                 {% endfor %}
+                </li>
             </ul>
         </div>
     </div>
@@ -142,6 +142,7 @@
 
 
     <a href="{{ path('sequence_run_edit', {'id': sequence_run.id}) }}" class="btn btn-default">Edit</a>
+    <a href="{{ path('sequence_run_index') }}" class="btn btn-default">Back</a>
     <a href="{{ path('sequence_run_delete', {'id': sequence_run.id}) }}" class="btn btn-default"
        onclick="return confirm('Are you sure you want to delete {{ sequence_run.id }}?')">Delete</a>
 
