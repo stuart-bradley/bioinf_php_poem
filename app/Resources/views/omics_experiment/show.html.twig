@@ -51,148 +51,154 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Files</h3>
-            <ul style="list-style-type:none;padding-left:0;" class="col-files">
-                <li class="panel panel-body panel-default">
-                {% for file in omics_experiment.files %}
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
-                            </div>
-                        </div>
-                {% endfor %}
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Statuses</h3>
-            <ul style="list-style-type:none;padding-left:0;" class="col-statuses">
-                {% for status in omics_experiment.statuses %}
+    {% if omics_experiment.files is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Files</h3>
+                <ul style="list-style-type:none;padding-left:0;" class="col-files">
                     <li class="panel panel-body panel-default">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Status</strong>
-                                <p>{{ status.statusString.type }}</p>
-                            </div>
-                        </div>
+                        {% for file in omics_experiment.files %}
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Date</strong>
-                                <p>{{ status.date|date('Y-m-d') }}</p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
+                                </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </li>
-                {% endfor %}
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Omics Experiment Types</h3>
-            <ul style="list-style-type:none;padding-left:0;" class="col-omics_experiment_types">
-                {% for omics_experiment_type in omics_experiment.omicsExperimentTypes %}
-                    <li class="panel panel-body panel-default">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Experiment type</strong>
-                                <p>{{ omics_experiment_type.omicsExperimentTypeString.type }}</p>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <ul style="list-style-type:none;padding-left:0;"
-                                            class="col-omics_experiment_sub_types">
-                                            {% for omics_experiment_sub_type in omics_experiment_type.omicsExperimentSubTypes %}
-                                                <li class="panel panel-body panel-default">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <strong>Experiment sub-type</strong>
-                                                            <p>{{ omics_experiment_sub_type.omicsExperimentSubTypeString.type }}</p>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <ul style="list-style-type:none;padding-left:0;"
-                                                                        class="col-samples">
-                                                                        {% for sample in omics_experiment_sub_type.samples %}
-                                                                            <li class="panel panel-body panel-default">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <strong>BioControl
-                                                                                            experiment
-                                                                                            ID</strong>
-                                                                                        <p>{{ sample.BCExperimentID }}</p>
+    {% if omics_experiment.statuses is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Statuses</h3>
+                <ul style="list-style-type:none;padding-left:0;" class="col-statuses">
+                    {% for status in omics_experiment.statuses %}
+                        <li class="panel panel-body panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Status</strong>
+                                    <p>{{ status.statusString.type }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Date</strong>
+                                    <p>{{ status.date|date('Y-m-d') }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if omics_experiment.omicsExperimentTypes is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Omics Experiment Types</h3>
+                <ul style="list-style-type:none;padding-left:0;" class="col-omics_experiment_types">
+                    {% for omics_experiment_type in omics_experiment.omicsExperimentTypes %}
+                        <li class="panel panel-body panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Experiment type</strong>
+                                    <p>{{ omics_experiment_type.omicsExperimentTypeString.type }}</p>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul style="list-style-type:none;padding-left:0;"
+                                                class="col-omics_experiment_sub_types">
+                                                {% for omics_experiment_sub_type in omics_experiment_type.omicsExperimentSubTypes %}
+                                                    <li class="panel panel-body panel-default">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <strong>Experiment sub-type</strong>
+                                                                <p>{{ omics_experiment_sub_type.omicsExperimentSubTypeString.type }}</p>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <ul style="list-style-type:none;padding-left:0;"
+                                                                            class="col-samples">
+                                                                            {% for sample in omics_experiment_sub_type.samples %}
+                                                                                <li class="panel panel-body panel-default">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>BioControl
+                                                                                                experiment
+                                                                                                ID</strong>
+                                                                                            <p>{{ sample.BCExperimentID }}</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <strong>BioControl sample
-                                                                                            ID</strong>
-                                                                                        <p>{{ sample.BCSampleID }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>BioControl sample
+                                                                                                ID</strong>
+                                                                                            <p>{{ sample.BCSampleID }}</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <strong>BioControl run
-                                                                                            ID</strong>
-                                                                                        <p>{{ sample.BCRunID }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>BioControl run
+                                                                                                ID</strong>
+                                                                                            <p>{{ sample.BCRunID }}</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <strong>Sampled date
-                                                                                            time</strong>
-                                                                                        <p>{{ sample.sampledDateTime|date('Y-m-d H:i:s') }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>Sampled date
+                                                                                                time</strong>
+                                                                                            <p>{{ sample.sampledDateTime|date('Y-m-d H:i:s') }}</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <strong>Sampled by</strong>
-                                                                                        <p>{{ sample.sampledBy }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>Sampled by</strong>
+                                                                                            <p>{{ sample.sampledBy }}</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <strong>Treated?</strong>
-                                                                                        <p>
-                                                                                            {% if sample.RNALaterTreated is empty %}
-                                                                                                False
-                                                                                            {% else %}
-                                                                                                True
-                                                                                            {% endif %}
-                                                                                        </p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>Treated?</strong>
+                                                                                            <p>
+                                                                                                {% if sample.RNALaterTreated is empty %}
+                                                                                                    False
+                                                                                                {% else %}
+                                                                                                    True
+                                                                                                {% endif %}
+                                                                                            </p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <strong>Material type
-                                                                                            string</strong>
-                                                                                        <p>{{ sample.materialTypeString.type }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>Material type
+                                                                                                string</strong>
+                                                                                            <p>{{ sample.materialTypeString.type }}</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </li>
-                                                                        {% endfor %}
-                                                                    </ul>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <a href="{{ path('omics_experiment_edit', {'id': omics_experiment.id}) }}" class="btn btn-default">Edit</a>
     <a href="{{ path('omics_experiment_index') }}" class="btn btn-default">Back</a>

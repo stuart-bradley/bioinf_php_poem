@@ -58,87 +58,91 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Files</h3>
-            <ul style="list-style-type:none;padding-left:0;" class="col-files">
-                <li class="panel panel-body panel-default">
-                {% for file in sequence_run.files %}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
-                            </div>
-                        </div>
-                {% endfor %}
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Samples</h3>
-            <ul style="list-style-type:none;padding-left:0;" class="col-samples">
-                {% for sample in sequence_run.samples %}
+    {% if sequence_run.files is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Files</h3>
+                <ul style="list-style-type:none;padding-left:0;" class="col-files">
                     <li class="panel panel-body panel-default">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>BioControl experiment
-                                    ID</strong>
-                                <p>{{ sample.BCExperimentID }}</p>
+                        {% for file in sequence_run.files %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>BioControl sample
-                                    ID</strong>
-                                <p>{{ sample.BCSampleID }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>BioControl run
-                                    ID</strong>
-                                <p>{{ sample.BCRunID }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Sampled date
-                                    time</strong>
-                                <p>{{ sample.sampledDateTime|date('Y-m-d H:i:s') }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Sampled by</strong>
-                                <p>{{ sample.sampledBy }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Treated?</strong>
-                                <p>
-                                    {% if sample.RNALaterTreated is empty %}
-                                        False
-                                    {% else %}
-                                        True
-                                    {% endif %}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>Material type
-                                    string</strong>
-                                <p>{{ sample.materialTypeString.type }}</p>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </li>
-                {% endfor %}
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
+
+    {% if sequence_run.samples is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Samples</h3>
+                <ul style="list-style-type:none;padding-left:0;" class="col-samples">
+                    {% for sample in sequence_run.samples %}
+                        <li class="panel panel-body panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>BioControl experiment
+                                        ID</strong>
+                                    <p>{{ sample.BCExperimentID }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>BioControl sample
+                                        ID</strong>
+                                    <p>{{ sample.BCSampleID }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>BioControl run
+                                        ID</strong>
+                                    <p>{{ sample.BCRunID }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Sampled date
+                                        time</strong>
+                                    <p>{{ sample.sampledDateTime|date('Y-m-d H:i:s') }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Sampled by</strong>
+                                    <p>{{ sample.sampledBy }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Treated?</strong>
+                                    <p>
+                                        {% if sample.RNALaterTreated is empty %}
+                                            False
+                                        {% else %}
+                                            True
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <strong>Material type
+                                        string</strong>
+                                    <p>{{ sample.materialTypeString.type }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
 
 
     <a href="{{ path('sequence_run_edit', {'id': sequence_run.id}) }}" class="btn btn-default">Edit</a>
