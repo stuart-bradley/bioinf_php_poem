@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {% stylesheets filter='cssrewrite'
-            '@bootstrap_css'
-            '@summernote_css' %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-    {% for type, flashes in app.session.flashbag.all %}
-        {% for flash in flashes %}
-            <div class="alert alert-{{ type }} fade in bg-info">
-                {{ flash }}
-            </div>
-        {% endfor %}
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets filter='cssrewrite'
+        '@bootstrap_css'
+        '@summernote_css'
+        '@poem_css' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{% for type, flashes in app.session.flashbag.all %}
+    {% for flash in flashes %}
+        <div class="alert alert-{{ type }} fade in bg-info">
+            {{ flash }}
+        </div>
     {% endfor %}
-    <div class="container-fluid">
-        {% block body %}{% endblock %}
-    </div>
-        {% block javascripts %}
-            {% javascripts
-                '@jquery'
-                '@bootstrap_js'
-            '@summernote_js'
-            '@form_collection'
-            '@exp_sub_type_selection_updater'
-            '@summernote_config_js' %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-    </body>
+{% endfor %}
+<div class="container-fluid">
+    {% block body %}
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">POEM</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('omics_experiment_index') }}">Omics Experiments <span class="sr-only">(Omics Experiments)</span></a>
+                        </li>
+                        <li><a href="{{ path('sequence_run_index') }}">Sequence Runs <span class="sr-only">(Sequence Runs)</span></a>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    {% endblock %}
+</div>
+{% block javascripts %}
+    {% javascripts
+    '@jquery'
+    '@bootstrap_js'
+    '@summernote_js'
+    '@form_collection'
+    '@exp_sub_type_selection_updater'
+    '@summernote_config_js'
+    '@set_nav_active_link' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
 </html>

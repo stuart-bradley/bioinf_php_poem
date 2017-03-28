@@ -3230,7 +3230,6 @@
     var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
 
 
-
 // Convert String-formatted options into Object-formatted ones
     function createOptions(options) {
         var object = {};
@@ -8297,7 +8296,6 @@
     var nonce = jQuery.now();
 
     var rquery = ( /\?/ );
-
 
 
 // Cross-browser xml parsing

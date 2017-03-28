@@ -2,8 +2,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
     <div class="experiment-index-div">
-        <h1>Omics Experiments | <a href="{{ path('sequence_run_index') }}">(Sequence Runs)</a></h1>
+        <h1>Omics Experiments</h1>
         <table class="table table-bordered">
             <tr>
                 <th>ID</th>
