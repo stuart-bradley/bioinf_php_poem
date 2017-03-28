@@ -1,0 +1,13 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 10.10.56.42
+    database_port: null
+    database_name: POEM
+    database_user: poem
+    database_password: poem123
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: a7b312ce8af5936575539fc1ef61a59792d8ba3a
+    database_name_dev: poem_dev
