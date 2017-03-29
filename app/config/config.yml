@@ -73,7 +73,33 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: AppBundle\Entity\User
+    user_class: AppBundle\Entity\FOSUser
+
+fr3d_ldap:
+   driver:
+      host: '%ldap_host%'
+      port: '%ldap_port%'
+      useSsl: true
+      username: '%ldap_username%'
+      password: '%ldap_password%'
+      baseDn: '%ldap_baseDn%'
+   user:
+      baseDn: '%ldap_baseDn%'
+      usernameAttribute: samaccountname
+      attributes:
+        - { ldap_attr: samaccountname,  user_method: setUsername }
+        - { ldap_attr: mail, user_method: setEmail }
+      filter: (&(ObjectClass=user))
+
+#fr3d_ldap:
+#   driver:
+#      host: ldap.forumsys.com
+#   user:
+#      baseDn: dc=example, dc=com
+#      attributes:
+#         - { ldap_attr: uid,  user_method: setUsername }
+#         - { ldap_attr: mail,  user_method: setEmail }
+#      filter: (&(ObjectClass=person))
 
 assetic:
     debug:          '%kernel.debug%'

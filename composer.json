@@ -33,7 +33,8 @@
     "symfony/assetic-bundle": "v2.8.0",
     "twig/twig": "1.*",
     "components/jquery": "3.1.1",
-    "friendsofsymfony/user-bundle": "~2.0.0-beta2"
+    "friendsofsymfony/user-bundle": "~2.0.0-beta2",
+    "fr3d/ldap-bundle": "3.0.*@dev"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

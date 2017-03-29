@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bbaf792877d74236b7f5262db10f80c1",
-    "content-hash": "7e4eaf8c67abb0e68de8bfa27a6bcfca",
+    "hash": "b2da2a3efebc58532c8c5f5a82650f91",
+    "content-hash": "9f67566722e0c76d00e5345f554ce97a",
     "packages": [
         {
             "name": "components/jquery",
@@ -933,6 +933,65 @@
             "time": "2016-12-18 15:42:34"
         },
         {
+            "name": "fr3d/ldap-bundle",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Maks3w/FR3DLdapBundle.git",
+                "reference": "5a8927c11af45fa06331b97221c6da1a4a237475"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Maks3w/FR3DLdapBundle/zipball/5a8927c11af45fa06331b97221c6da1a4a237475",
+                "reference": "5a8927c11af45fa06331b97221c6da1a4a237475",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "psr/log": "~1.0",
+                "symfony/config": "2.3 - 3",
+                "symfony/dependency-injection": "2.3 - 3",
+                "symfony/polyfill-php56": "^1.1",
+                "symfony/security": "2.3 - 3",
+                "symfony/security-bundle": "2.3 - 3",
+                "zendframework/zend-ldap": "2.5 - 3"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "1.11.*",
+                "fr3d/psr3-message-assertions": "0.1.*",
+                "friendsofsymfony/user-bundle": "~1.3",
+                "maks3w/phpunit-methods-trait": "^4.6",
+                "phpunit/phpunit": "^4.6",
+                "symfony/validator": "2.3 - 3"
+            },
+            "suggest": {
+                "friendsofsymfony/user-bundle": "Integrate authentication and management for DB users, useful for unmanned LDAP servers",
+                "symfony/validator": "Allow pre-validate for existing users before register new ones"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "FR3D\\LdapBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maks3w"
+                }
+            ],
+            "description": "This package provide users and authentication services based on LDAP directories for Symfony2 framework",
+            "homepage": "https://github.com/Maks3w/FR3DLdapBundle",
+            "keywords": [
+                "Authentication",
+                "ldap"
+            ],
+            "time": "2016-02-12 17:45:14"
+        },
+        {
             "name": "friendsofsymfony/user-bundle",
             "version": "2.0.0-beta2",
             "source": {
@@ -1459,16 +1518,16 @@
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v3.0.23",
+            "version": "v3.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "d3601fd5709168ace7a1ca6eefa2619a1632b7f7"
+                "reference": "472b339cf0c82f3a033b29f85d9d9cada3cd1a9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/d3601fd5709168ace7a1ca6eefa2619a1632b7f7",
-                "reference": "d3601fd5709168ace7a1ca6eefa2619a1632b7f7",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/472b339cf0c82f3a033b29f85d9d9cada3cd1a9c",
+                "reference": "472b339cf0c82f3a033b29f85d9d9cada3cd1a9c",
                 "shasum": ""
             },
             "require": {
@@ -1525,7 +1584,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2017-03-02 20:17:28"
+            "time": "2017-03-21 23:34:44"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -2094,16 +2153,16 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v2.5.3",
+            "version": "v2.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "b59a70d03b948e29d070b6c4416b4a03af4748ec"
+                "reference": "8ab32ce31a7156621fb92e0466586186beb89759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/b59a70d03b948e29d070b6c4416b4a03af4748ec",
-                "reference": "b59a70d03b948e29d070b6c4416b4a03af4748ec",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/8ab32ce31a7156621fb92e0466586186beb89759",
+                "reference": "8ab32ce31a7156621fb92e0466586186beb89759",
                 "shasum": ""
             },
             "require": {
@@ -2149,7 +2208,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2017-03-02 16:47:57"
+            "time": "2017-03-21 21:47:36"
         },
         {
             "name": "symfony/symfony",
@@ -2297,16 +2356,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.32.0",
+            "version": "v1.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9935b662e24d6e634da88901ab534cc12e8c728f"
+                "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9935b662e24d6e634da88901ab534cc12e8c728f",
-                "reference": "9935b662e24d6e634da88901ab534cc12e8c728f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
+                "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
                 "shasum": ""
             },
             "require": {
@@ -2315,12 +2374,12 @@
             "require-dev": {
                 "psr/container": "^1.0",
                 "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~3.2"
+                "symfony/phpunit-bridge": "~3.3@dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.32-dev"
+                    "dev-master": "1.33-dev"
                 }
             },
             "autoload": {
@@ -2355,22 +2414,75 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-02-27 00:07:03"
+            "time": "2017-03-22 15:40:09"
+        },
+        {
+            "name": "zendframework/zend-ldap",
+            "version": "2.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-ldap.git",
+                "reference": "a9284a7440e17ce0ba697670bb4db1baf2340acd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-ldap/zipball/a9284a7440e17ce0ba697670bb4db1baf2340acd",
+                "reference": "a9284a7440e17ce0ba697670bb4db1baf2340acd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ldap": "*",
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "php-mock/php-mock-phpunit": "~0.3",
+                "phpunit/phpunit": "^4.6",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-config": "^2.5",
+                "zendframework/zend-eventmanager": "^2.6.3 || ^3.0.1",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+            },
+            "suggest": {
+                "zendframework/zend-eventmanager": "Zend\\EventManager component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev",
+                    "dev-develop": "2.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Ldap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides support for LDAP operations including but not limited to binding, searching and modifying entries in an LDAP directory",
+            "homepage": "https://github.com/zendframework/zend-ldap",
+            "keywords": [
+                "ldap",
+                "zf2"
+            ],
+            "time": "2017-03-06 20:39:12"
         }
     ],
     "packages-dev": [
         {
             "name": "liip/functional-test-bundle",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipFunctionalTestBundle.git",
-                "reference": "be78ee4cd9289e61e57d237f9c4053ded9033760"
+                "reference": "64c4e9d60198fab453e6e21d2b26669b501e6ee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/be78ee4cd9289e61e57d237f9c4053ded9033760",
-                "reference": "be78ee4cd9289e61e57d237f9c4053ded9033760",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/64c4e9d60198fab453e6e21d2b26669b501e6ee3",
+                "reference": "64c4e9d60198fab453e6e21d2b26669b501e6ee3",
                 "shasum": ""
             },
             "require": {
@@ -2435,7 +2547,7 @@
             "keywords": [
                 "Symfony2"
             ],
-            "time": "2017-03-20 16:05:12"
+            "time": "2017-03-23 20:46:55"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3761,7 +3873,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 10
+        "friendsofsymfony/user-bundle": 10,
+        "fr3d/ldap-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
