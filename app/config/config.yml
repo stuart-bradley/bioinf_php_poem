@@ -88,7 +88,6 @@ assetic:
             bootstrap_css:
                 inputs:
                     - "%kernel.root_dir%/../src/AppBundle/Resources/public/css/bootstrap.min.css"
-                    - "%kernel.root_dir%/../src/AppBundle/Resources/public/css/bootstrap-theme.min.css"
                 output: "css/bootstrap_css.css"
                 filters: [cssrewrite]
             bootstrap_glyphicons_ttf:
