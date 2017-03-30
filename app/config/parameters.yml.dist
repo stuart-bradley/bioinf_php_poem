@@ -14,6 +14,7 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
+    mailer_email: test@email.com
 
     ldap_host: 0.0.0.0
     ldap_port: 363
