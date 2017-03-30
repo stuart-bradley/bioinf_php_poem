@@ -20,6 +20,7 @@ parameters:
     ldap_username: admin
     ldap_password: password
     ldap_baseDn: dc=ab,dc=com
+    ldap_baseDn_users: ou=group,dc=ab,dc=com
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

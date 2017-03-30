@@ -10,6 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @ORM\AttributeOverrides({
+ *     @ORM\AttributeOverride(name="password",
+ *          column=@ORM\Column(
+ *              name     = "password",
+ *              type     = "string",
+ *              nullable=true
+ *          )
+ *      )
+ * })
  */
 class FOSUser extends BaseUser implements LdapUserInterface
 {
@@ -21,9 +30,19 @@ class FOSUser extends BaseUser implements LdapUserInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", name="dn")
      */
     protected $dn;
+
+    /**
+     * @ORM\Column(type="string", name="department")
+     */
+    protected $department;
+
+    /**
+     * @ORM\Column(type="string", name="departmentDn")
+     */
+    protected $departmentDn;
 
     public function __construct()
     {
@@ -47,5 +66,55 @@ class FOSUser extends BaseUser implements LdapUserInterface
     public function setDn($dn)
     {
         $this->dn = $dn;
+
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return string
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * Set department
+     *
+     * @param \AppBundle\Entity\FOSUser $department
+     *
+     * @return FOSUser
+     */
+    public function setDepartment($department)
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * Get departmentDn
+     *
+     * @return string
+     */
+    public function getDepartmentDn()
+    {
+        return $this->departmentDn;
+    }
+
+    /**
+     * Set departmentDn
+     *
+     * @param \AppBundle\Entity\FOSUser $departmentDn
+     *
+     * @return FOSUser
+     */
+    public function setDepartmentDn($departmentDn)
+    {
+        $this->departmentDn = $departmentDn;
+
+        return $this;
     }
 }
