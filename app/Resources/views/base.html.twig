@@ -47,6 +47,13 @@
                         <li><a href="{{ path('sequence_run_index') }}">Sequence Runs <span class="sr-only">(Sequence Runs)</span></a>
                         </li>
                     </ul>
+                    <div class="collapse navbar-collapse  navbar-right" id="bs-example-navbar-collapse-2">
+                        <ul class="nav navbar-nav">
+                            <li><p class="navbar-text navbar-right">Logged in as {{ app.user.getUsernameForView() }}.
+                                    <a href="{{ path('fos_user_security_logout') }}">Logout</a></p>
+                            </li>
+                        </ul>
+                    </div>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>

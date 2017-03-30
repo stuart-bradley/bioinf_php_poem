@@ -117,4 +117,14 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
         return $this;
     }
+
+    /**
+     * Get username for views.
+     *
+     * @return string
+     */
+    public function getUsernameForView()
+    {
+        return str_replace('.', ' ', $this->username);
+    }
 }

@@ -3860,6 +3860,8 @@
     };
 
 
+
+
 // The deferred used on DOM ready
     var readyList = jQuery.Deferred();
 
@@ -4171,6 +4173,7 @@
     var dataPriv = new Data();
 
     var dataUser = new Data();
+
 
 
 //	Implementation Summary
@@ -4685,6 +4688,7 @@
     var rtagName = ( /<([a-z][^\/\0>\x20\t\r\n\f]+)/i );
 
     var rscriptType = ( /^$|\/(?:java|ecma)script/i );
+
 
 
 // We have to close these tags to support XHTML (#13200)
@@ -9526,6 +9530,8 @@
             };
         }
     });
+
+
 
 
 // Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
