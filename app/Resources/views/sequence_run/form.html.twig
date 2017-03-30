@@ -4,6 +4,7 @@
 {% form_theme form 'sequence_run/sequence_run_subfields.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
     <div id="prototypes">
         <div id="proto-samples" data-prototype="{{ form_row(form.samples.vars.prototype)|e }}"></div>
         <div id="proto-files" data-prototype="{{ form_row(form.files.vars.prototype)|e }}"></div>
@@ -58,12 +59,13 @@
 
     {% if edit %}
         {{ form_widget(form.save, { 'label': 'Edit Sequence Run' }) }}
-        <a href="{{ path('sequence_run_show', {'id': form.vars.value.id}) }}" class="btn btn-default">Back</a>
+        <a href="{{ path('sequence_run_show', {'id': form.vars.value.id}) }}" class="btn btn-default"
+           onclick="return redirectConfirm()">Back</a>
         <a href="{{ path('sequence_run_delete', {'id': form.vars.value.id}) }}" class="btn btn-default"
            onclick="return confirm('Are you sure you want to delete Sequence Run {{ form.vars.value.id }}?')">Delete</a>
     {% else %}
         {{ form_widget(form.save, { 'label': 'Create Sequence Run' }) }}
-        <a href="{{ path('sequence_run_index') }}" class="btn btn-default">Back</a>
+        <a href="{{ path('sequence_run_index') }}" class="btn btn-default" onclick="return redirectConfirm()">Back</a>
     {% endif %}
     <div style="display: none;">{{ form_rest(form) }}</div>
     {{ form_end(form) }}

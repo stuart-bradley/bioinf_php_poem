@@ -4,6 +4,7 @@
 {% form_theme form 'omics_experiment/omics_experiment_subfields.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
     <div id="prototypes">
         <div id="proto-samples"
              data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype.samples.vars.prototype)|e }}"></div>
@@ -96,12 +97,14 @@
     </button><br><br>
     {% if edit %}
         {{ form_widget(form.save, { 'label': 'Edit Experiment' }) }}
-        <a href="{{ path('omics_experiment_show', {'id': form.vars.value.id}) }}" class="btn btn-default">Back</a>
+        <a href="{{ path('omics_experiment_show', {'id': form.vars.value.id}) }}" class="btn btn-default"
+           onclick="return redirectConfirm()">Back</a>
         <a href="{{ path('omics_experiment_delete', {'id': form.vars.value.id}) }}" class="btn btn-default"
            onclick="return confirm('Are you sure you want to delete {{ form.vars.value.projectName }}?')">Delete</a>
     {% else %}
         {{ form_widget(form.save, { 'label': 'Create Experiment' }) }}
-        <a href="{{ path('omics_experiment_index') }}" class="btn btn-default">Back</a>
+        <a href="{{ path('omics_experiment_index') }}" class="btn btn-default"
+           onclick="return redirectConfirm()">Back</a>
     {% endif %}
     <div style="display: none;">{{ form_rest(form) }}</div>
     {{ form_end(form) }}

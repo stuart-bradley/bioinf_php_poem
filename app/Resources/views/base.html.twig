@@ -42,9 +42,11 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ path('omics_experiment_index') }}">Omics Experiments <span class="sr-only">(Omics Experiments)</span></a>
+                        <li><a href="{{ path('omics_experiment_index') }}" onclick="return redirectConfirm()">Omics
+                                Experiments <span class="sr-only">(Omics Experiments)</span></a>
                         </li>
-                        <li><a href="{{ path('sequence_run_index') }}">Sequence Runs <span class="sr-only">(Sequence Runs)</span></a>
+                        <li><a href="{{ path('sequence_run_index') }}" onclick="return redirectConfirm()">Sequence Runs
+                                <span class="sr-only">(Sequence Runs)</span></a>
                         </li>
                     </ul>
                     <div class="collapse navbar-collapse  navbar-right" id="bs-example-navbar-collapse-2">
