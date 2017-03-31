@@ -82,7 +82,7 @@ fr3d_ldap:
    driver:
       host: '%ldap_host%'
       port: '%ldap_port%'
-      useSsl: true
+      useStartTls:  true
       username: '%ldap_username%'
       password: '%ldap_password%'
       baseDn: '%ldap_baseDn%'
