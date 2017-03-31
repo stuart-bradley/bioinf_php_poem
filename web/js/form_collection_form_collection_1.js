@@ -183,16 +183,20 @@ function FormCollections(collection_classes) {
             newForm = newForm.replace(re, curr_index);
             $(button).data('index', $(button).data('index') + 1);
 
-            id = $(button).parent().find('div').children('select').attr('id');
-            find = '__' + 'expsubtype' + '_prot__';
-            re = new RegExp(find, 'g');
-            curr_index = /omicsExperimentSubTypes_(\d+)/.exec(id)[1];
-            newForm = newForm.replace(re, curr_index);
+            try {
+                id = $(button).parent().find('div').children('select').attr('id');
+                find = '__' + 'expsubtype' + '_prot__';
+                re = new RegExp(find, 'g');
+                curr_index = /omicsExperimentSubTypes_(\d+)/.exec(id)[1];
+                newForm = newForm.replace(re, curr_index);
 
-            find = '__' + 'exptype' + '_prot__';
-            re = new RegExp(find, 'g');
-            curr_index = /omicsExperimentTypes_(\d+)/.exec(id)[1];
-            newForm = newForm.replace(re, curr_index);
+                find = '__' + 'exptype' + '_prot__';
+                re = new RegExp(find, 'g');
+                curr_index = /omicsExperimentTypes_(\d+)/.exec(id)[1];
+                newForm = newForm.replace(re, curr_index);
+            } catch (err) {
+            }
+
         }
         return $(newForm);
     };

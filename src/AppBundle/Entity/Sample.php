@@ -58,16 +58,6 @@ class Sample
      */
     private $sampledDateTime;
 
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sampled_by", type="string")
-     *
-     * @Assert\NotBlank()
-     */
-    private $sampledBy;
-
     /**
      * @var bool
      *
@@ -75,6 +65,12 @@ class Sample
      *
      */
     private $RNALaterTreated;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="samples")
+     * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     */
+    private $sampledBy;
 
     /**
      * @ORM\ManyToOne(targetEntity="MaterialTypeStrings", inversedBy="samples")
@@ -186,7 +182,7 @@ class Sample
     /**
      * Set sampledBy
      *
-     * @param string $sampledBy
+     * @param FOSUser $sampledBy
      *
      * @return Sample
      */
@@ -200,7 +196,7 @@ class Sample
     /**
      * Get sampledBy
      *
-     * @return string
+     * @return FOSUser
      */
     public function getSampledBy()
     {

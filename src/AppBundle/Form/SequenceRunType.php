@@ -18,8 +18,6 @@ class SequenceRunType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // Change to EntityType for Users.
-            ->add('runBy', TextType::class)
             ->add('startDate', DateType::class, array(
                 'data' => new \DateTime(),
             ))

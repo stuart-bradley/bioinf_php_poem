@@ -7,11 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Doctrine\ORM\EntityRepository;
 
 class SampleType extends AbstractType
 {
@@ -28,8 +28,14 @@ class SampleType extends AbstractType
             ->add('sampledDateTime', DateTimeType::class, array(
                 'label' => 'Sample date and time',
                 'data' => new \DateTime()))
-            // Change to EntityType when User table is added.
-            ->add('sampledBy', TextType::class)
+            ->add('sampledBy', EntityType::class, array(
+                'class' => 'AppBundle:FOSUser',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->orderBy('u.cn', 'ASC');
+                },
+                'choice_label' => 'cn',
+            ))
             ->add('RNALaterTreated',CheckboxType::class,array(
                 'label' => 'Treated?',
                 'required' => false))

@@ -24,15 +24,6 @@ class SequenceRun
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="run_by", type="string")
-     *
-     * @Assert\NotBlank()
-     */
-    private $runBy;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="start_date", type="date")
@@ -87,6 +78,12 @@ class SequenceRun
     private $readLength;
 
     /**
+     * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="sequenceRuns")
+     * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     */
+    private $runBy;
+
+    /**
      * @var File
      *
      * @ORM\OneToMany(targetEntity="File", mappedBy="sequenceRun", cascade={"persist", "remove"})
@@ -121,7 +118,7 @@ class SequenceRun
     /**
      * Get runBy
      *
-     * @return string
+     * @return FOSUser
      */
     public function getRunBy()
     {
@@ -131,7 +128,7 @@ class SequenceRun
     /**
      * Set runBy
      *
-     * @param string $runBy
+     * @param FOSUser $runBy
      *
      * @return SequenceRun
      */

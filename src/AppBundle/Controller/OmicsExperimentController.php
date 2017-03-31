@@ -35,6 +35,8 @@ class OmicsExperimentController extends Controller {
         $form->handleRequest($request);
         // On submission.
         if ($form->isSubmitted()) {
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $omics_experiment->setRequestedBy($user);
             $em->persist($omics_experiment);
 
             $em->flush();

@@ -3860,6 +3860,8 @@
     };
 
 
+
+
 // The deferred used on DOM ready
     var readyList = jQuery.Deferred();
 
@@ -4171,6 +4173,7 @@
     var dataPriv = new Data();
 
     var dataUser = new Data();
+
 
 
 //	Implementation Summary
@@ -4685,6 +4688,7 @@
     var rtagName = ( /<([a-z][^\/\0>\x20\t\r\n\f]+)/i );
 
     var rscriptType = ( /^$|\/(?:java|ecma)script/i );
+
 
 
 // We have to close these tags to support XHTML (#13200)
@@ -9528,6 +9532,8 @@
     });
 
 
+
+
 // Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
     jQuery.ajaxPrefilter(function (s) {
         if (s.crossDomain) {
@@ -13788,16 +13794,20 @@ function FormCollections(collection_classes) {
             newForm = newForm.replace(re, curr_index);
             $(button).data('index', $(button).data('index') + 1);
 
-            id = $(button).parent().find('div').children('select').attr('id');
-            find = '__' + 'expsubtype' + '_prot__';
-            re = new RegExp(find, 'g');
-            curr_index = /omicsExperimentSubTypes_(\d+)/.exec(id)[1];
-            newForm = newForm.replace(re, curr_index);
+            try {
+                id = $(button).parent().find('div').children('select').attr('id');
+                find = '__' + 'expsubtype' + '_prot__';
+                re = new RegExp(find, 'g');
+                curr_index = /omicsExperimentSubTypes_(\d+)/.exec(id)[1];
+                newForm = newForm.replace(re, curr_index);
 
-            find = '__' + 'exptype' + '_prot__';
-            re = new RegExp(find, 'g');
-            curr_index = /omicsExperimentTypes_(\d+)/.exec(id)[1];
-            newForm = newForm.replace(re, curr_index);
+                find = '__' + 'exptype' + '_prot__';
+                re = new RegExp(find, 'g');
+                curr_index = /omicsExperimentTypes_(\d+)/.exec(id)[1];
+                newForm = newForm.replace(re, curr_index);
+            } catch (err) {
+            }
+
         }
         return $(newForm);
     };

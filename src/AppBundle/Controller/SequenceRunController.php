@@ -36,6 +36,8 @@ class SequenceRunController extends Controller {
 
         // On submission.
         if ($form->isSubmitted()) {
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $sequence_run->setRunBy($user);
             $em->persist($sequence_run);
             $em->flush();
             return $this->redirectToRoute('sequence_run_index');
