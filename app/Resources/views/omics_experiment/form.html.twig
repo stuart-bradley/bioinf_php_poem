@@ -113,5 +113,6 @@
             <script type="text/javascript">
                 new FormCollections(['files', 'statuses', 'omics_experiment_types', 'omics_experiment_sub_types', 'samples']);
                 new ExpSubTypeSelectionUpdater({{ select_relations|json_encode()|raw }});
+                new BioControlSampleUpdater();
             </script>
         {% endblock %}
