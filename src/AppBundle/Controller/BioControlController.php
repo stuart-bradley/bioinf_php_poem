@@ -17,7 +17,11 @@ class BioControlController extends Controller
 
         $sample_number = $request->request->get('sample_number');
 
-        $response = array("code" => 100, "success" => true, "sample_number" => $sample_number, "sample_data" => "test");
+        $bioControlEm = $this->get('doctrine.dbal.bio_control_connection');
+        $sql = "SELECT COUNT(*) FROM fos_user";
+        $rows = $bioControlEm->fetchArray($sql);
+
+        $response = array("code" => 100, "success" => true, "sample_number" => $rows[0], "sample_data" => "test");
 
         return new JsonResponse($response);
     }
