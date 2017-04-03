@@ -23,7 +23,7 @@ function BioControlSampleUpdater() {
                 data: {sample_number: $(input_field).val()},
                 success: function (response) {
                     if (response.code == 100 && response.success) {
-                        //alert(response.sample_number);
+                        alert(response.sample_number);
                     }
                 }
             });
