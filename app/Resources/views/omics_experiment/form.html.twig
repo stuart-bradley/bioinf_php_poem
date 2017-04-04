@@ -62,9 +62,16 @@
                             <ul style="list-style-type: none;" class="col-samples">
                                 {% for sample in omics_experiment_sub_type.samples %}
                                     <li class="panel panel-body panel-default">
-                                        {{ form_row(sample.BCExperimentID) }}
                                         {{ form_row(sample.BCSampleID) }}
+                                        <div class="progress" style="display:none">
+                                            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: 100%">
+                                                <span class="sr-only">100% Complete</span>
+                                            </div>
+                                        </div>
                                         {{ form_row(sample.BCRunID) }}
+                                        {{ form_row(sample.BCExperimentID) }}
                                         {{ form_row(sample.sampledDateTime) }}
                                         {{ form_row(sample.sampledBy) }}
                                         {{ form_row(sample.RNALaterTreated) }}

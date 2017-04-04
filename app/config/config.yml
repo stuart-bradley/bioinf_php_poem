@@ -175,7 +175,7 @@ assetic:
 
             poem_logo:
                 inputs:
-                - "%kernel.root_dir%/../src/AppBundle/Resources/public/images/poem_logo.png"
+                  - "%kernel.root_dir%/../src/AppBundle/Resources/public/images/poem_logo.png"
                 output: "poem_logo.png"
 
             summernote_css:

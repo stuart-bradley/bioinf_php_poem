@@ -18,16 +18,15 @@ class SampleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // Following three fields may change when BioControl is integrated.
-            ->add('BCExperimentID', IntegerType::class, array(
-                'label' => 'BioControl experiment ID'))
             ->add('BCSampleID', IntegerType::class, array(
                 'label' => 'BioControl sample ID'))
             ->add('BCRunID', IntegerType::class, array(
-                'label' => 'BioControl run ID'))
+                'label' => 'BioControl run ID', 'attr' => array('readonly' => true)))
+            ->add('BCExperimentID', IntegerType::class, array(
+                'label' => 'BioControl experiment ID', 'attr' => array('readonly' => true)))
             ->add('sampledDateTime', DateTimeType::class, array(
                 'label' => 'Sample date and time',
-                'data' => new \DateTime()))
+                'data' => new \DateTime(), 'attr' => array('readonly' => true)))
             ->add('sampledBy', EntityType::class, array(
                 'class' => 'AppBundle:FOSUser',
                 'query_builder' => function (EntityRepository $er) {
@@ -35,6 +34,7 @@ class SampleType extends AbstractType
                         ->orderBy('u.cn', 'ASC');
                 },
                 'choice_label' => 'cn',
+                'attr' => array('readonly' => true)
             ))
             ->add('RNALaterTreated',CheckboxType::class,array(
                 'label' => 'Treated?',
