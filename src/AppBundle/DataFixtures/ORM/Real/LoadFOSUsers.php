@@ -40,7 +40,7 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
         $options = array(
             'host' => $this->container->getParameter('ldap_host'),
             'port' => $this->container->getParameter('ldap_port'),
-            'useSsl' => true,
+            'useStartTls' => true,
             'username' => $this->container->getParameter('ldap_username'),
             'password' => $this->container->getParameter('ldap_password'),
             'baseDn' => $this->container->getParameter('ldap_baseDn_users')
@@ -73,6 +73,8 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
                         $user->setDepartmentDn($group);
                         $user->setCn($item['cn'][0]);
 
+                        $this->addReference($item["samaccountname"][0], $user);
+
                         $members[] = $item["samaccountname"][0];
                         $manager->persist($user);
                     }
@@ -87,6 +89,6 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
     {
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
-        return 8;
+        return 1;
     }
 }

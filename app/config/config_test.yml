@@ -8,6 +8,7 @@ framework:
     test: ~
     session:
         storage_id: session.storage.mock_file
+        name: MOCKSESSID
     profiler:
         collect: false
 
@@ -24,4 +25,4 @@ doctrine:
         connections:
             default:
                 driver:   pdo_sqlite
-                path:     %kernel.cache_dir%/test.db
+                path:     "%kernel.cache_dir%/test.db"

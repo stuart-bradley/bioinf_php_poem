@@ -17,7 +17,7 @@ class LoadSamples extends AbstractFixture implements OrderedFixtureInterface
         $sample->setBCExperimentID(1);
         $sample->setBCSampleID(1);
         $sample->setBCRunID(1);
-        $sample->setSampledBy("stuart.bradley");
+        $sample->setSampledBy($this->getReference("Stuart.Bradley"));
         $sample->setRNALaterTreated(true);
         $sample->setMaterialTypeString($this->getReference("DNA"));
         $this->addReference("sample_sequencing_run", $sample);
@@ -27,7 +27,7 @@ class LoadSamples extends AbstractFixture implements OrderedFixtureInterface
         $sample->setBCExperimentID(123);
         $sample->setBCSampleID(1);
         $sample->setBCRunID(1);
-        $sample->setSampledBy("stuart.bradley");
+        $sample->setSampledBy($this->getReference("Stuart.Bradley"));
         $sample->setRNALaterTreated(true);
         $sample->setMaterialTypeString($this->getReference("DNA"));
         $this->addReference("sample_omics_experiment", $sample);

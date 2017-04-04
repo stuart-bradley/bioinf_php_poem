@@ -8,10 +8,18 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 class SequenceRunControllerTest extends WebTestCase
 {
 
+    private $helper;
+
+    protected function setUp()
+    {
+        $this->helper = new ControllerHelperMethods();
+        $this->helper->loadTestFixtures();
+        $this->loginAs($this->helper->fixtures->getReference('Stuart.Bradley'), 'main');
+    }
+
     public function testIndex()
     {
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
+        $helper = $this->helper;
 
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/sequence_run/index');
@@ -21,8 +29,7 @@ class SequenceRunControllerTest extends WebTestCase
 
     public function testShow()
     {
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
+        $helper = $this->helper;
 
         $client = $this->makeClient();
         $sequenceRunId = $helper->fixtures->getReference("sequence_run_1")->getId();
@@ -35,8 +42,7 @@ class SequenceRunControllerTest extends WebTestCase
 
     public function testCreate()
     {
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
+        $helper = $this->helper;
 
         $client = $this->makeClient();
         $crawler = $client->request('POST', "/sequence_run/new");
@@ -61,8 +67,7 @@ class SequenceRunControllerTest extends WebTestCase
 
     public function testUpdate()
     {
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
+        $helper = $this->helper;
 
         $client = $this->makeClient();
         $sequenceRunId = $helper->fixtures->getReference("sequence_run_1")->getId();
