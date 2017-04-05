@@ -19,6 +19,7 @@ class BioControlController extends Controller
 
         $bioControlEm = $this->get('doctrine.dbal.bio_control_connection');
         $sql = 'SELECT * FROM fos_user WHERE id = ?';
+        //$sql = "SELECT Samples.SmpID, Samples.RunID, Runs.ExpID, Samples.Dat, Person.PerNam FROM Samples INNER JOIN Runs ON Samples.RunID=Runs.RunID INNER JOIN Person ON Samples.PerID=Person.PerID WHERE SmpID = ?";
         $sample = $bioControlEm->fetchAll($sql, array($sample_number));
 
         if (empty($sample)) {
