@@ -22,6 +22,7 @@ parameters:
     ldap_password: password
     ldap_baseDn: dc=ab,dc=com
     ldap_baseDn_users: ou=group,dc=ab,dc=com
+    ldap_domain_long: ab.com
 
     bio_control_host: 0.0.0.0
     bio_control_name: biocontrol

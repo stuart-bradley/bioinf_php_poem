@@ -72,6 +72,7 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
                         $user->setDepartment($ldap_groups[$matches[1]]);
                         $user->setDepartmentDn($group);
                         $user->setCn($item['cn'][0]);
+                        $user->setFromBioControl(false);
 
                         $this->addReference($item["samaccountname"][0], $user);
 

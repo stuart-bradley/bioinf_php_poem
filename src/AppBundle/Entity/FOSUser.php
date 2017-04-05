@@ -33,7 +33,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="dn")
+     * @ORM\Column(type="string", name="dn", nullable=true)
      */
     protected $dn;
 
@@ -47,16 +47,23 @@ class FOSUser extends BaseUser implements LdapUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="department")
+     * @ORM\Column(type="string", name="department", nullable=true)
      */
     protected $department;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", name="departmentDn")
+     * @ORM\Column(type="string", name="department_dn", nullable=true)
      */
     protected $departmentDn;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", name="from_bio_control")
+     */
+    protected $fromBioControl;
 
     /**
      * @ORM\OneToMany(targetEntity="OmicsExperiment", mappedBy="requestedBy")
@@ -78,6 +85,9 @@ class FOSUser extends BaseUser implements LdapUserInterface
         parent::__construct();
         if (empty($this->roles)) {
             $this->roles[] = 'ROLE_USER';
+        }
+        if ($this->fromBioControl === NULL) {
+            $this->fromBioControl = false;
         }
         $this->omicsExperiments = new ArrayCollection();
         $this->sequenceRuns = new ArrayCollection();
@@ -168,13 +178,37 @@ class FOSUser extends BaseUser implements LdapUserInterface
     /**
      * Set departmentDn
      *
-     * @param \AppBundle\Entity\FOSUser $departmentDn
+     * @param string $departmentDn
      *
      * @return FOSUser
      */
     public function setDepartmentDn($departmentDn)
     {
         $this->departmentDn = $departmentDn;
+
+        return $this;
+    }
+
+    /**
+     * Get fromBioControl
+     *
+     * @return boolean
+     */
+    public function getFromBioControl()
+    {
+        return $this->fromBioControl;
+    }
+
+    /**
+     * Set fromBioControl
+     *
+     * @param string $fromBioControl
+     *
+     * @return FOSUser
+     */
+    public function setFromBioControl($fromBioControl)
+    {
+        $this->fromBioControl = $fromBioControl;
 
         return $this;
     }

@@ -2,6 +2,7 @@
 // src/AppBundle/Controller/BioControlController.php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\FOSUser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,14 +33,49 @@ class BioControlController extends Controller
         $sample = $queryBuilder->execute()->fetchAll();
 
         if (empty($sample)) {
-            $response = array("code" => 100, "success" => false, "sample_number" => $sample_number, "sample_data" => array());
+            $response = array("code" => 100, "success" => false, "sample_number" => $sample_number, "sample_data" => array(), "new_user" => false);
         } else {
-            $response = array("code" => 100, "success" => true, "sample_number" => $sample_number, "sample_data" => $sample[0]);
+
+            $user = $this->getDoctrine()
+                ->getRepository('AppBundle:FOSUser')
+                ->findOneByCn($sample[0]['PerNam']);
+
+            if ($user) {
+                $user_id = $user->getId();
+                $response = array("code" => 100, "success" => true, "sample_number" => $sample_number, "sample_data" => $sample[0], "new_user" => false, "user_id" => $user_id);
+            } else {
+                $user_id = $this->createNewUser($sample[0]['PerNam']);
+                $response = array("code" => 100, "success" => true, "sample_number" => $sample_number, "sample_data" => $sample[0], "new_user" => true, "user_id" => $user_id);
+
+            }
+
+
         }
-
-
-
-
         return new JsonResponse($response);
+    }
+
+
+    private function createNewUser($name)
+    {
+        $user = new FOSUser();
+        $user->setCn($name);
+
+        $username = str_replace(" ", ".", $name);
+        $user->setUsername($username);
+        $user->setUsernameCanonical(strtolower($username));
+
+        $domain = $this->getParameter('ldap_domain_long');
+
+        $email = $username . $domain;
+        $user->setEmail($email);
+        $user->setEmailCanonical(strtolower($email));
+
+        $user->setFromBioControl(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user->getId();
     }
 }

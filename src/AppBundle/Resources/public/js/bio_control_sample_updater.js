@@ -17,6 +17,10 @@ function BioControlSampleUpdater() {
         form.on('change', 'input[id$="BCSampleID"]', function (e) {
             self.modify(e.target);
         });
+
+        $(form).on('submit', function () {
+            $("select[id$='sampledBy']").prop('disabled', false);
+        });
     };
 
     self.modify = function (input_field) {
@@ -42,7 +46,10 @@ function BioControlSampleUpdater() {
                         $(BCRunID_field).val(response.sample_data['RunID']);
                         $(BCExperiment_field).val(response.sample_data['ExpID']);
                         self.setDateTime(datetime_fields, response.sample_data['Dat']);
-                        $(sampledBy_field).val(0);
+                        if (response.new_user) {
+                            self.add_new_user(sampledBy_field, response.sample_data['PerNam'], response.user_id)
+                        }
+                        $(sampledBy_field).val(response.user_id);
                     } else {
                         self.resetFields(input_field);
                     }
@@ -75,6 +82,13 @@ function BioControlSampleUpdater() {
         $(BCExperiment_field).val("");
         self.setDateTime(datetime_fields, new Date());
         $(sampledBy_field).removeAttr('selected').find('option:first').attr('selected', 'selected');
+    };
+
+    self.add_new_user = function (input_field, cn, user_id) {
+        $(input_field).append($('<option>', {
+            value: user_id,
+            text: cn
+        }));
     };
 
     self.construct();
