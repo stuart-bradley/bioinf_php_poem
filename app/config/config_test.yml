@@ -26,3 +26,9 @@ doctrine:
             default:
                 driver:   pdo_sqlite
                 path:     "%kernel.cache_dir%/test.db"
+            bio_control:
+              driver:   sqlsrv
+              host:     "%bio_control_host%"
+              dbname:   "%bio_control_name%"
+              user:     "%bio_control_user%"
+              password: "%bio_control_password%"

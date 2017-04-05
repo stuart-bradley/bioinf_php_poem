@@ -25,13 +25,11 @@ doctrine:
           password: "%database_password%"
           charset:  utf8mb4
         bio_control:
-          driver:   pdo_mysql
-          host:     "%database_host%"
-          port:     "%database_port%"
-          dbname:   "%database_name_dev%"
-          user:     "%database_user%"
-          password: "%database_password%"
-          charset:  utf8mb4
+          driver:   sqlsrv
+          host:     "%bio_control_host%"
+          dbname:   "%bio_control_name%"
+          user:     "%bio_control_user%"
+          password: "%bio_control_password%"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

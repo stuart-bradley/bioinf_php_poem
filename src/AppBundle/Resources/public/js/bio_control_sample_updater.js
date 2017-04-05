@@ -39,10 +39,10 @@ function BioControlSampleUpdater() {
                     if (response.code == 100 && response.success) {
                         $(input_field).parent().attr("class", "form-group has-success");
 
-                        $(BCRunID_field).val(response.sample_data['id']);
-                        $(BCExperiment_field).val(response.sample_data['id']);
-                        self.setDateTime(datetime_fields, response.sample_data['last_login']);
-                        $(sampledBy_field).val(response.sample_data['id']);
+                        $(BCRunID_field).val(response.sample_data['RunID']);
+                        $(BCExperiment_field).val(response.sample_data['ExpID']);
+                        self.setDateTime(datetime_fields, response.sample_data['Dat']);
+                        $(sampledBy_field).val(0);
                     } else {
                         self.resetFields(input_field);
                     }

@@ -24,9 +24,8 @@ parameters:
     ldap_baseDn_users: ou=group,dc=ab,dc=com
 
     bio_control_host: 0.0.0.0
-    bio_control_port: 0
     bio_control_name: biocontrol
-    bio_control_username: admin
+    bio_control_user: admin
     bio_control_password: password
 
     # A secret key that's used to generate certain security-related tokens

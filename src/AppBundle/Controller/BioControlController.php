@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 class BioControlController extends Controller
 {
@@ -18,9 +19,17 @@ class BioControlController extends Controller
         $sample_number = $request->request->get('sample_number');
 
         $bioControlEm = $this->get('doctrine.dbal.bio_control_connection');
-        $sql = 'SELECT * FROM fos_user WHERE id = ?';
-        //$sql = "SELECT Samples.SmpID, Samples.RunID, Runs.ExpID, Samples.Dat, Person.PerNam FROM Samples INNER JOIN Runs ON Samples.RunID=Runs.RunID INNER JOIN Person ON Samples.PerID=Person.PerID WHERE SmpID = ?";
-        $sample = $bioControlEm->fetchAll($sql, array($sample_number));
+
+        $queryBuilder = $bioControlEm->createQueryBuilder();
+        $queryBuilder
+            ->select('s.SmpID', 's.RunID', 'r.ExpID', 's.Dat', 'p.PerNam')
+            ->from('Samples', 's')
+            ->innerJoin('s', 'Runs', 'r', 's.RunID = r.RunID')
+            ->innerJoin('s', 'Person', 'p', 's.PerID=p.PerID')
+            ->where('s.SmpID = ?')
+            ->setParameter(0, $sample_number);
+
+        $sample = $queryBuilder->execute()->fetchAll();
 
         if (empty($sample)) {
             $response = array("code" => 100, "success" => false, "sample_number" => $sample_number, "sample_data" => array());
