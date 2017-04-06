@@ -43,19 +43,22 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name_dev%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  utf8mb4
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #     path:     "%database_path%"
+      default_connection: default
+      connections:
+        default:
+          driver:   pdo_mysql
+          host:     "%database_host%"
+          port:     "%database_port%"
+          dbname:   "%database_name_dev%"
+          user:     "%database_user%"
+          password: "%database_password%"
+          charset:  utf8mb4
+        bio_control:
+          driver:   sqlsrv
+          host:     "%bio_control_host%"
+          dbname:   "%bio_control_name%"
+          user:     "%bio_control_user%"
+          password: "%bio_control_password%"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -70,6 +73,42 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\FOSUser
+    from_email:
+      address: "%mailer_email%"
+      sender_name: POEM
+
+fr3d_ldap:
+   driver:
+      host: '%ldap_host%'
+      port: '%ldap_port%'
+      useStartTls:  true
+      username: '%ldap_username%'
+      password: '%ldap_password%'
+      baseDn: '%ldap_baseDn%'
+   user:
+      baseDn: '%ldap_baseDn%'
+      usernameAttribute: samaccountname
+      attributes:
+        - { ldap_attr: samaccountname,  user_method: setUsername }
+        - { ldap_attr: mail, user_method: setEmail }
+        - { ldap_attr: dn, user_method: setDn }
+        - { ldap_attr: cn, user_method: setCn }
+      filter: (&(ObjectClass=user))
+
+#fr3d_ldap:
+#   driver:
+#      host: ldap.forumsys.com
+#   user:
+#      baseDn: dc=example, dc=com
+#      attributes:
+#         - { ldap_attr: uid,  user_method: setUsername }
+#         - { ldap_attr: mail,  user_method: setEmail }
+#      filter: (&(ObjectClass=person))
+
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'
@@ -83,7 +122,6 @@ assetic:
             bootstrap_css:
                 inputs:
                     - "%kernel.root_dir%/../src/AppBundle/Resources/public/css/bootstrap.min.css"
-                    - "%kernel.root_dir%/../src/AppBundle/Resources/public/css/bootstrap-theme.min.css"
                 output: "css/bootstrap_css.css"
                 filters: [cssrewrite]
             bootstrap_glyphicons_ttf:
@@ -110,6 +148,7 @@ assetic:
             jquery:
                 inputs:
                     - "%kernel.root_dir%/../vendor/components/jquery/jquery.js"
+                output: "js/jquery.js"
 
             form_collection:
                 inputs:
@@ -123,6 +162,10 @@ assetic:
                 inputs:
                   - "%kernel.root_dir%/../src/AppBundle/Resources/public/js/set_nav_active_link.js"
                 output: "js/set_nav_active_link.js"
+            bio_control_sample_updater:
+                inputs:
+                  - "%kernel.root_dir%/../src/AppBundle/Resources/public/js/bio_control_sample_updater.js"
+                output: "js/bio_control_sample_updater.js"
 
             poem_css:
                 inputs:
@@ -132,7 +175,7 @@ assetic:
 
             poem_logo:
                 inputs:
-                - "%kernel.root_dir%/../src/AppBundle/Resources/public/images/poem_logo.png"
+                  - "%kernel.root_dir%/../src/AppBundle/Resources/public/images/poem_logo.png"
                 output: "poem_logo.png"
 
             summernote_css:

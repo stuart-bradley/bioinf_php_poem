@@ -8,10 +8,11 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
+use Doctrine\ORM\EntityRepository;
 
 class OmicsExperimentType extends AbstractType
 {
@@ -19,8 +20,6 @@ class OmicsExperimentType extends AbstractType
     {
         $builder
             ->add('projectName', TextType::class)
-            // Needs to be changed to EntityType when Users are added.
-            ->add('requestedBy', TextType::class)
             ->add('requestedDate', DateType::class)
             ->add('description', TextareaType::class, array('attr' => array('class' => 'summernote')))
             ->add('questions', TextareaType::class, array('label' => 'Questions to be answered', 'attr' => array('class' => 'summernote')))

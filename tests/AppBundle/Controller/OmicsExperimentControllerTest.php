@@ -7,12 +7,17 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 class OmicsExperimentControllerControllerTest extends WebTestCase
 {
 
+    private $helper;
+
+    protected function setUp()
+    {
+        $this->helper = new ControllerHelperMethods();
+        $this->helper->loadTestFixtures();
+        $this->loginAs($this->helper->fixtures->getReference('Stuart.Bradley'), 'main');
+    }
+
     public function testIndex()
     {
-
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
-
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/omics_experiment/index');
         $this->assertStatusCode(200, $client);
@@ -21,9 +26,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
 
     public function testShow()
     {
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
-
+        $helper = $this->helper;
         $client = $this->makeClient();
         $sequenceRunId = $helper->fixtures->getReference("omics_experiment_1")->getId();
         $crawler = $client->request('GET', "/omics_experiment/show/$sequenceRunId");
@@ -52,9 +55,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
 
     public function testCreate()
     {
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
-
+        $helper = $this->helper;
         $client = $this->makeClient();
         $crawler = $client->request('POST', "/omics_experiment/new");
 
@@ -84,12 +85,9 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
 
     public function testUpdate()
     {
-        $helper = new ControllerHelperMethods();
-        $helper->loadTestFixtures();
-
+        $helper = $this->helper;
         $client = $this->makeClient();
         $sequenceRunId = $helper->fixtures->getReference("omics_experiment_1")->getId();
-        $client = $this->makeClient();
         $crawler = $client->request('PATCH', "/omics_experiment/edit/$sequenceRunId");
 
         $form = $crawler->selectButton("Edit Experiment")->form();

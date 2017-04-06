@@ -12,9 +12,12 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class ControllerHelperMethods extends WebTestCase
 {
+    public $fixtures;
+
     public function loadTestFixtures()
     {
         $this->fixtures = $this->loadFixtures(array(
+            'AppBundle\DataFixtures\ORM\Real\LoadFOSUsers',
             'AppBundle\DataFixtures\ORM\Real\LoadMaterialTypeStrings',
             'AppBundle\DataFixtures\ORM\Real\LoadStatusStrings',
             'AppBundle\DataFixtures\ORM\Real\LoadOmicsExperimentSubTypeStrings',
@@ -75,8 +78,7 @@ class ControllerHelperMethods extends WebTestCase
         $sampleArray['BCExperimentID'] = 10;
         $sampleArray['BCSampleID'] = 10;
         $sampleArray['BCRunID'] = 10;
-        $sampleArray['sampledBy'] = 10;
-        $sampleArray['sampledBy'] = 10;
+        $sampleArray['sampledBy'] = $this->fixtures->getReference('Stuart.Bradley');
         $sampleArray['materialTypeString'] = 1;
         $sampleArray['RNALaterTreated'] = 1;
 

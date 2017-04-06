@@ -33,15 +33,6 @@ class OmicsExperiment
     private $projectName;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="requested_by", type="string")
-     *
-     * @Assert\NotBlank()
-     */
-    private $requestedBy;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="requested_date", type="date")
@@ -78,6 +69,12 @@ class OmicsExperiment
      * @Assert\Date()
      */
     private $requestedEndDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="omicsExperiments")
+     * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     */
+    private $requestedBy;
 
     /**
      * @var File
@@ -143,7 +140,7 @@ class OmicsExperiment
     /**
      * Get requestedBy
      *
-     * @return string
+     * @return FOSUser
      */
     public function getRequestedBy()
     {
@@ -153,7 +150,7 @@ class OmicsExperiment
     /**
      * Set requestedBy
      *
-     * @param string $requestedBy
+     * @param FOSUser $requestedBy
      *
      * @return OmicsExperiment
      */

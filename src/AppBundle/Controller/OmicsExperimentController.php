@@ -8,8 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-// TODO: deleteAction should be implemented.
-
 class OmicsExperimentController extends Controller {
     /**
      * @Route("/omics_experiment/index", name="omics_experiment_index")
@@ -35,6 +33,8 @@ class OmicsExperimentController extends Controller {
         $form->handleRequest($request);
         // On submission.
         if ($form->isSubmitted()) {
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $omics_experiment->setRequestedBy($user);
             $em->persist($omics_experiment);
 
             $em->flush();

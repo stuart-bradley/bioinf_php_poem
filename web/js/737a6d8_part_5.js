@@ -20,8 +20,8 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
         });
 
         // Observes new sub_type additions and updates them accordingly.
-        var observer = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutation) {
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
                 var nodes = mutation.addedNodes[0];
                 var sub_type_select = $(nodes).find("select[id$='omicsExperimentSubTypeString']");
                 // Checks if added node is a sub_type.
@@ -46,7 +46,7 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
     /*
      * Finds parent value and passes it to the update method.
      */
-    self.modify = function (selector) {
+    self.modify = function(selector) {
         var frame = $('ul.col-omics_experiment_types');
         var parent_val = $("option:selected", selector).text();
         // Finds experiment_sub_type select children.
@@ -59,7 +59,7 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
     /*
      * Takes parent value, and finds correct options before revealing them in list.
      */
-    self.update_child = function (child_selector, parent_val) {
+    self.update_child = function(child_selector, parent_val) {
         // Hides ALL options.
         $(child_selector).children('option').hide();
         // Shows relevant options.

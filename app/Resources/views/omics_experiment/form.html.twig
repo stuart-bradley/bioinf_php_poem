@@ -4,6 +4,7 @@
 {% form_theme form 'omics_experiment/omics_experiment_subfields.html.twig' %}
 
 {% block body %}
+    {{ parent() }}
     <div id="prototypes">
         <div id="proto-samples"
              data-prototype="{{ form_row(form.omicsExperimentTypes.vars.prototype.omicsExperimentSubTypes.vars.prototype.samples.vars.prototype)|e }}"></div>
@@ -21,7 +22,6 @@
     {% endif %}
     {{ form_start(form) }}
     {{ form_row(form.projectName) }}
-    {{ form_row(form.requestedBy) }}
     {{ form_row(form.requestedDate) }}
     {{ form_row(form.description) }}
     {{ form_row(form.questions) }}
@@ -31,7 +31,7 @@
     <ul style="list-style-type:none;padding-left:0;" class="col-files">
         {% for file in form.files %}
         <li class="panel panel-body panel-default">
-            <p><a href="{{ asset('uploads/omics_experiments/' ~ file.vars.value.path) }}">{{ file.vars.value.name }}</a></p>
+            <p><a href="{{ asset('uploads/' ~ file.vars.value.path) }}">{{ file.vars.value.name }}</a></p>
             {{ form_widget(file.file , { 'attr': {'style': 'display: none;'} }) }}
         </li>
         {% endfor %}
@@ -62,9 +62,16 @@
                             <ul style="list-style-type: none;" class="col-samples">
                                 {% for sample in omics_experiment_sub_type.samples %}
                                     <li class="panel panel-body panel-default">
-                                        {{ form_row(sample.BCExperimentID) }}
                                         {{ form_row(sample.BCSampleID) }}
+                                        <div class="progress" style="display:none">
+                                            <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: 100%">
+                                                <span class="sr-only">100% Complete</span>
+                                            </div>
+                                        </div>
                                         {{ form_row(sample.BCRunID) }}
+                                        {{ form_row(sample.BCExperimentID) }}
                                         {{ form_row(sample.sampledDateTime) }}
                                         {{ form_row(sample.sampledBy) }}
                                         {{ form_row(sample.RNALaterTreated) }}
@@ -96,12 +103,14 @@
     </button><br><br>
     {% if edit %}
         {{ form_widget(form.save, { 'label': 'Edit Experiment' }) }}
-        <a href="{{ path('omics_experiment_show', {'id': form.vars.value.id}) }}" class="btn btn-default">Back</a>
+        <a href="{{ path('omics_experiment_show', {'id': form.vars.value.id}) }}" class="btn btn-default"
+           onclick="return redirectConfirm()">Back</a>
         <a href="{{ path('omics_experiment_delete', {'id': form.vars.value.id}) }}" class="btn btn-default"
            onclick="return confirm('Are you sure you want to delete {{ form.vars.value.projectName }}?')">Delete</a>
     {% else %}
         {{ form_widget(form.save, { 'label': 'Create Experiment' }) }}
-        <a href="{{ path('omics_experiment_index') }}" class="btn btn-default">Back</a>
+        <a href="{{ path('omics_experiment_index') }}" class="btn btn-default"
+           onclick="return redirectConfirm()">Back</a>
     {% endif %}
     <div style="display: none;">{{ form_rest(form) }}</div>
     {{ form_end(form) }}
@@ -111,5 +120,6 @@
             <script type="text/javascript">
                 new FormCollections(['files', 'statuses', 'omics_experiment_types', 'omics_experiment_sub_types', 'samples']);
                 new ExpSubTypeSelectionUpdater({{ select_relations|json_encode()|raw }});
+                new BioControlSampleUpdater();
             </script>
         {% endblock %}
