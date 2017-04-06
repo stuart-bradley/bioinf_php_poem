@@ -31,7 +31,7 @@
     <ul style="list-style-type:none;padding-left:0;" class="col-files">
         {% for file in form.files %}
         <li class="panel panel-body panel-default">
-            <p><a href="{{ asset('uploads/omics_experiments/' ~ file.vars.value.path) }}">{{ file.vars.value.name }}</a></p>
+            <p><a href="{{ asset('uploads/' ~ file.vars.value.path) }}">{{ file.vars.value.name }}</a></p>
             {{ form_widget(file.file , { 'attr': {'style': 'display: none;'} }) }}
         </li>
         {% endfor %}

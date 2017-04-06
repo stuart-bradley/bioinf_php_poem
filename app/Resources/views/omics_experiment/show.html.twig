@@ -58,7 +58,6 @@
                 <ul style="list-style-type:none;padding-left:0;" class="col-files">
                     <li class="panel panel-body panel-default">
                         {% for file in omics_experiment.files %}
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <p><a href="{{ asset('uploads/' ~ file.path) }}">{{ file.name }}</a></p>
