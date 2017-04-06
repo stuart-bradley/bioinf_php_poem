@@ -14,12 +14,11 @@ function BioControlSampleUpdater() {
 
     self.construct = function () {
         var form = $('form');
+        $('input[id$="BCSampleID"]').each(function (index, value) {
+            self.blur_selects(value);
+        });
         form.on('change', 'input[id$="BCSampleID"]', function (e) {
             self.modify(e.target);
-        });
-
-        $(form).on('submit', function () {
-            $("select[id$='sampledBy']").prop('disabled', false);
         });
     };
 
@@ -29,6 +28,8 @@ function BioControlSampleUpdater() {
         BCExperiment_field = $(input_field).closest(".form-group").next().next().next().find("input[id$='BCExperimentID']");
         datetime_fields = $(input_field).closest(".form-group").next().next().next().next().find("div[id$='sampledDateTime']");
         sampledBy_field = $(input_field).closest(".form-group").next().next().next().next().next().find("select[id$='sampledBy']");
+
+        self.blur_selects(input_field);
 
         if ($(input_field).val().length > 0) {
             $.ajax({
@@ -89,6 +90,26 @@ function BioControlSampleUpdater() {
             value: user_id,
             text: cn
         }));
+    };
+
+    self.blur_selects = function (input_field) {
+        var datetime = $(input_field).closest(".form-group").next().next().next().next().find("div[id$='sampledDateTime']");
+        var sampledBy = $(input_field).closest(".form-group").next().next().next().next().next().find("select[id$='sampledBy']");
+        self.blur_field(sampledBy);
+        self.blur_field($(datetime).find("select[id$='date_month']"));
+        self.blur_field($(datetime).find("select[id$='date_day']"));
+        self.blur_field($(datetime).find("select[id$='date_year']"));
+        self.blur_field($(datetime).find("select[id$='time_hour']"));
+        self.blur_field($(datetime).find("select[id$='time_minute']"));
+    };
+
+    self.blur_field = function (field) {
+        $(field).css('background-color', '#eee');
+        $(field).css('pointer-events', 'none');
+
+        $(field).focus(function () {
+            $(this).blur();
+        });
     };
 
     self.construct();

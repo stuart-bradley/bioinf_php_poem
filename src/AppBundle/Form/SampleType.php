@@ -26,15 +26,14 @@ class SampleType extends AbstractType
                 'label' => 'BioControl experiment ID', 'attr' => array('readonly' => true)))
             ->add('sampledDateTime', DateTimeType::class, array(
                 'label' => 'Sample date and time',
-                'data' => new \DateTime(), 'attr' => array('readonly' => true)))
+                'data' => new \DateTime()))
             ->add('sampledBy', EntityType::class, array(
                 'class' => 'AppBundle:FOSUser',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.cn', 'ASC');
                 },
-                'choice_label' => 'cn',
-                'attr' => array('readonly' => true)
+                'choice_label' => 'cn'
             ))
             ->add('RNALaterTreated',CheckboxType::class,array(
                 'label' => 'Treated?',

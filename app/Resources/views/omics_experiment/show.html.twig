@@ -127,14 +127,6 @@
                                                                                 <li class="panel panel-body panel-default">
                                                                                     <div class="row">
                                                                                         <div class="col-md-12">
-                                                                                            <strong>BioControl
-                                                                                                experiment
-                                                                                                ID</strong>
-                                                                                            <p>{{ sample.BCExperimentID }}</p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-12">
                                                                                             <strong>BioControl sample
                                                                                                 ID</strong>
                                                                                             <p>{{ sample.BCSampleID }}</p>
@@ -149,9 +141,17 @@
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12">
+                                                                                            <strong>BioControl
+                                                                                                experiment
+                                                                                                ID</strong>
+                                                                                            <p>{{ sample.BCExperimentID }}</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
                                                                                             <strong>Sampled date
                                                                                                 time</strong>
-                                                                                            <p>{{ sample.sampledDateTime|date('Y-m-d H:i:s') }}</p>
+                                                                                            <p>{{ sample.sampledDateTime|date('Y-m-d H:i') }}</p>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="row">
