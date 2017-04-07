@@ -1,6 +1,6 @@
 
+<img align="center" src="https://raw.githubusercontent.com/lutrasdebtra/bioinf_php_poem/master/web/poem_logo.png">
 
-![poem_image](https://raw.githubusercontent.com/lutrasdebtra/bioinf_php_poem/master/web/poem_logo.png)
 
 ## POEM - Overview
 
