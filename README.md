@@ -1,5 +1,5 @@
 
-<img style="vertical-align: text-top;" width="150" src="https://raw.githubusercontent.com/lutrasdebtra/bioinf_php_poem/master/web/poem_logo.png">
+<img style="vertical-align: middle;" width="150" src="https://raw.githubusercontent.com/lutrasdebtra/bioinf_php_poem/master/web/poem_logo.png">
 
 
 ## POEM - Overview
