@@ -10657,8 +10657,7 @@ $(document).ready(function () {
 function redirectConfirm() {
 
     var chunked_pathname = window.location.pathname.split("/");
-    var pathname = chunked_pathname[chunked_pathname.length - 1];
-    if (pathname == "edit" || pathname == "new") {
+    if (chunked_pathname[chunked_pathname.length - 2] == "edit" || chunked_pathname[chunked_pathname.length - 1] == "new") {
         return confirm('Are you sure you want to leave this page? You will lose all new data.')
     }
     return true;
