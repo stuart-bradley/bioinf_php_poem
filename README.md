@@ -48,6 +48,15 @@ git clone https://github.com/lutrasdebtra/bioinf_php_poem
 cd /bioinf_php_poem
 ```
 
+### Prerequisites 
+
+Since POEM is a Symfony application, it relies on PHP and a small number of extensions:
+* PHP 7.0.
+* Composer
+* PHP-LDAP - For the user authentication.
+* Microsoft SQL (sqlsrv) PHP driver - Required for interfacing with BioControl. If it's setup in another database, that 
+driver will be required instead (see [Misc Config: BioControl](https://github.com/lutrasdebtra/bioinf_php_poem#biocontrol)). 
+
 ### Composer Installation
 
 ```
