@@ -1,8 +1,8 @@
 
 
-# ![poem_image](https://raw.githubusercontent.com/lutrasdebtra/bioinf_php_poem/master/web/poem_logo.png) POEM
+![poem_image](https://raw.githubusercontent.com/lutrasdebtra/bioinf_php_poem/master/web/poem_logo.png)
 
-## Overview
+## POEM - Overview
 
 POEM is a experiment management system for omics experiments and sequencing runs. It integrates with BioControl 
 and existing LDAP/AD authentication systems to make managing experiments digitally easy and seemless. 
