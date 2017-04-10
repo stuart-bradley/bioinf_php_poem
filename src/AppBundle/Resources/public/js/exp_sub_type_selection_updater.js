@@ -11,12 +11,12 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
      * Creates on change events for all omicsExperimentType
      * changes (even ones added later).
      */
-    self.construct = function () {
+    self.construct_selection_updater = function () {
         var omics_experiment_selector = $('ul.col-omics_experiment_types');
         // Monitors experiment_type selects for change.
         // on selector allows for selectors to be added without adding new events.
         omics_experiment_selector.on('change', 'select[id$="omicsExperimentTypeString"]', function (e) {
-            self.modify(e.target);
+            self.modify_selection_updater(e.target);
         });
 
         // Observes new sub_type additions and updates them accordingly.
@@ -46,7 +46,7 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
     /*
      * Finds parent value and passes it to the update method.
      */
-    self.modify = function(selector) {
+    self.modify_selection_updater = function (selector) {
         var frame = $('ul.col-omics_experiment_types');
         var parent_val = $("option:selected", selector).text();
         // Finds experiment_sub_type select children.
@@ -80,5 +80,5 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
         }
     };
 
-    self.construct();
+    self.construct_selection_updater();
 }
