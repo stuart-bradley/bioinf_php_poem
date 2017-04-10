@@ -7,6 +7,8 @@
 POEM is a experiment management system for omics experiments and sequencing runs. It integrates with BioControl 
 and existing LDAP/AD authentication systems to make managing experiments digitally easy and seemless. 
 
+Screencaps of the various views can be found in the [`\screenshots` folder](https://github.com/lutrasdebtra/bioinf_php_poem/tree/master/screenshots).
+
 ### General Features
 
 * **Omics Experiments**:
@@ -45,6 +47,15 @@ However, I will explain how to configure the various components.
 git clone https://github.com/lutrasdebtra/bioinf_php_poem
 cd /bioinf_php_poem
 ```
+
+### Prerequisites 
+
+Since POEM is a Symfony application, it relies on PHP and a small number of extensions:
+* PHP 7.0.
+* Composer
+* PHP-LDAP - For the user authentication.
+* Microsoft SQL (sqlsrv) PHP driver - Required for interfacing with BioControl. If it's setup in another database, that 
+driver will be required instead (see [Misc Config: BioControl](https://github.com/lutrasdebtra/bioinf_php_poem#biocontrol)). 
 
 ### Composer Installation
 

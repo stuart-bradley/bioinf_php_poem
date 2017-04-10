@@ -12,17 +12,17 @@ function BioControlSampleUpdater() {
     var datetime_fields;
     var sampledBy_field;
 
-    self.construct = function () {
+    self.construct_sample_fields = function () {
         var form = $('form');
         $('input[id$="BCSampleID"]').each(function (index, value) {
             self.blur_selects(value);
         });
         form.on('change', 'input[id$="BCSampleID"]', function (e) {
-            self.modify(e.target);
+            self.modify_sample_fields(e.target);
         });
     };
 
-    self.modify = function (input_field) {
+    self.modify_sample_fields = function (input_field) {
 
         BCRunID_field = $(input_field).closest(".form-group").next().next().find("input[id$='BCRunID']");
         BCExperiment_field = $(input_field).closest(".form-group").next().next().next().find("input[id$='BCExperimentID']");
@@ -112,5 +112,5 @@ function BioControlSampleUpdater() {
         });
     };
 
-    self.construct();
+    self.construct_sample_fields();
 }

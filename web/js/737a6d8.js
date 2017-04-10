@@ -10265,7 +10265,7 @@ function FormCollections(collection_classes) {
     /*
      * Generates buttons for already present entities.
      */
-    self.construct = function () {
+    self.construct_form_collections = function () {
         $.each(collection_classes, function (i, val) {
             var group = $('.col-' + val);
             // Add delete links to every LI group on the page.
@@ -10433,7 +10433,7 @@ function FormCollections(collection_classes) {
         return $(newForm);
     };
 
-    self.construct();
+    self.construct_form_collections();
 
 }
 /*
@@ -10449,12 +10449,12 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
      * Creates on change events for all omicsExperimentType
      * changes (even ones added later).
      */
-    self.construct = function () {
+    self.construct_selection_updater = function () {
         var omics_experiment_selector = $('ul.col-omics_experiment_types');
         // Monitors experiment_type selects for change.
         // on selector allows for selectors to be added without adding new events.
         omics_experiment_selector.on('change', 'select[id$="omicsExperimentTypeString"]', function (e) {
-            self.modify(e.target);
+            self.modify_selection_updater(e.target);
         });
 
         // Observes new sub_type additions and updates them accordingly.
@@ -10484,7 +10484,7 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
     /*
      * Finds parent value and passes it to the update method.
      */
-    self.modify = function(selector) {
+    self.modify_selection_updater = function (selector) {
         var frame = $('ul.col-omics_experiment_types');
         var parent_val = $("option:selected", selector).text();
         // Finds experiment_sub_type select children.
@@ -10518,7 +10518,7 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
         }
     };
 
-    self.construct();
+    self.construct_selection_updater();
 }
 /*
  * BioControlSampleUpdater
@@ -10534,17 +10534,17 @@ function BioControlSampleUpdater() {
     var datetime_fields;
     var sampledBy_field;
 
-    self.construct = function () {
+    self.construct_sample_fields = function () {
         var form = $('form');
         $('input[id$="BCSampleID"]').each(function (index, value) {
             self.blur_selects(value);
         });
         form.on('change', 'input[id$="BCSampleID"]', function (e) {
-            self.modify(e.target);
+            self.modify_sample_fields(e.target);
         });
     };
 
-    self.modify = function (input_field) {
+    self.modify_sample_fields = function (input_field) {
 
         BCRunID_field = $(input_field).closest(".form-group").next().next().find("input[id$='BCRunID']");
         BCExperiment_field = $(input_field).closest(".form-group").next().next().next().find("input[id$='BCExperimentID']");
@@ -10634,7 +10634,7 @@ function BioControlSampleUpdater() {
         });
     };
 
-    self.construct();
+    self.construct_sample_fields();
 }
 /**
  * Created by wackm on 19-Mar-17.

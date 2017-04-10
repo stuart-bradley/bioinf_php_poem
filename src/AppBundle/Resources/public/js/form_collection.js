@@ -33,7 +33,7 @@ function FormCollections(collection_classes) {
     /*
      * Generates buttons for already present entities.
      */
-    self.construct = function () {
+    self.construct_form_collections = function () {
         $.each(collection_classes, function (i, val) {
             var group = $('.col-' + val);
             // Add delete links to every LI group on the page.
@@ -201,6 +201,6 @@ function FormCollections(collection_classes) {
         return $(newForm);
     };
 
-    self.construct();
+    self.construct_form_collections();
 
 }
