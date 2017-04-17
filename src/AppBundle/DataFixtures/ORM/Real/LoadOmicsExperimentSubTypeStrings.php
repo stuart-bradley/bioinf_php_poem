@@ -19,7 +19,10 @@ class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements Order
             "Contamination Analysis",
             "Genome Assembly",
             "Time Course",
-            "Differential Expression"
+            "Differential Expression",
+            "Standard",
+            "New Strain Genome Sequencing",
+            "Construct Sequencing"
         ];
 
 
