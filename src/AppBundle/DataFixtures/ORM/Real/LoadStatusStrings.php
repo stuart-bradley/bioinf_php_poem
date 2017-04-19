@@ -29,10 +29,15 @@ class LoadStatusStrings extends AbstractFixture implements OrderedFixtureInterfa
         ];
 
         foreach ($statuses as $status) {
-            $statusString = new StatusStrings();
-            $statusString->setType($status);
+            $statusString = $manager
+                ->getRepository('AppBundle:StatusStrings')
+                ->findOneBy(array('type' => $status));
+            if ($statusString == null) {
+                $statusString = new StatusStrings();
+                $statusString->setType($status);
+                $manager->persist($statusString);
+            }
             $this->addReference($status, $statusString);
-            $manager->persist($statusString);
         }
         $manager->flush();
     }

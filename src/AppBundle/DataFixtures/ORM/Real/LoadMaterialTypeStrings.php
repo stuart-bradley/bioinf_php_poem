@@ -21,10 +21,15 @@ class LoadMaterialTypeStrings extends AbstractFixture implements OrderedFixtureI
         ];
 
         foreach ($materialTypes as $materialType) {
-            $materialTypeString = new MaterialTypeStrings();
-            $materialTypeString->setType($materialType);
+            $materialTypeString = $manager
+                ->getRepository('AppBundle:StatusStrings')
+                ->findOneBy(array('type' => $materialType));
+            if ($materialTypeString == null) {
+                $materialTypeString = new MaterialTypeStrings();
+                $materialTypeString->setType($materialType);
+                $manager->persist($materialTypeString);
+            }
             $this->addReference($materialType, $materialTypeString);
-            $manager->persist($materialTypeString);
         }
         $manager->flush();
     }

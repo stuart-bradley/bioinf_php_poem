@@ -5,6 +5,7 @@
 namespace AppBundle\DataFixtures\ORM\Real;
 
 use AppBundle\Entity\OmicsExperimentTypeStrings;
+use Composer\Installer\PackageEvent;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,9 +22,20 @@ class LoadOmicsExperimentTypeStrings extends AbstractFixture implements OrderedF
         ];
 
         foreach ($omicsExperimentTypes as $experimentType => $children) {
-            $omicsExperimentTypeString = new OmicsExperimentTypeStrings();
-            $omicsExperimentTypeString->setType($experimentType);
-            foreach ($children as $child) {
+            $omicsExperimentTypeString = $manager
+                ->getRepository('AppBundle:OmicsExperimentTypeStrings')
+                ->findOneBy(array('type' => $experimentType));
+            if ($omicsExperimentTypeString == null) {
+                $omicsExperimentTypeString = new OmicsExperimentTypeStrings();
+                $omicsExperimentTypeString->setType($experimentType);
+            }
+            // If existing subtype is in list, return false so it's ignored.
+            $remaining_children = $omicsExperimentTypeString->getOmicsExperimentSubTypeStrings()
+                ->filter(function ($omicsExperimentSubType) use ($children) {
+                    return !(in_array($omicsExperimentSubType->getType(), $children));
+                });
+
+            foreach ($remaining_children as $child) {
                 $omicsExperimentTypeString->addOmicsExperimentSubTypeString($this->getReference($child));
             }
             $this->addReference($experimentType, $omicsExperimentTypeString);
