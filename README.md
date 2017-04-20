@@ -118,6 +118,17 @@ A test LDAP configuration is commented out in `config.yml` which would allow you
 This bundle uses fixtures defined in `/src/AppBundle/DataFixtures/ORM/Test` to run functional tests on both
 Omics Experiments and Sequencing Runs. These tests can be run via `phpunit`.
 
+##### [DoctrineFixturesBundle](https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html)
+
+This bundle allows for database changes during production mode. Migrations are added to the database via:
+
+```
+php bin/console doctrine:migrations:migrate
+```
+The quickest way to generate a migration is to change the appropriate entities and then run:
+```
+php bin/console doctrine:migrations:diff
+```
 #### Parameters
 
 During the Composer install, a number of parameters must be set, these are as follows:
@@ -166,6 +177,7 @@ The following commands must also be run with the `dev` and `test` `env` flags:
 php bin/console doctrine:database:create --env=prod
 php bin/console doctrine:schema:update --force --env=prod
 php bin/console doctrine:fixtures:load --fixtures=src/AppBundle/DataFixtures/ORM/Real --env=prod
+php bin/console doctrine:migrations:version --add --all --env=prod
 ```
 
 ### Misc Config
