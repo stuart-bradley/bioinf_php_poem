@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -35,6 +36,7 @@ class SampleType extends AbstractType
                 },
                 'choice_label' => 'cn'
             ))
+            ->add('comments', TextareaType::class, array('required' => false))
             ->add('RNALaterTreated',CheckboxType::class,array(
                 'label' => 'Treated?',
                 'required' => false))

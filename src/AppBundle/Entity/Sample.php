@@ -64,6 +64,14 @@ class Sample
     private $RNALaterTreated;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="comments", type="text", nullable=true)
+     *
+     */
+    private $comments;
+
+    /**
      * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="samples")
      * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
      */
@@ -222,6 +230,30 @@ class Sample
     public function getRNALaterTreated()
     {
         return $this->RNALaterTreated;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set questions
+     *
+     * @param string $comments
+     *
+     * @return Sample
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+
+        return $this;
     }
 
     /**
