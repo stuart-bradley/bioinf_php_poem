@@ -21,15 +21,21 @@ class BioControllerControllerControllerTest extends WebTestCase
         $helper = $this->helper;
         $client = $this->makeClient();
 
-        $payload = ['sample_number' => 67655];
-        $client->request(
+        $crawler = $client->request(
             'POST',
             "/bio_control/sample",
-            $payload,
-            [],
-            ['HTTP_Content-Type' => 'application/json']
+            array('sample_number' => 67655),
+            array(),
+            array('HTTP_Content-Type' => 'application/json')
         );
 
+        $JSON_response = json_decode($client->getResponse()->getContent(), true);
+
         $this->assertStatusCode(200, $client);
+        $this->assertNotEmpty($JSON_response);
+
+        $this->assertEquals($JSON_response["code"], 100);
+        $this->assertEquals($JSON_response["success"], true);
+        $this->assertEquals($JSON_response["sample_number"], 67655);
     }
 }
