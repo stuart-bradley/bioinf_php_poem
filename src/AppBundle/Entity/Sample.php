@@ -25,7 +25,7 @@ class Sample
     /**
      * @var int
      *
-     * @ORM\Column(name="bcexperiment_id", type="integer")
+     * @ORM\Column(name="bcexperiment_id", type="integer", nullable=true)
      *
      */
     private $BCExperimentID;
@@ -33,7 +33,7 @@ class Sample
     /**
      * @var int
      *
-     * @ORM\Column(name="bcsample_id", type="integer")
+     * @ORM\Column(name="bcsample_id", type="integer", nullable=true)
      *
      */
     private $BCSampleID;
@@ -41,7 +41,7 @@ class Sample
     /**
      * @var int
      *
-     * @ORM\Column(name="bcrun_id", type="integer")
+     * @ORM\Column(name="bcrun_id", type="integer", nullable=true)
      *
      */
     private $BCRunID;
