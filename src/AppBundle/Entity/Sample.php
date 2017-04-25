@@ -27,7 +27,6 @@ class Sample
      *
      * @ORM\Column(name="bcexperiment_id", type="integer")
      *
-     * @Assert\NotBlank()
      */
     private $BCExperimentID;
 
@@ -36,7 +35,6 @@ class Sample
      *
      * @ORM\Column(name="bcsample_id", type="integer")
      *
-     * @Assert\NotBlank()
      */
     private $BCSampleID;
 
@@ -45,7 +43,6 @@ class Sample
      *
      * @ORM\Column(name="bcrun_id", type="integer")
      *
-     * @Assert\NotBlank()
      */
     private $BCRunID;
 

@@ -19,11 +19,11 @@ class SampleType extends AbstractType
     {
         $builder
             ->add('BCSampleID', IntegerType::class, array(
-                'label' => 'BioControl sample ID'))
+                'label' => 'BioControl sample ID', 'required' => false))
             ->add('BCRunID', IntegerType::class, array(
-                'label' => 'BioControl run ID', 'attr' => array('readonly' => true)))
+                'label' => 'BioControl run ID', 'required' => false))
             ->add('BCExperimentID', IntegerType::class, array(
-                'label' => 'BioControl experiment ID', 'attr' => array('readonly' => true)))
+                'label' => 'BioControl experiment ID', 'required' => false))
             ->add('sampledDateTime', DateTimeType::class, array(
                 'label' => 'Sample date and time',
                 'data' => new \DateTime()))
