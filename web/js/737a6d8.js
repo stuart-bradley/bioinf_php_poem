@@ -10533,6 +10533,7 @@ function BioControlSampleUpdater() {
     var BCExperiment_field;
     var datetime_fields;
     var sampledBy_field;
+    var comments_field;
 
     self.construct_sample_fields = function () {
         var form = $('form');
@@ -10552,6 +10553,8 @@ function BioControlSampleUpdater() {
         BCExperiment_field = $(input_field).closest(".form-group").next().next().next().find("input[id$='BCExperimentID']");
         datetime_fields = $(input_field).closest(".form-group").next().next().next().next().find("div[id$='sampledDateTime']");
         sampledBy_field = $(input_field).closest(".form-group").next().next().next().next().next().find("select[id$='sampledBy']");
+        comments_field = $(input_field).closest(".form-group").next().next().next().next().next().next().find("textarea[id$='comments']");
+
 
         if ($(input_field).val().length > 0) {
             $.ajax({
@@ -10575,6 +10578,7 @@ function BioControlSampleUpdater() {
                             self.add_new_user(sampledBy_field, response.sample_data['PerNam'], response.user_id)
                         }
                         $(sampledBy_field).val(response.user_id);
+                        $(comments_field).val(response.comments);
                     } else {
                         self.resetFields(input_field);
                     }
@@ -10622,10 +10626,11 @@ function BioControlSampleUpdater() {
         var BCExperiment = $(input_field).closest(".form-group").next().next().next().find("input[id$='BCExperimentID']");
         var datetime = $(input_field).closest(".form-group").next().next().next().next().find("div[id$='sampledDateTime']");
         var sampledBy = $(input_field).closest(".form-group").next().next().next().next().next().find("select[id$='sampledBy']");
-
+        var comments = $(input_field).closest(".form-group").next().next().next().next().next().next().find("textarea[id$='comments']");
         self.blur_field(BCRunID, toggle);
         self.blur_field(BCExperiment, toggle);
         self.blur_field(sampledBy, toggle);
+        self.blur_field(comments, toggle);
         self.blur_field($(datetime).find("select[id$='date_month']"), toggle);
         self.blur_field($(datetime).find("select[id$='date_day']"), toggle);
         self.blur_field($(datetime).find("select[id$='date_year']"), toggle);
