@@ -23,7 +23,7 @@ class BioControlController extends Controller
 
         $queryBuilder = $bioControlEm->createQueryBuilder();
         $queryBuilder
-            ->select('s.SmpID', 's.RunID', 'r.ExpID', 's.Dat', 'p.PerNam')
+            ->select('s.SmpID', 's.RunID', 'r.ExpID', 's.Dat', 'p.PerNam', 'r.InoculationTime')
             ->from('Samples', 's')
             ->innerJoin('s', 'Runs', 'r', 's.RunID = r.RunID')
             ->innerJoin('s', 'Person', 'p', 's.PerID=p.PerID')
@@ -35,7 +35,7 @@ class BioControlController extends Controller
         if (empty($sample)) {
             $response = array("code" => 100, "success" => false, "sample_number" => $sample_number, "sample_data" => array(), "new_user" => false, "comments" => "");
         } else {
-            $comments = $this->createCommentSection($sample);
+            $comments = $this->createCommentSection($sample[0]);
             $user = $this->getDoctrine()
                 ->getRepository('AppBundle:FOSUser')
                 ->findOneByCn($sample[0]['PerNam']);
@@ -81,7 +81,18 @@ class BioControlController extends Controller
 
     private function createCommentSection($sample)
     {
-        $comments = "test";
+        $comments = "";
+
+        if (!empty($sample["InoculationTime"])) {
+            $date_org = new \DateTime($sample["InoculationTime"]);
+            $date_now = new \DateTime();
+
+            $diff = $date_org->diff($date_now)->format("%a");
+
+            $comments .= "Fermentation Day: " . $diff . "\n";
+        }
+
+        $comments = rtrim($comments);
 
         return $comments;
     }
