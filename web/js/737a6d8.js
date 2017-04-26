@@ -10549,11 +10549,11 @@ function BioControlSampleUpdater() {
 
     self.modify_sample_fields = function (input_field) {
 
-        BCRunID_field = $(input_field).closest(".form-group").next().next().find("input[id$='BCRunID']");
-        BCExperiment_field = $(input_field).closest(".form-group").next().next().next().find("input[id$='BCExperimentID']");
-        datetime_fields = $(input_field).closest(".form-group").next().next().next().next().find("div[id$='sampledDateTime']");
-        sampledBy_field = $(input_field).closest(".form-group").next().next().next().next().next().find("select[id$='sampledBy']");
-        comments_field = $(input_field).closest(".form-group").next().next().next().next().next().next().find("textarea[id$='comments']");
+        BCRunID_field = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCRunID']");
+        BCExperiment_field = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCExperimentID']");
+        datetime_fields = $(input_field).closest(".form-group").parent().find("div.form-group > div[id$='sampledDateTime']");
+        sampledBy_field = $(input_field).closest(".form-group").parent().find("div.form-group > select[id$='sampledBy']");
+        comments_field = $(input_field).closest(".form-group").parent().find("div.form-group > textarea[id$='comments']");
 
 
         if ($(input_field).val().length > 0) {
@@ -10622,11 +10622,12 @@ function BioControlSampleUpdater() {
     };
 
     self.blur_selects_toggle = function (input_field, toggle) {
-        var BCRunID = $(input_field).closest(".form-group").next().next().find("input[id$='BCRunID']");
-        var BCExperiment = $(input_field).closest(".form-group").next().next().next().find("input[id$='BCExperimentID']");
-        var datetime = $(input_field).closest(".form-group").next().next().next().next().find("div[id$='sampledDateTime']");
-        var sampledBy = $(input_field).closest(".form-group").next().next().next().next().next().find("select[id$='sampledBy']");
-        var comments = $(input_field).closest(".form-group").next().next().next().next().next().next().find("textarea[id$='comments']");
+        var BCRunID = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCRunID']");
+        var BCExperiment = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCExperimentID']");
+        var datetime = $(input_field).closest(".form-group").parent().find("div.form-group > div[id$='sampledDateTime']");
+        var sampledBy = $(input_field).closest(".form-group").parent().find("div.form-group > select[id$='sampledBy']");
+        var comments = $(input_field).closest(".form-group").parent().find("div.form-group > textarea[id$='comments']");
+
         self.blur_field(BCRunID, toggle);
         self.blur_field(BCExperiment, toggle);
         self.blur_field(sampledBy, toggle);
