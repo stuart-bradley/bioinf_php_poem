@@ -22,16 +22,22 @@ class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements Order
             "Differential Expression",
             "Standard",
             "New Strain Genome Sequencing",
-            "Construct Sequencing"
+            "Construct Sequencing",
+            "Glycerol Stock"
         ];
 
 
         foreach ($omicsExperimentSubTypes as $experimentSubType) {
-            $omicsExperimentSubTypeString = new OmicsExperimentSubTypeStrings();
-            $omicsExperimentSubTypeString->setType($experimentSubType);
+            $omicsExperimentSubTypeString = $manager
+                ->getRepository('AppBundle:OmicsExperimentSubTypeStrings')
+                ->findOneBy(array('type' => $experimentSubType));
+            if ($omicsExperimentSubTypeString == null) {
+                $omicsExperimentSubTypeString = new OmicsExperimentSubTypeStrings();
+                $omicsExperimentSubTypeString->setType($experimentSubType);
+                $manager->persist($omicsExperimentSubTypeString);
+            }
             // Reference to object via type string for use in LoadOmicsExperimentTypeStrings.
             $this->addReference($experimentSubType, $omicsExperimentSubTypeString);
-            $manager->persist($omicsExperimentSubTypeString);
         }
 
         $manager->flush();

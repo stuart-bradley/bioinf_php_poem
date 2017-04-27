@@ -109,6 +109,12 @@ fr3d_ldap:
 #         - { ldap_attr: mail,  user_method: setEmail }
 #      filter: (&(ObjectClass=person))
 
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
+
 assetic:
     debug:          '%kernel.debug%'
     use_controller: '%kernel.debug%'

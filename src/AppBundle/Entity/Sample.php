@@ -25,27 +25,24 @@ class Sample
     /**
      * @var int
      *
-     * @ORM\Column(name="bcexperiment_id", type="integer")
+     * @ORM\Column(name="bcexperiment_id", type="integer", nullable=true)
      *
-     * @Assert\NotBlank()
      */
     private $BCExperimentID;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="bcsample_id", type="integer")
+     * @ORM\Column(name="bcsample_id", type="integer", nullable=true)
      *
-     * @Assert\NotBlank()
      */
     private $BCSampleID;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="bcrun_id", type="integer")
+     * @ORM\Column(name="bcrun_id", type="integer", nullable=true)
      *
-     * @Assert\NotBlank()
      */
     private $BCRunID;
 
@@ -65,6 +62,14 @@ class Sample
      *
      */
     private $RNALaterTreated;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comments", type="text", nullable=true)
+     *
+     */
+    private $comments;
 
     /**
      * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="samples")
@@ -225,6 +230,30 @@ class Sample
     public function getRNALaterTreated()
     {
         return $this->RNALaterTreated;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Set questions
+     *
+     * @param string $comments
+     *
+     * @return Sample
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+
+        return $this;
     }
 
     /**

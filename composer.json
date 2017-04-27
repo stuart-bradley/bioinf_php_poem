@@ -34,7 +34,8 @@
     "twig/twig": "1.*",
     "components/jquery": "3.1.1",
     "friendsofsymfony/user-bundle": "~2.0.0-beta2",
-    "fr3d/ldap-bundle": "3.0.*@dev"
+    "fr3d/ldap-bundle": "3.0.*@dev",
+    "doctrine/doctrine-migrations-bundle": "^1.0"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",
