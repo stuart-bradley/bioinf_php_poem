@@ -2,7 +2,7 @@
 <img style="vertical-align: middle;" width="150" src="https://raw.githubusercontent.com/lutrasdebtra/bioinf_php_poem/master/web/poem_logo.png">
 
 
-## POEM - Overview
+## POEM (Portal for Omics Experiment Management) - Overview
 
 POEM is a experiment management system for omics experiments and sequencing runs. It integrates with BioControl 
 and existing LDAP/AD authentication systems to make managing experiments digitally easy and seemless. 
@@ -81,6 +81,8 @@ During the composer installation a number of third-party packages will be instal
  experiment types can have specific sub-types as defined in the prior file's associative array. New sub-types will also 
  need to be added to `LoadOmicsExperimentSubTypeStrings.php`.
  
+ All of these fixtures have been created so that they can safely used with the `--append` flag.
+ 
 ##### [AsseticBundle](https://symfony.com/doc/current/assetic/asset_management.html)
 
 Assetic is used to manage static web assets. All files have been precompiled into the `/web` folder. Any additional assets 
@@ -118,7 +120,7 @@ A test LDAP configuration is commented out in `config.yml` which would allow you
 This bundle uses fixtures defined in `/src/AppBundle/DataFixtures/ORM/Test` to run functional tests on both
 Omics Experiments and Sequencing Runs. These tests can be run via `phpunit`.
 
-##### [DoctrineFixturesBundle](https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html)
+##### [DoctrineMigrationsBundle](https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html)
 
 This bundle allows for database changes during production mode. Migrations are added to the database via:
 
@@ -217,13 +219,14 @@ Additionally, in `src/AppBundle/Controller/BioControlController.php` a very spec
 required information:
 
 ```php
-$queryBuilder
-    ->select('s.SmpID', 's.RunID', 'r.ExpID', 's.Dat', 'p.PerNam')
-    ->from('Samples', 's')
-    ->innerJoin('s', 'Runs', 'r', 's.RunID = r.RunID')
-    ->innerJoin('s', 'Person', 'p', 's.PerID=p.PerID')
-    ->where('s.SmpID = ?')
-    ->setParameter(0, $sample_number);
+$queryBuilder = $bioControlEm->createQueryBuilder();
+        $queryBuilder
+            ->select('s.SmpID', 's.RunID', 'r.ExpID', 's.Dat', 'p.PerNam', 'r.InoculationTime')
+            ->from('Samples', 's')
+            ->innerJoin('s', 'Runs', 'r', 's.RunID = r.RunID')
+            ->innerJoin('s', 'Person', 'p', 's.PerID=p.PerID')
+            ->where('s.SmpID = ?')
+            ->setParameter(0, $sample_number);
 ```
 
 If BioControl is setup differently, this query will have to be changed. To function the resulting query needs to look
@@ -236,7 +239,8 @@ array (
         'RunID' => <integer>,
         'ExpID' => <integer>,
         'Dat' => <DateTime>,
-        'perNam' => <string>
+        'perNam' => <string>,
+        'InoculationTime' => <DateTime>
     )   
 )
 ```
@@ -255,6 +259,16 @@ works correctly. A example `load` function is provided below that gets all users
 ```php
 public function load(ObjectManager $manager)
 {
+    $ldap_groups = array(
+        "Team_BioInformatics" => "Bioinformatics",
+        "Team_Fermentation" => "Fermentation",
+        "Team_Synthetic Biology" => "Synthetic Biology",
+        "Team_Eng Process Engineering" => "Process Engineering",
+        "Team_Eng Global Operations" => "Engineering",
+        "Team_Eng Design Development" => "Engineering",
+        "Team_Process Validation" => "Process Validation"
+    );
+
     $options = array(
         'host' => $this->container->getParameter('ldap_host'),
         'port' => $this->container->getParameter('ldap_port'),
@@ -269,27 +283,39 @@ public function load(ObjectManager $manager)
 
     $baseDn = $this->container->getParameter('ldap_baseDn_users');
     $filter = '(&(&(ObjectClass=user))(samaccountname=*))';
-    $attributes = ['samaccountname', 'dn', 'mail', 'cn'];
+    $attributes = ['samaccountname', 'dn', 'mail', 'memberof', 'cn'];
     $result = $ldap->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
 
     $members = [];
 
     foreach ($result as $item) {
-        if (!in_array($item["samaccountname"][0], $members)) {
-            $user = new FOSUser();
-            $user->setDn($item["dn"]);
-            $user->setEnabled(1);
-            $user->setUsername($item["samaccountname"][0]);
-            $user->setUsernameCanonical(strtolower($item["samaccountname"][0]));
-            $user->setEmail($item["mail"][0]);
-            $user->setEmailCanonical(strtolower($item["mail"][0]));
-            $user->setCn($item['cn'][0]);
-            $user->setFromBioControl(false);
+        if (array_key_exists("memberof", $item)) {
+            foreach ($item["memberof"] as $group) {
+                $matches = [];
+                preg_match("/CN=([\w\s]+),/", $group, $matches);
+                if (array_key_exists(1, $matches) && array_key_exists($matches[1], $ldap_groups) && !in_array($item["samaccountname"][0], $members)) {
+                    $user = $manager
+                        ->getRepository('AppBundle:FOSUser')
+                        ->findOneBy(array('username' => $item["samaccountname"][0]));
+                    if ($user == null) {
+                        $user = new FOSUser();
+                        $user->setDn($item["dn"]);
+                        $user->setEnabled(1);
+                        $user->setUsername($item["samaccountname"][0]);
+                        $user->setUsernameCanonical(strtolower($item["samaccountname"][0]));
+                        $user->setEmail($item["mail"][0]);
+                        $user->setEmailCanonical(strtolower($item["mail"][0]));
+                        $user->setDepartment($ldap_groups[$matches[1]]);
+                        $user->setDepartmentDn($group);
+                        $user->setCn($item['cn'][0]);
+                        $user->setFromBioControl(false);
 
-            $this->addReference($item["samaccountname"][0], $user);
-
-            $members[] = $item["samaccountname"][0];
-            $manager->persist($user);
+                        $manager->persist($user);
+                    }
+                    $this->addReference($item["samaccountname"][0], $user);
+                    $members[] = $item["samaccountname"][0];
+                }
+            }
         }
     }
     $manager->flush();
