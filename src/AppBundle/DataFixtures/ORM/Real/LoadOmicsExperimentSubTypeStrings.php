@@ -15,15 +15,10 @@ class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements Order
     {
 
         $omicsExperimentSubTypes = [
-            "Mutation Analysis",
-            "Contamination Analysis",
-            "Genome Assembly",
-            "Time Course",
-            "Differential Expression",
+            "Mutation Analysis", "Contamination Analysis", "Genome Assembly",
+            "Time Course", "Differential Expression",
             "Standard",
-            "New Strain Genome Sequencing",
-            "Construct Sequencing",
-            "Glycerol Stock"
+            "New Strain Genome Sequencing", "Construct Sequencing"
         ];
 
 
@@ -39,7 +34,6 @@ class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements Order
             // Reference to object via type string for use in LoadOmicsExperimentTypeStrings.
             $this->addReference($experimentSubType, $omicsExperimentSubTypeString);
         }
-
         $manager->flush();
     }
 

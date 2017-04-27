@@ -140,6 +140,14 @@ class OmicsExperimentTypeStrings
     }
 
     /**
+     * Removal all omicsExperimentSubTypeStrings
+     */
+    public function removeAllOmicsExperimentSubTypeStrings()
+    {
+        $this->omicsExperimentSubTypeStrings = new ArrayCollection();
+    }
+
+    /**
      * Get omicsExperimentSubTypeStrings
      *
      * @return \Doctrine\Common\Collections\Collection

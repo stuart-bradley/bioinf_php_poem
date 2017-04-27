@@ -86,7 +86,6 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
                 }
             }
         }
-
         $manager->flush();
     }
 

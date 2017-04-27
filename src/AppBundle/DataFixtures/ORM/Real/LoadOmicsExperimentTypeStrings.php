@@ -29,13 +29,10 @@ class LoadOmicsExperimentTypeStrings extends AbstractFixture implements OrderedF
                 $omicsExperimentTypeString = new OmicsExperimentTypeStrings();
                 $omicsExperimentTypeString->setType($experimentType);
             }
-            // If existing subtype is in list, return false so it's ignored.
-            $remaining_children = $omicsExperimentTypeString->getOmicsExperimentSubTypeStrings()
-                ->filter(function ($omicsExperimentSubType) use ($children) {
-                    return !(in_array($omicsExperimentSubType->getType(), $children));
-                });
 
-            foreach ($remaining_children as $child) {
+            $omicsExperimentTypeString->removeAllOmicsExperimentSubTypeStrings();
+
+            foreach ($children as $child) {
                 $omicsExperimentTypeString->addOmicsExperimentSubTypeString($this->getReference($child));
             }
             $this->addReference($experimentType, $omicsExperimentTypeString);
