@@ -29,6 +29,7 @@ class SampleType extends AbstractType
                 'label' => 'Sample date and time',
                 'data' => new \DateTime()))
             ->add('sampledBy', EntityType::class, array(
+                'required' => false,
                 'class' => 'AppBundle:FOSUser',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')

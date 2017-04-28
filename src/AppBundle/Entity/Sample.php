@@ -74,6 +74,8 @@ class Sample
     /**
      * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="samples")
      * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     *
+     * @Assert\NotBlank()
      */
     private $sampledBy;
 
