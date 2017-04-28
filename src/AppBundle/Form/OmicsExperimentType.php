@@ -19,10 +19,10 @@ class OmicsExperimentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('projectName', TextType::class)
+            ->add('projectName', TextType::class, array('required' => false))
             ->add('requestedDate', DateType::class)
-            ->add('description', TextareaType::class, array('attr' => array('class' => 'summernote')))
-            ->add('questions', TextareaType::class, array('label' => 'Questions to be answered', 'attr' => array('class' => 'summernote')))
+            ->add('description', TextareaType::class, array('required' => false, 'attr' => array('class' => 'summernote')))
+            ->add('questions', TextareaType::class, array('required' => false, 'label' => 'Questions to be answered', 'attr' => array('class' => 'summernote')))
             ->add('requestedEndDate', DateType::class)
             ->add('files', CollectionType::class, array(
                 'entry_type' => DataFileType::class,
