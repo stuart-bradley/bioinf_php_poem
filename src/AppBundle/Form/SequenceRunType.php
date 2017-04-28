@@ -24,13 +24,13 @@ class SequenceRunType extends AbstractType
             ->add('endDate', DateType::class, array(
                 'data' => new \DateTime(),
             ))
-            ->add('kit', TextType::class)
+            ->add('kit', TextType::class, array('required' => false))
             ->add('materialTypeString', EntityType::class, array(
                 'class' => 'AppBundle:MaterialTypeStrings',
                 'choice_label' => 'type',
                 'label' => 'Material type'))
-            ->add('runCoverageTarget', IntegerType::class)
-            ->add('readLength', IntegerType::class)
+            ->add('runCoverageTarget', IntegerType::class, array('required' => false))
+            ->add('readLength', IntegerType::class, array('required' => false))
             ->add('files', CollectionType::class, array(
                 'entry_type' => DataFileType::class,
                 'allow_add' => true,
