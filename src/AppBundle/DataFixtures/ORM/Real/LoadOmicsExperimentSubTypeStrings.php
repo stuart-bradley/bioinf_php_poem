@@ -15,10 +15,9 @@ class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements Order
     {
 
         $omicsExperimentSubTypes = [
-            "Mutation Analysis", "Contamination Analysis", "Genome Assembly",
             "Time Course", "Differential Expression",
             "Standard",
-            "New Strain Genome Sequencing", "Construct Sequencing"
+            "Time Course", "Strain", "Contamination Check", "De Novo Assembly"
         ];
 
 
