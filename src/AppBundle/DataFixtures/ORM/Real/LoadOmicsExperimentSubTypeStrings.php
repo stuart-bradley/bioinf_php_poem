@@ -14,24 +14,27 @@ class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements Order
     public function load(ObjectManager $manager)
     {
 
-        $omicsExperimentSubTypes = [
-            "Time Course", "Differential Expression",
-            "Standard",
-            "Strain", "Contamination Check", "De Novo Assembly"
+        $omicsExperimentTypes = [
+            "Transcriptomics" => ["Time Course", "Differential Expression"],
+            "Proteomics" => ["Standard"],
+            "Metabolomics" => ["Standard"],
+            "Genomics" => ["Time Course", "Strain", "Contamination Check", "De Novo Assembly"]
         ];
 
-
-        foreach ($omicsExperimentSubTypes as $experimentSubType) {
-            $omicsExperimentSubTypeString = $manager
-                ->getRepository('AppBundle:OmicsExperimentSubTypeStrings')
-                ->findOneBy(array('type' => $experimentSubType));
-            if ($omicsExperimentSubTypeString == null) {
-                $omicsExperimentSubTypeString = new OmicsExperimentSubTypeStrings();
-                $omicsExperimentSubTypeString->setType($experimentSubType);
-                $manager->persist($omicsExperimentSubTypeString);
+        foreach ($omicsExperimentTypes as $experimentType => $children) {
+            foreach ($children as $experimentSubType) {
+                $omicsExperimentSubTypeString = $manager
+                    ->getRepository('AppBundle:OmicsExperimentSubTypeStrings')
+                    ->findOneBy(array('type' => $experimentSubType));
+                if ($omicsExperimentSubTypeString == null) {
+                    $omicsExperimentSubTypeString = new OmicsExperimentSubTypeStrings();
+                    $omicsExperimentSubTypeString->setType($experimentSubType);
+                    $manager->persist($omicsExperimentSubTypeString);
+                }
+                // Reference to object via type string for use in LoadOmicsExperimentTypeStrings.
+                $this->addReference($experimentType . ":" . $experimentSubType, $omicsExperimentSubTypeString);
             }
-            // Reference to object via type string for use in LoadOmicsExperimentTypeStrings.
-            $this->addReference($experimentSubType, $omicsExperimentSubTypeString);
+
         }
         $manager->flush();
     }
