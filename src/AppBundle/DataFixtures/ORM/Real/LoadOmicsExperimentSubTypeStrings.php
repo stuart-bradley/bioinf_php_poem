@@ -17,7 +17,7 @@ class LoadOmicsExperimentSubTypeStrings extends AbstractFixture implements Order
         $omicsExperimentSubTypes = [
             "Time Course", "Differential Expression",
             "Standard",
-            "Time Course", "Strain", "Contamination Check", "De Novo Assembly"
+            "Strain", "Contamination Check", "De Novo Assembly"
         ];
 
 
