@@ -15,10 +15,10 @@ class LoadOmicsExperimentTypeStrings extends AbstractFixture implements OrderedF
     public function load(ObjectManager $manager)
     {
         $omicsExperimentTypes = [
-            "Transcriptomics" => ["Mutation Analysis", "Contamination Analysis", "Genome Assembly"],
-            "Proteomics" => ["Time Course", "Differential Expression"],
+            "Transcriptomics" => ["Time Course", "Differential Expression"],
+            "Proteomics" => ["Standard"],
             "Metabolomics" => ["Standard"],
-            "Genomics" => ["New Strain Genome Sequencing", "Construct Sequencing"]
+            "Genomics" => ["Time Course", "Strain", "Contamination Check", "De Novo Assembly"]
         ];
 
         foreach ($omicsExperimentTypes as $experimentType => $children) {
