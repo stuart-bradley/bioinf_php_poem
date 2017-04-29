@@ -63,10 +63,17 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
         // Hides ALL options.
         $(child_selector).children('option').hide();
         // Shows relevant options.
+
         $.each(selection_relations[parent_val], function (i, val) {
-            $(child_selector).children('option').filter(function () {
-                return $(this).html() == val;
-            }).show();
+            var usedNames = {};
+            $(child_selector).children('option').each(function () {
+                if(! usedNames[this.text]) {
+                    usedNames[this.text] = this.value;
+                    if ($(this).html() == val) {
+                        $(this).show();
+                    }
+                }
+            });
         });
         // Gets first non-hidden option.
         var first_non_hidden_option = $(child_selector).children('option').filter(function () {

@@ -28,7 +28,6 @@ class OmicsExperimentTypeStringsRepository extends \Doctrine\ORM\EntityRepositor
                 }
             }
         }
-
         return $res;
     }
 }
