@@ -7,22 +7,27 @@ use AppBundle\Form\OmicsExperimentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class OmicsExperimentController extends Controller {
+class OmicsExperimentController extends Controller
+{
     /**
      * @Route("/omics_experiment/index", name="omics_experiment_index")
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         // Grab all experiments from database and hand them to template.
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiments = $repository->findAll();
-        return $this->render('omics_experiment/index.html.twig',['omics_experiments' => $omics_experiments]);
+        return $this->render('omics_experiment/index.html.twig', ['omics_experiments' => $omics_experiments]);
     }
 
     /**
      * @Route("/omics_experiment/new", name="omics_experiment_new")
      */
-    public function newAction(Request $request) {
+    public function newAction(Request $request)
+    {
         $omics_experiment = new OmicsExperiment();
 
         $em = $this->getDoctrine()->getManager();
@@ -41,22 +46,25 @@ class OmicsExperimentController extends Controller {
             return $this->redirectToRoute('omics_experiment_index');
         }
 
-        return $this->render('omics_experiment/form.html.twig', array('form' => $form->createView(), 'select_relations' =>  $exp_type_relations, 'edit' => False));
+        return $this->render('omics_experiment/form.html.twig', array('form' => $form->createView(), 'select_relations' => $exp_type_relations, 'edit' => False));
     }
 
     /**
      * @Route("/omics_experiment/show/{id}", name="omics_experiment_show")
      */
-    public function showAction($id) {
+    public function showAction($id)
+    {
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiment = $repository->find($id);
+
         return $this->render('omics_experiment/show.html.twig', array('omics_experiment' => $omics_experiment));
     }
 
     /**
      * @Route("/omics_experiment/edit/{id}", name="omics_experiment_edit")
      */
-    public function editAction(Request $request, $id) {
+    public function editAction(Request $request, $id)
+    {
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiment = $repository->find($id);
 
@@ -73,13 +81,14 @@ class OmicsExperimentController extends Controller {
             return $this->redirectToRoute('omics_experiment_index');
         }
 
-        return $this->render('omics_experiment/form.html.twig', array('form' => $form->createView(), 'select_relations' =>  $exp_type_relations, 'edit' => True));
+        return $this->render('omics_experiment/form.html.twig', array('form' => $form->createView(), 'select_relations' => $exp_type_relations, 'edit' => True));
     }
 
     /**
      * @Route("omics_experiment/delete/{id}", name="omics_experiment_delete")
      */
-    public function deleteAction(Request $request, $id) {
+    public function deleteAction(Request $request, $id)
+    {
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiment = $repository->find($id);
 
@@ -93,5 +102,30 @@ class OmicsExperimentController extends Controller {
         );
 
         return $this->redirectToRoute('omics_experiment_index');
+    }
+
+    /**
+     * @Route("/omics_experiment/export/{id}", name="omics_experiment_export")
+     */
+    public function exportAction(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
+        $omics_experiment = $repository->find($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $export = $em->getRepository('AppBundle:OmicsExperiment')->getExport($id);
+
+        $fileContent = $export; // the generated file content
+        $response = new Response($fileContent);
+
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'foo.csv'
+        );
+
+        $response->headers->set('Content-Disposition', $disposition);
+        $response->send();
+
+        return new Response();
     }
 }
