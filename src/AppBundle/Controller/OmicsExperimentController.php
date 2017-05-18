@@ -120,7 +120,7 @@ class OmicsExperimentController extends Controller
 
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'foo.csv'
+            $omics_experiment->getProjectName() . '.csv'
         );
 
         $response->headers->set('Content-Disposition', $disposition);
