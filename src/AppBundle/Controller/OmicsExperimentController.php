@@ -113,14 +113,12 @@ class OmicsExperimentController extends Controller
         $omics_experiment = $repository->find($id);
 
         $em = $this->getDoctrine()->getManager();
-        $export = $em->getRepository('AppBundle:OmicsExperiment')->getExport($id);
-
-        $fileContent = $export; // the generated file content
+        $fileContent = $em->getRepository('AppBundle:OmicsExperiment')->getExport($id);
         $response = new Response($fileContent);
 
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'foo.csv'
+            $omics_experiment->getProjectName() . '.csv'
         );
 
         $response->headers->set('Content-Disposition', $disposition);
