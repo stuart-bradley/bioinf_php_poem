@@ -10,4 +10,35 @@ namespace AppBundle\Repository;
  */
 class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getExport($id)
+    {
+        $qm = $this->getEntityManager()->createQueryBuilder();
+        $qm->select('sample.BCSampleID', 'omics.projectName', 'expstr.type AS exptype', 'expsubstr.type AS expsubtype')
+            ->from('AppBundle:OmicsExperiment', 'omics')
+            ->join('omics.omicsExperimentTypes', 'exp')
+            ->join('exp.omicsExperimentSubTypes', 'subexp')
+            ->join('subexp.samples', 'sample')
+            ->join('exp.omicsExperimentTypeString', 'expstr')
+            ->join('subexp.omicsExperimentSubTypeString', 'expsubstr')
+            ->where('omics.id = :id')
+            ->setParameter('id', $id);
+        $results = $qm->getQuery()->getArrayResult();
+
+        $str_result = "";
+
+        foreach ($results as $i => $r) {
+            if ($i == 0) {
+                foreach (array_keys($r) as $key) {
+                    $str_result .= $key . ",";
+                }
+                $str_result = substr($str_result, 0, -1) . "\n";
+            }
+            foreach ($r as $field) {
+                $str_result .= $field . ",";
+            }
+            $str_result = substr($str_result, 0, -1) . "\n";
+        }
+
+        return $str_result;
+    }
 }

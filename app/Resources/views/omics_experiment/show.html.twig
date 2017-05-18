@@ -209,6 +209,7 @@
     <a href="{{ path('omics_experiment_index') }}" class="btn btn-default">Back</a>
     <a href="{{ path('omics_experiment_delete', {'id': omics_experiment.id}) }}" class="btn btn-default"
        onclick="return confirm('Are you sure you want to delete {{ omics_experiment.id }}?')">Delete</a>
-
+    <a href="{{ path('omics_experiment_export', {'id': omics_experiment.id}) }}" class="btn btn-default">Export to
+        CSV</a>
 
 {% endblock %}
