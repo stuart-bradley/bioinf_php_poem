@@ -10485,7 +10485,7 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
      * Finds parent value and passes it to the update method.
      */
     self.modify_selection_updater = function (selector) {
-        var frame = $('ul.col-omics_experiment_types');
+        var frame = $(selector).parent().parent();
         var parent_val = $("option:selected", selector).text();
         // Finds experiment_sub_type select children.
         var child_selectors = $(frame).find("select[id$='omicsExperimentSubTypeString']");
