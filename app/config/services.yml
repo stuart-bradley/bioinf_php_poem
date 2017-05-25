@@ -10,8 +10,8 @@ services:
   app.file_uploader:
           class: AppBundle\Uploader\FileUploader
           arguments: ['%file_directory%']
-  app.doctrine_reference_sequence_listener:
-          class: AppBundle\EventListener\uploadFileListener
+  app.doctrine_entity_listener:
+          class: AppBundle\EventListener\EntityListener
           arguments: ['@app.file_uploader', '@logger']
           tags:
               - { name: doctrine.event_listener, event: prePersist }
