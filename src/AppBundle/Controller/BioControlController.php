@@ -66,7 +66,7 @@ class BioControlController extends Controller
 
         $domain = $this->getParameter('ldap_domain_long');
 
-        $email = $username . $domain;
+        $email = $username . "@" . $domain;
         $user->setEmail($email);
         $user->setEmailCanonical(strtolower($email));
 
