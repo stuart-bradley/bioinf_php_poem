@@ -3,6 +3,3 @@ app:
     type:     annotation
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-simple_things_entity_audit:
-    resource: "@SimpleThingsEntityAuditBundle/Resources/config/routing.yml"
-    prefix: /audit
