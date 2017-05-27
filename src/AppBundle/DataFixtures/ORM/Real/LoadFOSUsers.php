@@ -51,7 +51,7 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
 
         $baseDn = $this->container->getParameter('ldap_baseDn_users');
         $filter = '(&(&(ObjectClass=user))(samaccountname=*))';
-        $attributes = ['samaccountname', 'dn', 'mail', 'memberof', 'cn'];
+        $attributes = ['samaccountname', 'dn', 'memberof', 'cn'];
         $result = $ldap->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
 
         $members = [];
@@ -67,19 +67,20 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
                             ->findOneBy(array('username' => $item["samaccountname"][0]));
                         if ($user == null) {
                             $user = new FOSUser();
-                            $user->setDn($item["dn"]);
-                            $user->setEnabled(1);
-                            $user->setUsername($item["samaccountname"][0]);
-                            $user->setUsernameCanonical(strtolower($item["samaccountname"][0]));
-                            $user->setEmail($item["mail"][0]);
-                            $user->setEmailCanonical(strtolower($item["mail"][0]));
-                            $user->setDepartment($ldap_groups[$matches[1]]);
-                            $user->setDepartmentDn($group);
-                            $user->setCn($item['cn'][0]);
-                            $user->setFromBioControl(false);
-
-                            $manager->persist($user);
                         }
+                        $user->setDn($item["dn"]);
+                        $user->setEnabled(1);
+                        $user->setUsername($item["samaccountname"][0]);
+                        $user->setUsernameCanonical(strtolower($item["samaccountname"][0]));
+                        $email = $item["samaccountname"][0] . "@" . $this->container->getParameter('ldap_domain_long');
+                        $user->setEmail($email);
+                        $user->setEmailCanonical(strtolower($email));
+                        $user->setDepartment($ldap_groups[$matches[1]]);
+                        $user->setDepartmentDn($group);
+                        $user->setCn($item['cn'][0]);
+                        $user->setFromBioControl(false);
+
+                        $manager->persist($user);
                         $this->addReference($item["samaccountname"][0], $user);
                         $members[] = $item["samaccountname"][0];
                     }
