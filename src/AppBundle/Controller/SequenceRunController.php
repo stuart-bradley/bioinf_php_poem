@@ -48,7 +48,6 @@ class SequenceRunController extends Controller {
 
     /**
      * @Route("/sequence_run/show/{id}", name="sequence_run_show")
-     * TODO: Not sure if nessesary (wasn't in last system).
      */
     public function showAction($id) {
         $repository = $this->getDoctrine()->getRepository('AppBundle:SequenceRun');
