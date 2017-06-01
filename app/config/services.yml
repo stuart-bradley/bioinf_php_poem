@@ -17,3 +17,7 @@ services:
               - { name: doctrine.event_listener, event: prePersist }
               - { name: doctrine.event_listener, event: preUpdate }
               - { name: doctrine.event_listener, event: preRemove }
+
+  app.biocontrol_manager:
+          class: AppBundle\BioControl\BioControlManager
+          arguments: ['@doctrine.dbal.bio_control_connection', '@doctrine.orm.default_entity_manager', '%ldap_domain_long%']
