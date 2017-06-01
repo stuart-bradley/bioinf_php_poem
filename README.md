@@ -215,7 +215,7 @@ doctrine:
         auto_mapping: true
 ```
 
-Additionally, in `src/AppBundle/Controller/BioControlController.php` a very specific SQL query is used to get the
+Additionally, in `src/AppBundle/BioControl/BioControlManager.php` a very specific SQL query is used to get the
 required information:
 
 ```php
@@ -248,7 +248,7 @@ array (
 Please note, `perNam` must match the `cn` of `FOSUsers`. 
 
 Also in the event BioControl cannot find a `FOSUser` with the `cn` `perNam`, it will generate one in 
-`BioControlController->createNewUser(perNam)`. This function might need to be changed to match any changes made to the 
+`BioControlManager->createNewUser(perNam)`. This function might need to be changed to match any changes made to the 
 `FOSUser entity`.
 
 #### LDAP

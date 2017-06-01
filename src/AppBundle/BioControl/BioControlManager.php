@@ -11,7 +11,7 @@ class BioControlManager
 {
     private $bioControlEm;
     private $em;
-    private $domain_name;
+    private $domainName;
 
     public function __construct(Connection $bioControlEm, EntityManagerInterface $em, $domainName)
     {
