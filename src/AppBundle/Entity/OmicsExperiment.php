@@ -45,7 +45,7 @@ class OmicsExperiment
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      *
      */
     private $description;
@@ -53,7 +53,7 @@ class OmicsExperiment
     /**
      * @var string
      *
-     * @ORM\Column(name="questions", type="text")
+     * @ORM\Column(name="questions", type="text", nullable=true)
      *
      */
     private $questions;

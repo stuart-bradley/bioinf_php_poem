@@ -41,7 +41,7 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
             'host' => $this->container->getParameter('ldap_host'),
             'port' => $this->container->getParameter('ldap_port'),
             'useStartTls' => true,
-            'username' => $this->container->getParameter('ldap_username'),
+            'username' => 'ldaptest',
             'password' => $this->container->getParameter('ldap_password'),
             'baseDn' => $this->container->getParameter('ldap_baseDn_users')
         );
