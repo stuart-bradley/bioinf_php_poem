@@ -47,7 +47,6 @@ class OmicsExperiment
      *
      * @ORM\Column(name="description", type="text")
      *
-     * @Assert\NotBlank()
      */
     private $description;
 
@@ -56,7 +55,6 @@ class OmicsExperiment
      *
      * @ORM\Column(name="questions", type="text")
      *
-     * @Assert\NotBlank()
      */
     private $questions;
 
@@ -69,6 +67,16 @@ class OmicsExperiment
      * @Assert\Date()
      */
     private $requestedEndDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="date")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     */
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="omicsExperiments")
@@ -101,6 +109,7 @@ class OmicsExperiment
         $this->files = new ArrayCollection();
         $this->requestedDate = new \DateTime();
         $this->requestedEndDate = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
     
     /**
@@ -241,6 +250,30 @@ class OmicsExperiment
     public function getRequestedEndDate()
     {
         return $this->requestedEndDate;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return OmicsExperiment
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 
     /**
