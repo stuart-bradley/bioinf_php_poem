@@ -26,7 +26,7 @@ class OmicsExperiment
     /**
      * @var string
      *
-     * @ORM\Column(name="project_name", type="string")
+     * @ORM\Column(name="project_name", type="string", unique=true)
      *
      * @Assert\NotBlank()
      */

@@ -113,7 +113,8 @@ class OmicsExperimentController extends Controller
         $omics_experiment = $repository->find($id);
 
         $em = $this->getDoctrine()->getManager();
-        $fileContent = $em->getRepository('AppBundle:OmicsExperiment')->getExport($id);
+        $fields = ['sample.BCSampleID', 'omics.projectName', 'expstr.type AS exptype', 'expsubstr.type AS expsubtype'];
+        $fileContent = $em->getRepository('AppBundle:OmicsExperiment')->getExport($id, $fields);
         $response = new Response($fileContent);
 
         $disposition = $response->headers->makeDisposition(
