@@ -45,7 +45,7 @@ class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
         return $str_result;
     }
 
-    public function getSpecificSample($projectName, $sampleName)
+    public function getSpecificSample($projectID, $sampleName)
     {
         $qm = $this->getEntityManager()->createQueryBuilder();
         $qm->select('*')
@@ -53,8 +53,8 @@ class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('omics.omicsExperimentTypes', 'exp')
             ->leftJoin('exp.omicsExperimentSubTypes', 'subexp')
             ->leftJoin('subexp.samples', 'sample')
-            ->where('omics.projectName = :projectName AND sample.sampleName = :sampleName')
-            ->setParameter('projectName', $projectName)
+            ->where('omics.projectID= :projectID AND sample.sampleName = :sampleName')
+            ->setParameter('projectID', $projectID)
             ->setParameter('sampleName', $sampleName);
         $results = $qm->getQuery()->getSingleResult();
 
