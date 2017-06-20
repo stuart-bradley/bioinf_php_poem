@@ -66,7 +66,9 @@ class FOSUser extends BaseUser implements LdapUserInterface
     protected $fromBioControl;
 
     /**
-     * @ORM\OneToMany(targetEntity="OmicsExperiment", mappedBy="requestedBy")
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="OmicsExperiment", inversedBy="users")
+     * @ORM\JoinTable(name="users_omics_experiments")
      */
     private $omicsExperiments;
 
@@ -223,7 +225,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
     public function addOmicsExperiment(\AppBundle\Entity\OmicsExperiment $omicsExperiment)
     {
         $this->omicsExperiments[] = $omicsExperiment;
-        $omicsExperiment->setRequestedBy($this);
 
         return $this;
     }

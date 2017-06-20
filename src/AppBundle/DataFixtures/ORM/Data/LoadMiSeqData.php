@@ -16,6 +16,7 @@ class LoadMiSeqData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+        return;
         $omics_experiments = $this->getOmicsExperimentsFromExcel('MiSeq Sample Submission Workbook.xlsx');
 
         foreach ($omics_experiments as $projectName => $omics_experiment_array) {
