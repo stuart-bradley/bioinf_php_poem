@@ -56,7 +56,7 @@ class BioControlManager
         return new JsonResponse($response);
     }
 
-    private function createNewUser($name)
+    public function createNewUser($name)
     {
         $user = new FOSUser();
         $user->setCn($name);

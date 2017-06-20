@@ -138,9 +138,8 @@ function BioControlSampleUpdater() {
             $(field).css('background-color', '#fff');
             $(field).css('pointer-events', 'auto');
 
-            $(field).focus(function () {
-                $(this).focus();
-            });
+            $(field).unbind('focus');
+            $(field).bind('focus');
         }
 
     };
