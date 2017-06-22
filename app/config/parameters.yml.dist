@@ -29,5 +29,8 @@ parameters:
     bio_control_user: admin
     bio_control_password: password
 
+    excel_data_path: file.xlsx
+    excel_data_worksheet: worksheet1
+
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

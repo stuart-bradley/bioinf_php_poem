@@ -334,6 +334,24 @@ class OmicsExperiment
         return $this->users;
     }
 
+    /*
+     * Checks if user exists
+     *
+     * @param \AppBundle\Entity\FOSUser $user
+     *
+     * @return boolean
+     *
+     */
+    public function hasUser(\AppBundle\Entity\FOSUser $user)
+    {
+        foreach ($this->users as $u) {
+            if ($user == $u) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Add status
      *
