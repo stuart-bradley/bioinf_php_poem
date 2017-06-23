@@ -20,6 +20,15 @@ function BioControlSampleUpdater() {
                 self.blur_selects_toggle(value, true);
             }
         });
+        form.on('change', 'input[id$="sampleName"]', function (e) {
+            var value = $(e.target).val();
+            var res = value.split("-");
+            if (/^\d+$/.test(res[1])) {
+                var BCSampleID_field = $(e.target).closest(".form-group").parent().find("div.form-group > input[id$='BCSampleID']");
+                $(BCSampleID_field).val(res[1]);
+                self.modify_sample_fields(BCSampleID_field);
+            }
+        });
         form.on('change', 'input[id$="BCSampleID"]', function (e) {
             self.modify_sample_fields(e.target);
         });
@@ -129,9 +138,8 @@ function BioControlSampleUpdater() {
             $(field).css('background-color', '#fff');
             $(field).css('pointer-events', 'auto');
 
-            $(field).focus(function () {
-                $(this).focus();
-            });
+            $(field).unbind('focus');
+            $(field).bind('focus');
         }
 
     };

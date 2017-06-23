@@ -8,11 +8,23 @@
             <h1>  {{ omics_experiment.projectName }} </h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>  {{ omics_experiment.projectID }} </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Submitted on</strong>
+            <p>{{ omics_experiment.createdAt|date('Y-m-d') }}</p>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
             <strong>Requested by</strong>
-            <p>{{ omics_experiment.requestedBy }}</p>
+            <p>{{ omics_experiment.users | join(", ") }}</p>
         </div>
     </div>
 
@@ -124,6 +136,12 @@
                                                                             class="col-samples">
                                                                             {% for sample in omics_experiment_sub_type.samples %}
                                                                                 <li class="panel panel-body panel-default">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <strong>Sample name</strong>
+                                                                                            <p>{{ sample.sampleName }}</p>
+                                                                                        </div>
+                                                                                    </div>
                                                                                     <div class="row">
                                                                                         <div class="col-md-12">
                                                                                             <strong>BioControl sample

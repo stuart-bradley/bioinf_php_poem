@@ -39,7 +39,7 @@ class OmicsExperimentController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
-            $omics_experiment->setRequestedBy($user);
+            $omics_experiment->addUser($user);
             $em->persist($omics_experiment);
 
             $em->flush();
@@ -75,7 +75,7 @@ class OmicsExperimentController extends Controller
 
         $form->handleRequest($request);
         // On submission.
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($omics_experiment);
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');
@@ -113,7 +113,8 @@ class OmicsExperimentController extends Controller
         $omics_experiment = $repository->find($id);
 
         $em = $this->getDoctrine()->getManager();
-        $fileContent = $em->getRepository('AppBundle:OmicsExperiment')->getExport($id);
+        $fields = ['sample.BCSampleID', 'omics.projectName', 'expstr.type AS exptype', 'expsubstr.type AS expsubtype'];
+        $fileContent = $em->getRepository('AppBundle:OmicsExperiment')->getExport($id, $fields);
         $response = new Response($fileContent);
 
         $disposition = $response->headers->makeDisposition(

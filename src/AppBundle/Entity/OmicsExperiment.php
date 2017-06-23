@@ -33,6 +33,13 @@ class OmicsExperiment
     private $projectName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="project_id", type="string", unique=true)
+     */
+    private $projectID;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="requested_date", type="date")
@@ -45,18 +52,16 @@ class OmicsExperiment
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      *
-     * @Assert\NotBlank()
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="questions", type="text")
+     * @ORM\Column(name="questions", type="text", nullable=true)
      *
-     * @Assert\NotBlank()
      */
     private $questions;
 
@@ -71,10 +76,20 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="omicsExperiments")
-     * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="date")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
-    private $requestedBy;
+    private $createdAt;
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="FOSUser", mappedBy="omicsExperiments")
+     */
+    private $users;
 
     /**
      * @var File
@@ -96,11 +111,13 @@ class OmicsExperiment
 
     public function __construct()
     {
+        $this->users = new ArrayCollection();
         $this->statuses = new ArrayCollection();
         $this->omicsExperimentTypes = new ArrayCollection();
         $this->files = new ArrayCollection();
         $this->requestedDate = new \DateTime();
         $this->requestedEndDate = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
     
     /**
@@ -138,25 +155,25 @@ class OmicsExperiment
     }
 
     /**
-     * Get requestedBy
+     * Get projectID
      *
-     * @return FOSUser
+     * @return string
      */
-    public function getRequestedBy()
+    public function getProjectID()
     {
-        return $this->requestedBy;
+        return $this->projectID;
     }
 
     /**
-     * Set requestedBy
+     * Set projectID
      *
-     * @param FOSUser $requestedBy
+     * @param string $projectID
      *
      * @return OmicsExperiment
      */
-    public function setRequestedBy($requestedBy)
+    public function setProjectID($projectID)
     {
-        $this->requestedBy = $requestedBy;
+        $this->projectID = $projectID;
 
         return $this;
     }
@@ -244,6 +261,30 @@ class OmicsExperiment
     }
 
     /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return OmicsExperiment
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
      * Set requestedEndDate
      *
      * @param \DateTime $requestedEndDate
@@ -255,6 +296,60 @@ class OmicsExperiment
         $this->requestedEndDate = $requestedEndDate;
 
         return $this;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\FOSUser $user
+     *
+     * @return OmicsExperiment
+     */
+    public function addUser(\AppBundle\Entity\FOSUser $user)
+    {
+        $this->users[] = $user;
+        $user->addOmicsExperiment($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\FOSUser $user
+     */
+    public function removeUser(\AppBundle\Entity\FOSUser $user)
+    {
+        $this->statuses->removeElement($user);
+        $user->removeOmicsExperiment(null);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /*
+     * Checks if user exists
+     *
+     * @param \AppBundle\Entity\FOSUser $user
+     *
+     * @return boolean
+     *
+     */
+    public function hasUser(\AppBundle\Entity\FOSUser $user)
+    {
+        foreach ($this->users as $u) {
+            if ($user == $u) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

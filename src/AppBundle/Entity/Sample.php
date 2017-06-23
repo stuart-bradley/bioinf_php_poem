@@ -23,6 +23,13 @@ class Sample
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="sample_name", type="string", nullable=true)
+     */
+    private $sampleName;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="bcexperiment_id", type="integer", nullable=true)
@@ -112,6 +119,30 @@ class Sample
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set sampleName
+     *
+     * @param string $sampleName
+     *
+     * @return Sample
+     */
+    public function setSampleName($sampleName)
+    {
+        $this->sampleName = $sampleName;
+
+        return $this;
+    }
+
+    /**
+     * Get sampleName
+     *
+     * @return string
+     */
+    public function getSampleName()
+    {
+        return $this->sampleName;
     }
 
     /**

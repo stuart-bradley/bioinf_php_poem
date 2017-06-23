@@ -10,16 +10,19 @@ namespace AppBundle\Repository;
  */
 class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getExport($id)
+    public function getExport($id, $fields)
     {
         $qm = $this->getEntityManager()->createQueryBuilder();
-        $qm->select('sample.BCSampleID', 'omics.projectName', 'expstr.type AS exptype', 'expsubstr.type AS expsubtype')
+        $qm->select($fields)
             ->from('AppBundle:OmicsExperiment', 'omics')
-            ->join('omics.omicsExperimentTypes', 'exp')
-            ->join('exp.omicsExperimentSubTypes', 'subexp')
-            ->join('subexp.samples', 'sample')
-            ->join('exp.omicsExperimentTypeString', 'expstr')
-            ->join('subexp.omicsExperimentSubTypeString', 'expsubstr')
+            ->leftJoin('omics.statuses', 'stat')
+            ->leftJoin('omics.files', 'files')
+            ->leftJoin('omics.omicsExperimentTypes', 'exp')
+            ->leftJoin('exp.omicsExperimentSubTypes', 'subexp')
+            ->leftJoin('subexp.samples', 'sample')
+            ->leftJoin('exp.omicsExperimentTypeString', 'expstr')
+            ->leftJoin('subexp.omicsExperimentSubTypeString', 'expsubstr')
+            ->leftJoin('sample.materialTypeString', 'mattypestr')
             ->where('omics.id = :id')
             ->setParameter('id', $id);
         $results = $qm->getQuery()->getArrayResult();
@@ -40,5 +43,21 @@ class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $str_result;
+    }
+
+    public function getSpecificSample($projectID, $sampleName)
+    {
+        $qm = $this->getEntityManager()->createQueryBuilder();
+        $qm->select('*')
+            ->from('AppBundle:OmicsExperiment', 'omics')
+            ->leftJoin('omics.omicsExperimentTypes', 'exp')
+            ->leftJoin('exp.omicsExperimentSubTypes', 'subexp')
+            ->leftJoin('subexp.samples', 'sample')
+            ->where('omics.projectID= :projectID AND sample.sampleName = :sampleName')
+            ->setParameter('projectID', $projectID)
+            ->setParameter('sampleName', $sampleName);
+        $results = $qm->getQuery()->getSingleResult();
+
+        return $results;
     }
 }

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityRepository;
@@ -19,6 +20,7 @@ class SampleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('sampleName', TextType::class, array('required' => false))
             ->add('BCSampleID', IntegerType::class, array(
                 'label' => 'BioControl sample ID', 'required' => false))
             ->add('BCRunID', IntegerType::class, array(

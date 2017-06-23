@@ -81,6 +81,10 @@ During the composer installation a number of third-party packages will be instal
  experiment types can have specific sub-types as defined in the prior file's associative array. New sub-types will also 
  need to be added to `LoadOmicsExperimentSubTypeStrings.php`.
  
+ In the `Data` folder, `LoadExcelData.php` is used to load pre-exsiting experimental data, and will have to be heavily 
+ modified for use with a specific dataset. However, it can easily be ignored by setting the `excel_data_path` parameter
+ to blank. 
+ 
  All of these fixtures have been created so that they can safely used with the `--append` flag.
  
 ##### [AsseticBundle](https://symfony.com/doc/current/assetic/asset_management.html)
@@ -166,6 +170,11 @@ parameters:
   bio_control_name: biocontrol
   bio_control_user: admin
   bio_control_password: password
+  
+  # Excel data location and worksheet.
+  excel_data_path: file.xlsx
+  excel_data_worksheet: worksheet1
+  
   # A secret key that's used to generate certain security-related tokens
   secret: ThisTokenIsNotSoSecretChangeIt
 
@@ -215,7 +224,7 @@ doctrine:
         auto_mapping: true
 ```
 
-Additionally, in `src/AppBundle/Controller/BioControlController.php` a very specific SQL query is used to get the
+Additionally, in `src/AppBundle/BioControl/BioControlManager.php` a very specific SQL query is used to get the
 required information:
 
 ```php
@@ -223,8 +232,8 @@ $queryBuilder = $bioControlEm->createQueryBuilder();
         $queryBuilder
             ->select('s.SmpID', 's.RunID', 'r.ExpID', 's.Dat', 'p.PerNam', 'r.InoculationTime')
             ->from('Samples', 's')
-            ->innerJoin('s', 'Runs', 'r', 's.RunID = r.RunID')
-            ->innerJoin('s', 'Person', 'p', 's.PerID=p.PerID')
+            ->leftJoin('s', 'Runs', 'r', 's.RunID = r.RunID')
+            ->leftJoin('s', 'Person', 'p', 's.PerID=p.PerID')
             ->where('s.SmpID = ?')
             ->setParameter(0, $sample_number);
 ```
@@ -248,7 +257,7 @@ array (
 Please note, `perNam` must match the `cn` of `FOSUsers`. 
 
 Also in the event BioControl cannot find a `FOSUser` with the `cn` `perNam`, it will generate one in 
-`BioControlController->createNewUser(perNam)`. This function might need to be changed to match any changes made to the 
+`BioControlManager->createNewUser(perNam)`. This function might need to be changed to match any changes made to the 
 `FOSUser entity`.
 
 #### LDAP
@@ -321,3 +330,8 @@ public function load(ObjectManager $manager)
     $manager->flush();
 }
 ```
+
+#### Excel Data Loading
+
+In the fixtures `Data/LoadExcelData.php` is an example of how to use `PHPExcel` to load experiments into the database. 
+Like `FOSUser.php` it is only setup for a very specific file structure, and would have to be heavily modified before use.  

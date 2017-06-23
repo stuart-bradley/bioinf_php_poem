@@ -20,6 +20,7 @@ class OmicsExperimentType extends AbstractType
     {
         $builder
             ->add('projectName', TextType::class, array('required' => false))
+            ->add('projectID', TextType::class, array('required' => false))
             ->add('requestedDate', DateType::class)
             ->add('description', TextareaType::class, array('required' => false, 'attr' => array('class' => 'summernote')))
             ->add('questions', TextareaType::class, array('required' => false, 'label' => 'Questions to be answered', 'attr' => array('class' => 'summernote')))

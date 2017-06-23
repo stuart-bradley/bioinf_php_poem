@@ -63,7 +63,9 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $values = $form->getPhpValues();
 
         $values['omics_experiment']['projectName'] = 'test experiment';
-        $values['omics_experiment']['requestedBy'] = 'stuart.bradley';
+        $values['omics_experiment']['projectID'] = 'P01';
+        $values['omics_experiment']['users'] = [];
+        $values['omics_experiment']['users'][0] = $this->helper->fixtures->getReference('Stuart.Bradley');
         $values['omics_experiment']['description'] = 'description';
         $values['omics_experiment']['questions'] = 'questions';
 

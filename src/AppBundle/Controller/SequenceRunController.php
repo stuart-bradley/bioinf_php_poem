@@ -48,7 +48,6 @@ class SequenceRunController extends Controller {
 
     /**
      * @Route("/sequence_run/show/{id}", name="sequence_run_show")
-     * TODO: Not sure if nessesary (wasn't in last system).
      */
     public function showAction($id) {
         $repository = $this->getDoctrine()->getRepository('AppBundle:SequenceRun');
@@ -70,7 +69,7 @@ class SequenceRunController extends Controller {
         $form->handleRequest($request);
 
         // On submission.
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($sequence_run);
             $em->flush();
             return $this->redirectToRoute('sequence_run_index');
