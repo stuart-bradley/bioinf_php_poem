@@ -23,9 +23,7 @@
                         {{exp.requestedDate|date('Y-m-d')}}
                     </td>
                     <td>
-                        {% for user in exp.users %}
-                            {{ user.cn }}
-                        {% endfor %}
+                        {{ exp.users | join(", ") }}
                     </td>
                     <td>
                         {{exp.projectName}}
