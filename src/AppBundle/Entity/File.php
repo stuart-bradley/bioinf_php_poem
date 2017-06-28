@@ -16,7 +16,6 @@ class File
 {
     /**
      * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,21 +24,18 @@ class File
 
     /**
      * @var string
-     *
      * @ORM\Column(name="path", type="string", length=255)
      */
     private $path;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var integer
-     *
      * @ORM\Column(name="size", type="integer")
      */
     private $size;
@@ -63,7 +59,6 @@ class File
 
     /**
      * Get id
-     *
      * @return integer
      */
     public function getId()
@@ -73,9 +68,7 @@ class File
 
     /**
      * Set path
-     *
      * @param string $path
-     *
      * @return File
      */
     public function setPath($path)
@@ -87,7 +80,6 @@ class File
 
     /**
      * Get path
-     *
      * @return string
      */
     public function getPath()
@@ -97,9 +89,7 @@ class File
 
     /**
      * Set name
-     *
      * @param string $name
-     *
      * @return File
      */
     public function setName($name)
@@ -111,7 +101,6 @@ class File
 
     /**
      * Get name
-     *
      * @return string
      */
     public function getName()
@@ -121,9 +110,7 @@ class File
 
     /**
      * Set size
-     *
      * @param integer $size
-     *
      * @return File
      */
     public function setSize($size)
@@ -135,7 +122,6 @@ class File
 
     /**
      * Get file
-     *
      * @return UploadedFile
      */
     public function getFile()
@@ -145,9 +131,7 @@ class File
 
     /**
      * Set size
-     *
      * @param UploadedFile $file
-     *
      * @return File
      */
     public function setFile($file)
@@ -159,7 +143,6 @@ class File
 
     /**
      * Get size
-     *
      * @return integer
      */
     public function getSize()
@@ -169,9 +152,7 @@ class File
 
     /**
      * Set omicsExperiment
-     *
      * @param \AppBundle\Entity\OmicsExperiment $omicsExperiment
-     *
      * @return File
      */
     public function setOmicsExperiment(\AppBundle\Entity\OmicsExperiment $omicsExperiment = null)
@@ -183,7 +164,6 @@ class File
 
     /**
      * Get omicsExperiment
-     *
      * @return \AppBundle\Entity\OmicsExperiment
      */
     public function getOmicsExperiment()
@@ -193,9 +173,7 @@ class File
 
     /**
      * Set sequenceRun
-     *
      * @param \AppBundle\Entity\SequenceRun $sequenceRun
-     *
      * @return File
      */
     public function setSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun = null)
@@ -207,7 +185,6 @@ class File
 
     /**
      * Get sequenceRun
-     *
      * @return \AppBundle\Entity\SequenceRun
      */
     public function getSequenceRun()

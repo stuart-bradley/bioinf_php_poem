@@ -3,23 +3,54 @@
 namespace AppBundle\BioControl;
 
 use AppBundle\Entity\FOSUser;
+use AppBundle\UserManager\UserManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\Connection;
 
+/**
+ * Class BioControlManager
+ * @package AppBundle\BioControl
+ */
 class BioControlManager
 {
+    /**
+     * @var Connection
+     */
     private $bioControlEm;
+    /**
+     * @var EntityManager
+     */
     private $em;
+    /**
+     * @var string
+     */
     private $domainName;
+    /**
+     * @var UserManager
+     */
+    private $userManager;
 
-    public function __construct(Connection $bioControlEm, EntityManagerInterface $em, $domainName)
+    /**
+     * BioControlManager constructor.
+     * @param Connection $bioControlEm
+     * @param EntityManager $em
+     * @param string $domainName
+     * @param UserManager $userManager
+     */
+    public function __construct(Connection $bioControlEm, EntityManager $em, $domainName, UserManager $userManager)
     {
         $this->bioControlEm = $bioControlEm;
         $this->em = $em;
         $this->domainName = $domainName;
+        $this->userManager = $userManager;
     }
 
+    /**
+     * Gets an individual sample from the BioControl database. Returns JSON.
+     * @param string $sample_number
+     * @return JsonResponse
+     */
     public function getBioControlSample($sample_number)
     {
 
@@ -40,13 +71,13 @@ class BioControlManager
             $comments = $this->createCommentSection($sample[0]);
             $user = $this->em
                 ->getRepository('AppBundle:FOSUser')
-                ->findOneByCn($sample[0]['PerNam']);
+                ->findOneBy(array('cn' => $sample[0]['PerNam']));
 
             if ($user) {
                 $user_id = $user->getId();
                 $response = array("code" => 100, "success" => true, "sample_number" => $sample_number, "sample_data" => $sample[0], "new_user" => false, "user_id" => $user_id, "comments" => $comments);
             } else {
-                $user = $this->createNewUser($sample[0]['PerNam']);
+                $user = $this->userManager->findOrCreateUser($sample[0]['PerNam']);
                 $user_id = $user->getId();
                 $response = array("code" => 100, "success" => true, "sample_number" => $sample_number, "sample_data" => $sample[0], "new_user" => true, "user_id" => $user_id, "comments" => $comments);
 
@@ -57,6 +88,11 @@ class BioControlManager
         return new JsonResponse($response);
     }
 
+    /**
+     * Gets an individual sample from the BioControl database. Returns array query.
+     * @param string $sample_number
+     * @return array|null
+     */
     public function getBioControlSampleNonJSON($sample_number)
     {
         $queryBuilder = $this->bioControlEm->createQueryBuilder();
@@ -77,31 +113,11 @@ class BioControlManager
         }
     }
 
-    public function createNewUser($name)
-    {
-        $user = new FOSUser();
-        $user->setCn($name);
-        $user->setDn("CN=" . $name);
-
-        $username = str_replace(" ", ".", $name);
-        $user->setUsername($username);
-        $user->setUsernameCanonical(strtolower($username));
-
-        $domain = $this->domainName;
-
-        $email = $username . "@" . $domain;
-        $user->setEmail($email);
-        $user->setEmailCanonical(strtolower($email));
-
-        $user->setFromBioControl(true);
-
-
-        $this->em->persist($user);
-        $this->em->flush();
-
-        return $user;
-    }
-
+    /**
+     * Converts various sample fields into a textbox for UI.
+     * @param array $sample
+     * @return string
+     */
     private function createCommentSection($sample)
     {
         $comments = "";

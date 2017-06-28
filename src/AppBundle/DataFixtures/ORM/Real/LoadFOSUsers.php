@@ -41,7 +41,7 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
             'host' => $this->container->getParameter('ldap_host'),
             'port' => $this->container->getParameter('ldap_port'),
             'useStartTls' => true,
-            'username' => 'ldaptest',
+            'username' => $this->container->getParameter('ldap_username'),
             'password' => $this->container->getParameter('ldap_password'),
             'baseDn' => $this->container->getParameter('ldap_baseDn_users')
         );
@@ -51,7 +51,7 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
 
         $baseDn = $this->container->getParameter('ldap_baseDn_users');
         $filter = '(&(&(ObjectClass=user))(samaccountname=*))';
-        $attributes = ['samaccountname', 'dn', 'memberof', 'cn'];
+        $attributes = ['samaccountname', 'dn', 'memberof', 'cn', 'mail'];
         $result = $ldap->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
 
         $members = [];
@@ -73,8 +73,8 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
                         $user->setUsername($item["samaccountname"][0]);
                         $user->setUsernameCanonical(strtolower($item["samaccountname"][0]));
                         $email = $item["samaccountname"][0] . "@" . $this->container->getParameter('ldap_domain_long');
-                        $user->setEmail($email);
-                        $user->setEmailCanonical(strtolower($email));
+                        $user->setEmail($item["mail"][0]);
+                        $user->setEmailCanonical(strtolower($item["mail"][0]));
                         $user->setDepartment($ldap_groups[$matches[1]]);
                         $user->setDepartmentDn($group);
                         $user->setCn($item['cn'][0]);
