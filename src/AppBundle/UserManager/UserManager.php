@@ -30,6 +30,19 @@ class UserManager
     private $ldap_baseDn_users;
 
     /**
+     * @var array
+     */
+    private $ldap_groups = array(
+        "Team_BioInformatics" => "Bioinformatics",
+        "Team_Fermentation" => "Fermentation",
+        "Team_Synthetic Biology" => "Synthetic Biology",
+        "Team_Eng Process Engineering" => "Process Engineering",
+        "Team_Eng Global Operations" => "Engineering",
+        "Team_Eng Design Development" => "Engineering",
+        "Team_Process Validation" => "Process Validation"
+    );
+
+    /**
      * UserManager constructor.
      * @param EntityManager $em
      * @param string $ldap_host
@@ -81,20 +94,21 @@ class UserManager
     }
 
     /**
-     * Updates a users' DN from LDAP database.
-     * @param array $names
+     * Creates all users from LDAP server which have valid memberof groups defined by
+     * $this->ldap_groups.
      */
-    public function updateUsersDn($names)
+    public function createAllUsers()
     {
-        foreach ($names as $name) {
-            $name = $this->convertToSamaccountname($name);
-            $user = $this->em
-                ->getRepository('AppBundle:FOSUser')
-                ->findOneBy(array('username' => $name));
-            if ($user) {
-                $ldap_result = $this->findViaLDAP($name);
-                if ($ldap_result) {
-                    $user->setDn($ldap_result["dn"]);
+        $filter = '(&(&(ObjectClass=user))(samaccountname=*))';
+        $attributes = ['samaccountname', 'dn', 'memberof', 'cn', 'mail'];
+        $result = $this->ldap->searchEntries($filter, $this->ldap_baseDn_users, Ldap::SEARCH_SCOPE_SUB, $attributes);
+
+        foreach ($result as $item) {
+            if (array_key_exists("memberof", $item)) {
+                if ($this->hasValidDepartment($item["memberof"])) {
+                    // $item is wrapped in an array because $this->createUser unwraps single queries
+                    // (Which is how LDAP queries are returned by default).
+                    $this->createUser($item['cn'][0], array($item));
                 }
             }
         }
@@ -110,12 +124,18 @@ class UserManager
         return str_replace(" ", ".", $name);
     }
 
-    private function createUser($name)
+    /**
+     * @param $name
+     * @param null|array $ldap_result
+     * @return FOSUser
+     */
+    private function createUser($name, $ldap_result = null)
     {
         $name = $this->convertToSamaccountname($name);
         $user = new FOSUser();
-        $ldap_result = $this->findViaLDAP($name);
-
+        if ($ldap_result == null) {
+            $ldap_result = $this->findViaLDAP($name);
+        }
         if ($ldap_result) {
             $ldap_result = $ldap_result[0];
             $user->setDn($ldap_result["dn"]);
@@ -145,36 +165,6 @@ class UserManager
     }
 
     /**
-     * Attempts to set department and departmentDn from LDAP memberof array.
-     * @param FOSUser $user
-     * @param array $memberof
-     * @return bool
-     */
-    private function setDepartmentForUser(FOSUser $user, $memberof)
-    {
-        $ldap_groups = array(
-            "Team_BioInformatics" => "Bioinformatics",
-            "Team_Fermentation" => "Fermentation",
-            "Team_Synthetic Biology" => "Synthetic Biology",
-            "Team_Eng Process Engineering" => "Process Engineering",
-            "Team_Eng Global Operations" => "Engineering",
-            "Team_Eng Design Development" => "Engineering",
-            "Team_Process Validation" => "Process Validation"
-        );
-
-        foreach ($memberof as $group) {
-            $matches = [];
-            preg_match("/CN=([\w\s]+),/", $group, $matches);
-            if (array_key_exists(1, $matches) && array_key_exists($matches[1], $ldap_groups)) {
-                $user->setDepartment($ldap_groups[$matches[1]]);
-                $user->setDepartmentDn($group);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Queries LDAP for accountname and returns result.
      * @param string $samaccountname
      * @return array $result
@@ -187,6 +177,63 @@ class UserManager
         $result = $this->ldap->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
 
         return $result;
+    }
+
+    /**
+     * Attempts to set department and departmentDn from LDAP memberof array.
+     * @param FOSUser $user
+     * @param array $memberof
+     * @return bool
+     */
+    private function setDepartmentForUser(FOSUser $user, $memberof)
+    {
+        foreach ($memberof as $group) {
+            $matches = [];
+            preg_match("/CN=([\w\s]+),/", $group, $matches);
+            if (array_key_exists(1, $matches) && array_key_exists($matches[1], $this->ldap_groups)) {
+                $user->setDepartment($this->ldap_groups[$matches[1]]);
+                $user->setDepartmentDn($group);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether memberof ldap array contains a valid group.
+     * @param array $memberof
+     * @return bool
+     */
+    private function hasValidDepartment($memberof)
+    {
+        foreach ($memberof as $group) {
+            $matches = [];
+            preg_match("/CN=([\w\s]+),/", $group, $matches);
+            if (array_key_exists(1, $matches) && array_key_exists($matches[1], $this->ldap_groups)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Updates a users' DN from LDAP database.
+     * @param array $names
+     */
+    public function updateUsersDn($names)
+    {
+        foreach ($names as $name) {
+            $name = $this->convertToSamaccountname($name);
+            $user = $this->em
+                ->getRepository('AppBundle:FOSUser')
+                ->findOneBy(array('username' => $name));
+            if ($user) {
+                $ldap_result = $this->findViaLDAP($name);
+                if ($ldap_result) {
+                    $user->setDn($ldap_result["dn"]);
+                }
+            }
+        }
     }
 
 

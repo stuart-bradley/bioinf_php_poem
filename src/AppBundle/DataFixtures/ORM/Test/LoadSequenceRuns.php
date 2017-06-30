@@ -14,7 +14,7 @@ class LoadSequenceRuns extends AbstractFixture implements OrderedFixtureInterfac
     public function load(ObjectManager $manager)
     {
         $sequence_run = new SequenceRun();
-        $sequence_run->setRunBy($this->getReference("Stuart.Bradley"));
+        $sequence_run->setRunBy($manager->getRepository('AppBundle:FOSUser')->findAll()[0]);
         $sequence_run->setKit("Illumina");
         $sequence_run->setReadLength(100);
         $sequence_run->setRunCoverageTarget(100);

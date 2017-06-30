@@ -262,74 +262,12 @@ Also in the event BioControl cannot find a `FOSUser` with the `cn` `perNam`, it 
 
 #### LDAP
 
-As mentioned previously in the fixtures section, the `LoadFOSUsers.php` file might need to be modified heavily before it
-works correctly. A example `load` function is provided below that gets all users and updates their basic attributes:
+As mentioned previously in the fixtures section, the `UserManager.php` (which is called by `LoadFOSUsers.php`) file 
+might need to be modified heavily before it works correctly. The entire call is designed with a specific LDAP server
+in mind, and will not work correctly in other systems. More specifically, `createAllUsers()` and `createUser()` are 
+good places to start modification, which many of the other methods supporting them.
 
-```php
-public function load(ObjectManager $manager)
-{
-    $ldap_groups = array(
-        "Team_BioInformatics" => "Bioinformatics",
-        "Team_Fermentation" => "Fermentation",
-        "Team_Synthetic Biology" => "Synthetic Biology",
-        "Team_Eng Process Engineering" => "Process Engineering",
-        "Team_Eng Global Operations" => "Engineering",
-        "Team_Eng Design Development" => "Engineering",
-        "Team_Process Validation" => "Process Validation"
-    );
 
-    $options = array(
-        'host' => $this->container->getParameter('ldap_host'),
-        'port' => $this->container->getParameter('ldap_port'),
-        'useStartTls' => true,
-        'username' => $this->container->getParameter('ldap_username'),
-        'password' => $this->container->getParameter('ldap_password'),
-        'baseDn' => $this->container->getParameter('ldap_baseDn_users')
-    );
-
-    $ldap = new Ldap($options);
-    $ldap->bind();
-
-    $baseDn = $this->container->getParameter('ldap_baseDn_users');
-    $filter = '(&(&(ObjectClass=user))(samaccountname=*))';
-    $attributes = ['samaccountname', 'dn', 'mail', 'memberof', 'cn'];
-    $result = $ldap->searchEntries($filter, $baseDn, Ldap::SEARCH_SCOPE_SUB, $attributes);
-
-    $members = [];
-
-    foreach ($result as $item) {
-        if (array_key_exists("memberof", $item)) {
-            foreach ($item["memberof"] as $group) {
-                $matches = [];
-                preg_match("/CN=([\w\s]+),/", $group, $matches);
-                if (array_key_exists(1, $matches) && array_key_exists($matches[1], $ldap_groups) && !in_array($item["samaccountname"][0], $members)) {
-                    $user = $manager
-                        ->getRepository('AppBundle:FOSUser')
-                        ->findOneBy(array('username' => $item["samaccountname"][0]));
-                    if ($user == null) {
-                        $user = new FOSUser();
-                        $user->setDn($item["dn"]);
-                        $user->setEnabled(1);
-                        $user->setUsername($item["samaccountname"][0]);
-                        $user->setUsernameCanonical(strtolower($item["samaccountname"][0]));
-                        $user->setEmail($item["mail"][0]);
-                        $user->setEmailCanonical(strtolower($item["mail"][0]));
-                        $user->setDepartment($ldap_groups[$matches[1]]);
-                        $user->setDepartmentDn($group);
-                        $user->setCn($item['cn'][0]);
-                        $user->setFromBioControl(false);
-
-                        $manager->persist($user);
-                    }
-                    $this->addReference($item["samaccountname"][0], $user);
-                    $members[] = $item["samaccountname"][0];
-                }
-            }
-        }
-    }
-    $manager->flush();
-}
-```
 
 #### Excel Data Loading
 
