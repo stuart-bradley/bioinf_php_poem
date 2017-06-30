@@ -80,17 +80,23 @@ class UserManager
         }
     }
 
-    /*
-     * TODO
+    /**
+     * Updates a users' DN from LDAP database.
+     * @param array $names
      */
-    public function updateUser($name)
+    public function updateUsersDn($names)
     {
-        $name = $this->convertToSamaccountname($name);
-        $user = $this->em
-            ->getRepository('AppBundle:FOSUser')
-            ->findOneBy(array('username' => $name));
-        if ($user) {
-
+        foreach ($names as $name) {
+            $name = $this->convertToSamaccountname($name);
+            $user = $this->em
+                ->getRepository('AppBundle:FOSUser')
+                ->findOneBy(array('username' => $name));
+            if ($user) {
+                $ldap_result = $this->findViaLDAP($name);
+                if ($ldap_result) {
+                    $user->setDn($ldap_result["dn"]);
+                }
+            }
         }
     }
 
