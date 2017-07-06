@@ -115,6 +115,31 @@ class UserManager
     }
 
     /**
+     * Updates FOSUser DNs for a set of FOSUsers.
+     * @param array $users
+     * @return string
+     */
+    public function updateUsersDn($users)
+    {
+        $string_result = "";
+        foreach ($users as $user) {
+            /*  @var FOSUser $user */
+            $record = $this->findViaLDAP($user->getUsername());
+            if ($record) {
+                // Unpack single user query.
+                $record = $record[0];
+                if ($record["dn"] != $user->getDn()) {
+                    $user->setDn($record["dn"]);
+                    $string_result .= $user->getUsername() . " DN set to: " . $record["dn"] . PHP_EOL;
+                } else {
+                    $string_result .= $user->getUsername() . " DN not set (already consistent)." . PHP_EOL;
+                }
+            }
+        }
+        return $string_result;
+    }
+
+    /**
      * Converts normal names like John Smith to usernames like John.Smith.
      * @param string $name
      * @return string
@@ -215,26 +240,4 @@ class UserManager
         }
         return false;
     }
-
-    /**
-     * Updates a users' DN from LDAP database.
-     * @param array $names
-     */
-    public function updateUsersDn($names)
-    {
-        foreach ($names as $name) {
-            $name = $this->convertToSamaccountname($name);
-            $user = $this->em
-                ->getRepository('AppBundle:FOSUser')
-                ->findOneBy(array('username' => $name));
-            if ($user) {
-                $ldap_result = $this->findViaLDAP($name);
-                if ($ldap_result) {
-                    $user->setDn($ldap_result["dn"]);
-                }
-            }
-        }
-    }
-
-
 }
