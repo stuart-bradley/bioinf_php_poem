@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/Command/UpdateUserDnCommandCommand.php
+// src/AppBundle/Command/UpdateUserDnCommand.php
 namespace AppBundle\Command;
 
 use AppBundle\Entity\FOSUser;
@@ -15,7 +15,7 @@ class UpdateUserDnCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
-        $this->setName('user:updateDn')
+        $this->setName('poem:user:updateDn')
             ->addArgument(
                 'usernames',
                 InputArgument::IS_ARRAY | InputArgument::OPTIONAL,
