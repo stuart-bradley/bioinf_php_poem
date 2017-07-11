@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 
-// TODO: deleteAction should be implemented.
-
 class SequenceRunController extends Controller {
     /**
      * @Route("/sequence_run/index", name="sequence_run_index")

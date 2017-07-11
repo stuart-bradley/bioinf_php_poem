@@ -16,7 +16,7 @@ class LoadOmicsExperiments extends AbstractFixture implements OrderedFixtureInte
         $omicsExperiment = new OmicsExperiment();
         $omicsExperiment->setProjectName("Project 1");
         $omicsExperiment->setProjectID("P01");
-        $omicsExperiment->addUser($this->getReference("Stuart.Bradley"));
+        $omicsExperiment->addUser($manager->getRepository('AppBundle:FOSUser')->findAll()[0]);
         $omicsExperiment->setDescription("The Description");
         $omicsExperiment->setQuestions("The Questions");
         $omicsExperiment->addStatus($this->getReference("status_omics_experiment"));

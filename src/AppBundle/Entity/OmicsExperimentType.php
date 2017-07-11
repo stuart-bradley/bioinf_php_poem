@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OmicsExperimentType
- *
  * @ORM\Table(name="omics_experiment_type")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OmicsExperimentTypeRepository")
  */
@@ -16,7 +15,6 @@ class OmicsExperimentType
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -48,7 +46,6 @@ class OmicsExperimentType
 
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -58,7 +55,6 @@ class OmicsExperimentType
 
     /**
      * Get omicsExperiment
-     *
      * @return \AppBundle\Entity\OmicsExperiment
      */
     public function getOmicsExperiment()
@@ -68,9 +64,7 @@ class OmicsExperimentType
 
     /**
      * Set omicsExperiment
-     *
      * @param \AppBundle\Entity\OmicsExperiment $omicsExperiment
-     *
      * @return OmicsExperimentType
      */
     public function setOmicsExperiment(\AppBundle\Entity\OmicsExperiment $omicsExperiment = null)
@@ -82,9 +76,7 @@ class OmicsExperimentType
 
     /**
      * Add omicsExperimentSubType
-     *
      * @param \AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType
-     *
      * @return OmicsExperimentType
      */
     public function addOmicsExperimentSubType(\AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType)
@@ -97,7 +89,6 @@ class OmicsExperimentType
 
     /**
      * Remove omicsExperimentSubType
-     *
      * @param \AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType
      */
     public function removeOmicsExperimentSubType(\AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType)
@@ -108,7 +99,6 @@ class OmicsExperimentType
 
     /**
      * Get omicsExperimentSubTypes
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getOmicsExperimentSubTypes()
@@ -118,7 +108,6 @@ class OmicsExperimentType
 
     /**
      * Get omicsExperimentTypeString
-     *
      * @return \AppBundle\Entity\OmicsExperimentTypeStrings
      */
     public function getOmicsExperimentTypeString()
@@ -128,9 +117,7 @@ class OmicsExperimentType
 
     /**
      * Set omicsExperimentTypeString
-     *
      * @param \AppBundle\Entity\OmicsExperimentTypeStrings $omicsExperimentTypeString
-     *
      * @return OmicsExperimentType
      */
     public function setOmicsExperimentTypeString(\AppBundle\Entity\OmicsExperimentTypeStrings $omicsExperimentTypeString = null)

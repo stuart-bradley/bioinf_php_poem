@@ -16,7 +16,6 @@ class OmicsExperiment
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,25 +24,20 @@ class OmicsExperiment
 
     /**
      * @var string
-     *
      * @ORM\Column(name="project_name", type="string")
-     *
      * @Assert\NotBlank()
      */
     private $projectName;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="project_id", type="string", unique=true)
      */
     private $projectID;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="requested_date", type="date")
-     *
      * @Assert\NotBlank()
      * @Assert\Date()
      */
@@ -51,7 +45,6 @@ class OmicsExperiment
 
     /**
      * @var string
-     *
      * @ORM\Column(name="description", type="text", nullable=true)
      *
      */
@@ -59,7 +52,6 @@ class OmicsExperiment
 
     /**
      * @var string
-     *
      * @ORM\Column(name="questions", type="text", nullable=true)
      *
      */
@@ -67,9 +59,7 @@ class OmicsExperiment
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="requested_end_date", type="date")
-     *
      * @Assert\NotBlank()
      * @Assert\Date()
      */
@@ -77,9 +67,7 @@ class OmicsExperiment
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="created_at", type="date")
-     *
      * @Assert\NotBlank()
      * @Assert\Date()
      */
@@ -93,7 +81,6 @@ class OmicsExperiment
 
     /**
      * @var File
-     *
      * @ORM\OneToMany(targetEntity="File", mappedBy="omicsExperiment", cascade={"persist", "remove"})
      *
      */
@@ -122,7 +109,6 @@ class OmicsExperiment
     
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -132,7 +118,6 @@ class OmicsExperiment
 
     /**
      * Get projectName
-     *
      * @return string
      */
     public function getProjectName()
@@ -142,9 +127,7 @@ class OmicsExperiment
 
     /**
      * Set projectName
-     *
      * @param string $projectName
-     *
      * @return OmicsExperiment
      */
     public function setProjectName($projectName)
@@ -156,7 +139,6 @@ class OmicsExperiment
 
     /**
      * Get projectID
-     *
      * @return string
      */
     public function getProjectID()
@@ -166,9 +148,7 @@ class OmicsExperiment
 
     /**
      * Set projectID
-     *
      * @param string $projectID
-     *
      * @return OmicsExperiment
      */
     public function setProjectID($projectID)
@@ -180,7 +160,6 @@ class OmicsExperiment
 
     /**
      * Get requestedDate
-     *
      * @return \DateTime
      */
     public function getRequestedDate()
@@ -190,9 +169,7 @@ class OmicsExperiment
 
     /**
      * Set requestedDate
-     *
      * @param \DateTime $requestedDate
-     *
      * @return OmicsExperiment
      */
     public function setRequestedDate($requestedDate)
@@ -204,7 +181,6 @@ class OmicsExperiment
 
     /**
      * Get description
-     *
      * @return string
      */
     public function getDescription()
@@ -214,9 +190,7 @@ class OmicsExperiment
 
     /**
      * Set description
-     *
      * @param string $description
-     *
      * @return OmicsExperiment
      */
     public function setDescription($description)
@@ -228,7 +202,6 @@ class OmicsExperiment
 
     /**
      * Get questions
-     *
      * @return string
      */
     public function getQuestions()
@@ -238,9 +211,7 @@ class OmicsExperiment
 
     /**
      * Set questions
-     *
      * @param string $questions
-     *
      * @return OmicsExperiment
      */
     public function setQuestions($questions)
@@ -252,7 +223,6 @@ class OmicsExperiment
 
     /**
      * Get requestedEndDate
-     *
      * @return \DateTime
      */
     public function getRequestedEndDate()
@@ -262,9 +232,7 @@ class OmicsExperiment
 
     /**
      * Set createdAt
-     *
      * @param \DateTime $createdAt
-     *
      * @return OmicsExperiment
      */
     public function setCreatedAt($createdAt)
@@ -276,7 +244,6 @@ class OmicsExperiment
 
     /**
      * Get createdAt
-     *
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -286,9 +253,7 @@ class OmicsExperiment
 
     /**
      * Set requestedEndDate
-     *
      * @param \DateTime $requestedEndDate
-     *
      * @return OmicsExperiment
      */
     public function setRequestedEndDate($requestedEndDate)
@@ -300,9 +265,7 @@ class OmicsExperiment
 
     /**
      * Add user
-     *
      * @param \AppBundle\Entity\FOSUser $user
-     *
      * @return OmicsExperiment
      */
     public function addUser(\AppBundle\Entity\FOSUser $user)
@@ -315,7 +278,6 @@ class OmicsExperiment
 
     /**
      * Remove user
-     *
      * @param \AppBundle\Entity\FOSUser $user
      */
     public function removeUser(\AppBundle\Entity\FOSUser $user)
@@ -326,7 +288,6 @@ class OmicsExperiment
 
     /**
      * Get users
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getUsers()
@@ -336,9 +297,7 @@ class OmicsExperiment
 
     /*
      * Checks if user exists
-     *
      * @param \AppBundle\Entity\FOSUser $user
-     *
      * @return boolean
      *
      */
@@ -354,9 +313,7 @@ class OmicsExperiment
 
     /**
      * Add status
-     *
      * @param \AppBundle\Entity\Status $status
-     *
      * @return OmicsExperiment
      */
     public function addStatus(\AppBundle\Entity\Status $status)
@@ -369,7 +326,6 @@ class OmicsExperiment
 
     /**
      * Remove status
-     *
      * @param \AppBundle\Entity\Status $status
      */
     public function removeStatus(\AppBundle\Entity\Status $status)
@@ -380,7 +336,6 @@ class OmicsExperiment
 
     /**
      * Get statuses
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getStatuses()
@@ -390,9 +345,7 @@ class OmicsExperiment
 
     /**
      * Add omicsExperimentType
-     *
      * @param \AppBundle\Entity\OmicsExperimentType $omicsExperimentType
-     *
      * @return OmicsExperiment
      */
     public function addOmicsExperimentType(\AppBundle\Entity\OmicsExperimentType $omicsExperimentType)
@@ -405,7 +358,6 @@ class OmicsExperiment
 
     /**
      * Remove omicsExperimentType
-     *
      * @param \AppBundle\Entity\OmicsExperimentType $omicsExperimentType
      */
     public function removeOmicsExperimentType(\AppBundle\Entity\OmicsExperimentType $omicsExperimentType)
@@ -416,7 +368,6 @@ class OmicsExperiment
 
     /**
      * Get omicsExperimentTypes
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getOmicsExperimentTypes()
@@ -426,9 +377,7 @@ class OmicsExperiment
 
     /**
      * Add file
-     *
      * @param \AppBundle\Entity\File $file
-     *
      * @return OmicsExperiment
      */
     public function addFile(\AppBundle\Entity\File $file)
@@ -441,7 +390,6 @@ class OmicsExperiment
 
     /**
      * Remove file
-     *
      * @param \AppBundle\Entity\File $file
      */
     public function removeFile(\AppBundle\Entity\File $file)
@@ -452,7 +400,6 @@ class OmicsExperiment
 
     /**
      * Get files
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getFiles()

@@ -18,6 +18,10 @@ services:
               - { name: doctrine.event_listener, event: preUpdate }
               - { name: doctrine.event_listener, event: preRemove }
 
+  app.user_manager:
+            class: AppBundle\UserManager\UserManager
+            arguments: ['@doctrine.orm.default_entity_manager', '%ldap_host%', '%ldap_port', '%ldap_username%', '%ldap_password%', '%ldap_baseDn_users%', '%ldap_domain_long%']
+
   app.biocontrol_manager:
           class: AppBundle\BioControl\BioControlManager
-          arguments: ['@doctrine.dbal.bio_control_connection', '@doctrine.orm.default_entity_manager', '%ldap_domain_long%']
+          arguments: ['@doctrine.dbal.bio_control_connection', '@doctrine.orm.default_entity_manager', '%ldap_domain_long%', '@app.user_manager']

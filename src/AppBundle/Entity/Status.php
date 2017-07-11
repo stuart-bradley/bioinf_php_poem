@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Status
- *
  * @ORM\Table(name="status")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StatusRepository")
  */
@@ -16,7 +15,6 @@ class Status
 
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,7 +23,6 @@ class Status
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="date", type="date")
      */
     private $date;
@@ -50,7 +47,6 @@ class Status
 
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -60,9 +56,7 @@ class Status
     
     /**
      * Set date
-     *
      * @param \DateTime $date
-     *
      * @return Status
      */
     public function setDate($date)
@@ -74,7 +68,6 @@ class Status
 
     /**
      * Get date
-     *
      * @return \DateTime
      */
     public function getDate()
@@ -84,9 +77,7 @@ class Status
 
     /**
      * Set omicsExperiment
-     *
      * @param \AppBundle\Entity\OmicsExperiment $omicsExperiment
-     *
      * @return Status
      */
     public function setOmicsExperiment(\AppBundle\Entity\OmicsExperiment $omicsExperiment = null)
@@ -98,7 +89,6 @@ class Status
 
     /**
      * Get omicsExperiment
-     *
      * @return \AppBundle\Entity\OmicsExperiment
      */
     public function getOmicsExperiment()
@@ -108,9 +98,7 @@ class Status
 
     /**
      * Set statusString
-     *
      * @param \AppBundle\Entity\StatusStrings $statusString
-     *
      * @return Status
      */
     public function setStatusString(\AppBundle\Entity\StatusStrings $statusString = null)
@@ -122,7 +110,6 @@ class Status
 
     /**
      * Get statusString
-     *
      * @return \AppBundle\Entity\StatusStrings
      */
     public function getStatusString()

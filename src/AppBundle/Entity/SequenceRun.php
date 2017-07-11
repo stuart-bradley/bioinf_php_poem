@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SequenceRun
- *
  * @ORM\Table(name="sequence_run")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SequenceRunRepository")
  */
@@ -16,7 +15,6 @@ class SequenceRun
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,9 +23,7 @@ class SequenceRun
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="start_date", type="date")
-     *
      * @Assert\NotBlank()
      * @Assert\Date()
      */
@@ -35,9 +31,7 @@ class SequenceRun
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="end_dat", type="date")
-     *
      * @Assert\NotBlank()
      * @Assert\Date()
      */
@@ -45,9 +39,7 @@ class SequenceRun
 
     /**
      * @var string
-     *
      * @ORM\Column(name="kit", type="string")
-     *
      * @Assert\NotBlank()
      */
     private $kit;
@@ -61,18 +53,14 @@ class SequenceRun
 
     /**
      * @var int
-     *
      * @ORM\Column(name="run_coverage_target", type="integer")
-     *
      * @Assert\NotBlank()
      */
     private $runCoverageTarget;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="read_length", type="integer")
-     *
      * @Assert\NotBlank()
      */
     private $readLength;
@@ -85,9 +73,7 @@ class SequenceRun
 
     /**
      * @var File
-     *
      * @ORM\OneToMany(targetEntity="File", mappedBy="sequenceRun", cascade={"persist", "remove"})
-     *
      */
     private $files;
 
@@ -107,7 +93,6 @@ class SequenceRun
 
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -117,7 +102,6 @@ class SequenceRun
 
     /**
      * Get runBy
-     *
      * @return FOSUser
      */
     public function getRunBy()
@@ -127,9 +111,7 @@ class SequenceRun
 
     /**
      * Set runBy
-     *
      * @param FOSUser $runBy
-     *
      * @return SequenceRun
      */
     public function setRunBy($runBy)
@@ -141,7 +123,6 @@ class SequenceRun
 
     /**
      * Get startDate
-     *
      * @return \DateTime
      */
     public function getStartDate()
@@ -151,9 +132,7 @@ class SequenceRun
 
     /**
      * Set startDate
-     *
      * @param \DateTime $startDate
-     *
      * @return SequenceRun
      */
     public function setStartDate($startDate)
@@ -165,7 +144,6 @@ class SequenceRun
 
     /**
      * Get endDate
-     *
      * @return \DateTime
      */
     public function getEndDate()
@@ -175,9 +153,7 @@ class SequenceRun
 
     /**
      * Set endDate
-     *
      * @param \DateTime $endDate
-     *
      * @return SequenceRun
      */
     public function setEndDate($endDate)
@@ -189,7 +165,6 @@ class SequenceRun
 
     /**
      * Get kit
-     *
      * @return string
      */
     public function getKit()
@@ -199,9 +174,7 @@ class SequenceRun
 
     /**
      * Set kit
-     *
      * @param string $kit
-     *
      * @return SequenceRun
      */
     public function setKit($kit)
@@ -213,7 +186,6 @@ class SequenceRun
 
     /**
      * Get runCoverageTarget
-     *
      * @return int
      */
     public function getRunCoverageTarget()
@@ -223,9 +195,7 @@ class SequenceRun
 
     /**
      * Set runCoverageTarget
-     *
      * @param integer $runCoverageTarget
-     *
      * @return SequenceRun
      */
     public function setRunCoverageTarget($runCoverageTarget)
@@ -237,7 +207,6 @@ class SequenceRun
 
     /**
      * Get readLength
-     *
      * @return int
      */
     public function getReadLength()
@@ -247,9 +216,7 @@ class SequenceRun
 
     /**
      * Set readLength
-     *
      * @param integer $readLength
-     *
      * @return SequenceRun
      */
     public function setReadLength($readLength)
@@ -261,9 +228,7 @@ class SequenceRun
 
     /**
      * Add sample
-     *
      * @param \AppBundle\Entity\Sample $sample
-     *
      * @return SequenceRun
      */
     public function addSample(\AppBundle\Entity\Sample $sample)
@@ -276,7 +241,6 @@ class SequenceRun
 
     /**
      * Remove sample
-     *
      * @param \AppBundle\Entity\Sample $sample
      */
     public function removeSample(\AppBundle\Entity\Sample $sample)
@@ -287,7 +251,6 @@ class SequenceRun
 
     /**
      * Get samples
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSamples()
@@ -297,7 +260,6 @@ class SequenceRun
 
     /**
      * Get materialTypeString
-     *
      * @return \AppBundle\Entity\MaterialTypeStrings
      */
     public function getMaterialTypeString()
@@ -307,9 +269,7 @@ class SequenceRun
 
     /**
      * Set materialTypeString
-     *
      * @param \AppBundle\Entity\MaterialTypeStrings $materialTypeString
-     *
      * @return SequenceRun
      */
     public function setMaterialTypeString(\AppBundle\Entity\MaterialTypeStrings $materialTypeString = null)
@@ -321,9 +281,7 @@ class SequenceRun
 
     /**
      * Add file
-     *
      * @param \AppBundle\Entity\File $file
-     *
      * @return SequenceRun
      */
     public function addFile(\AppBundle\Entity\File $file)
@@ -336,7 +294,6 @@ class SequenceRun
 
     /**
      * Remove file
-     *
      * @param \AppBundle\Entity\File $file
      */
     public function removeFile(\AppBundle\Entity\File $file)
@@ -347,7 +304,6 @@ class SequenceRun
 
     /**
      * Get files
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getFiles()

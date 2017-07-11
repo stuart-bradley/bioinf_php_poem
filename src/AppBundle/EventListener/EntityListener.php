@@ -9,18 +9,35 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use AppBundle\Entity\OmicsExperiment;
 use AppBundle\Entity\File;
 use AppBundle\Uploader\FileUploader;
+use Monolog\Logger;
 use \Symfony\Component\Debug\Exception\ContextErrorException;
 
+/**
+ * Class EntityListener
+ * @package AppBundle\EventListener
+ */
 class EntityListener
 {
+    /**
+     * @var FileUploader
+     */
     private $uploader;
 
-    public function __construct(FileUploader $uploader, $logger)
+    /**
+     * EntityListener constructor.
+     * @param FileUploader $uploader
+     * @param Logger $logger
+     */
+    public function __construct(FileUploader $uploader, Logger $logger)
     {
         $this->uploader = $uploader;
         $this->logger = $logger;
     }
 
+    /**
+     * Captures pre-presist events.
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -30,6 +47,10 @@ class EntityListener
         }
     }
 
+    /**
+     * Captures pre-update events.
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -39,6 +60,10 @@ class EntityListener
         }
     }
 
+    /**
+     * Captures pre-remove events.
+     * @param LifecycleEventArgs $args
+     */
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -47,6 +72,10 @@ class EntityListener
         }
     }
 
+    /**
+     * Uploads file to server.
+     * @param File $entity
+     */
     private function uploadFile(File $entity)
     {
         $uploadedFile = $entity->getFile();
@@ -61,6 +90,7 @@ class EntityListener
     }
 
     /**
+     * Deletes files from server when parent entity is deleted.
      * @param omicsExperiment|SequenceRun $entity
      */
     private function deleteFiles($entity)

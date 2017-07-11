@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * StatusStrings
- *
  * @ORM\Table(name="status_strings")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StatusStringsRepository")
  */
@@ -16,7 +15,6 @@ class StatusStrings
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,7 +23,6 @@ class StatusStrings
 
     /**
      * @var string
-     *
      * @ORM\Column(name="type", type="string")
      */
     private $type;
@@ -43,7 +40,6 @@ class StatusStrings
 
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -53,9 +49,7 @@ class StatusStrings
 
     /**
      * Set type
-     *
      * @param string $type
-     *
      * @return StatusStrings
      */
     public function setType($type)
@@ -67,7 +61,6 @@ class StatusStrings
 
     /**
      * Get type
-     *
      * @return string
      */
     public function getType()
@@ -77,9 +70,7 @@ class StatusStrings
 
     /**
      * Add status
-     *
      * @param \AppBundle\Entity\Status $status
-     *
      * @return StatusStrings
      */
     public function addStatus(\AppBundle\Entity\Status $status)
@@ -92,7 +83,6 @@ class StatusStrings
 
     /**
      * Remove status
-     *
      * @param \AppBundle\Entity\Status $status
      */
     public function removeStatus(\AppBundle\Entity\Status $status)
@@ -102,7 +92,6 @@ class StatusStrings
 
     /**
      * Get statuses
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getStatuses()

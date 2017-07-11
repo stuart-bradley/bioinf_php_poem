@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Sample
- *
  * @ORM\Table(name="sample")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SampleRepository")
  */
@@ -15,7 +14,6 @@ class Sample
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,64 +22,50 @@ class Sample
 
     /**
      * @var string
-     *
      * @ORM\Column(name="sample_name", type="string", nullable=true)
      */
     private $sampleName;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="bcexperiment_id", type="integer", nullable=true)
-     *
      */
     private $BCExperimentID;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="bcsample_id", type="integer", nullable=true)
-     *
      */
     private $BCSampleID;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="bcrun_id", type="integer", nullable=true)
-     *
      */
     private $BCRunID;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="sampled_date_time", type="datetime")
-     *
      * @Assert\NotBlank()
      */
     private $sampledDateTime;
 
     /**
      * @var bool
-     *
      * @ORM\Column(name="rnalater_treated", type="boolean")
-     *
      */
     private $RNALaterTreated;
 
     /**
      * @var string
-     *
      * @ORM\Column(name="comments", type="text", nullable=true)
-     *
      */
     private $comments;
 
     /**
      * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="samples")
      * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
-     *
      * @Assert\NotBlank()
      */
     private $sampledBy;
@@ -113,7 +97,6 @@ class Sample
 
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -123,9 +106,7 @@ class Sample
 
     /**
      * Set sampleName
-     *
      * @param string $sampleName
-     *
      * @return Sample
      */
     public function setSampleName($sampleName)
@@ -137,7 +118,6 @@ class Sample
 
     /**
      * Get sampleName
-     *
      * @return string
      */
     public function getSampleName()
@@ -147,9 +127,7 @@ class Sample
 
     /**
      * Set bCExperimentID
-     *
      * @param integer $bCExperimentID
-     *
      * @return Sample
      */
     public function setBCExperimentID($bCExperimentID)
@@ -161,7 +139,6 @@ class Sample
 
     /**
      * Get bCExperimentID
-     *
      * @return int
      */
     public function getBCExperimentID()
@@ -171,9 +148,7 @@ class Sample
 
     /**
      * Set bCSampleID
-     *
      * @param integer $bCSampleID
-     *
      * @return Sample
      */
     public function setBCSampleID($bCSampleID)
@@ -185,7 +160,6 @@ class Sample
 
     /**
      * Get bCSampleID
-     *
      * @return int
      */
     public function getBCSampleID()
@@ -195,9 +169,7 @@ class Sample
 
     /**
      * Set bCRunID
-     *
      * @param integer $bCRunID
-     *
      * @return Sample
      */
     public function setBCRunID($bCRunID)
@@ -209,7 +181,6 @@ class Sample
 
     /**
      * Get bCRunID
-     *
      * @return int
      */
     public function getBCRunID()
@@ -219,9 +190,7 @@ class Sample
 
     /**
      * Set sampledBy
-     *
      * @param FOSUser $sampledBy
-     *
      * @return Sample
      */
     public function setSampledBy($sampledBy)
@@ -233,7 +202,6 @@ class Sample
 
     /**
      * Get sampledBy
-     *
      * @return FOSUser
      */
     public function getSampledBy()
@@ -243,9 +211,7 @@ class Sample
 
     /**
      * Set rNALaterTreated
-     *
      * @param boolean $rNALaterTreated
-     *
      * @return Sample
      */
     public function setRNALaterTreated($rNALaterTreated)
@@ -257,7 +223,6 @@ class Sample
 
     /**
      * Get rNALaterTreated
-     *
      * @return bool
      */
     public function getRNALaterTreated()
@@ -267,7 +232,6 @@ class Sample
 
     /**
      * Get comments
-     *
      * @return string
      */
     public function getComments()
@@ -276,10 +240,8 @@ class Sample
     }
 
     /**
-     * Set questions
-     *
+     * Set comments
      * @param string $comments
-     *
      * @return Sample
      */
     public function setComments($comments)
@@ -291,9 +253,7 @@ class Sample
 
     /**
      * Set omicsExperimentSubType
-     *
      * @param \AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType
-     *
      * @return Sample
      */
     public function setOmicsExperimentSubType(\AppBundle\Entity\OmicsExperimentSubType $omicsExperimentSubType = null)
@@ -305,7 +265,6 @@ class Sample
 
     /**
      * Get omicsExperimentSubType
-     *
      * @return \AppBundle\Entity\OmicsExperimentSubType
      */
     public function getOmicsExperimentSubType()
@@ -315,9 +274,7 @@ class Sample
 
     /**
      * Set sequenceRun
-     *
      * @param \AppBundle\Entity\SequenceRun $sequenceRun
-     *
      * @return Sample
      */
     public function setSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun = null)
@@ -329,7 +286,6 @@ class Sample
 
     /**
      * Get sequenceRun
-     *
      * @return \AppBundle\Entity\SequenceRun
      */
     public function getSequenceRun()
@@ -339,9 +295,7 @@ class Sample
 
     /**
      * Set materialTypeString
-     *
      * @param \AppBundle\Entity\MaterialTypeStrings $materialTypeString
-     *
      * @return Sample
      */
     public function setMaterialTypeString(\AppBundle\Entity\MaterialTypeStrings $materialTypeString = null)
@@ -353,7 +307,6 @@ class Sample
 
     /**
      * Get materialTypeString
-     *
      * @return \AppBundle\Entity\MaterialTypeStrings
      */
     public function getMaterialTypeString()
@@ -363,9 +316,7 @@ class Sample
 
     /**
      * Set sampledDateTime
-     *
      * @param \DateTime $sampledDateTime
-     *
      * @return Sample
      */
     public function setSampledDateTime($sampledDateTime)
@@ -377,7 +328,6 @@ class Sample
 
     /**
      * Get sampledDateTime
-     *
      * @return \DateTime
      */
     public function getSampledDateTime()

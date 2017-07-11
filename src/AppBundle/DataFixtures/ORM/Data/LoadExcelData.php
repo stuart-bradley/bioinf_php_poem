@@ -37,10 +37,11 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         if ($file_location == "") {
             return;
         }
-        $omics_experiments = $this->getOmicsExperimentsFromExcel($this->container->getParameter('excel_data_path'));
+        $omics_experiments = $this->getOmicsExperimentsFromExcel($file_location);
         $exp_type_genomics = null;
         $exp_sub_type = null;
         $bioControlManager = $this->container->get('app.biocontrol_manager');
+        $userManager = $this->container->get('app.user_manager');
 
         print("Loading experiments to database." . PHP_EOL);
 
@@ -95,7 +96,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                         $sample->setBCExperimentID($bioControlSample['ExpID']);
                         $sample->setSampledDateTime(new \DateTime($bioControlSample['Dat']));
                         $sample->setRNALaterTreated(false);
-                        $sample_user = $this->findOrCreateUser($sample_row[1], $manager);
+                        $sample_user = $userManager->findOrCreateUser($sample_row[1]);
                         $sample->setSampledBy($sample_user);
 
                         if (!$omics_experiment->hasUser($sample_user)) {
@@ -251,43 +252,6 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
             }
         }
         return $comments;
-    }
-
-    /*
-     * Finds a already created user, or creates a new one for database.
-     *
-     * Required because BioControl may have users not in LDAP system.
-     */
-    private function findOrCreateUser($name, ObjectManager $manager)
-    {
-        $user = $manager
-            ->getRepository('AppBundle:FOSUser')
-            ->findOneBy(array("cn" => $name));
-        if ($user) {
-            return $user;
-        } else {
-            $user = new FOSUser();
-            $user->setCn($name);
-            $user->setDn("CN=" . $name);
-
-            $username = str_replace(" ", ".", $name);
-            $user->setUsername($username);
-            $user->setUsernameCanonical(strtolower($username));
-
-            $domain = $this->container->getParameter('ldap_domain_long');
-
-            $email = $username . "@" . $domain;
-            $user->setEmail($email);
-            $user->setEmailCanonical(strtolower($email));
-
-            $user->setFromBioControl(true);
-
-            // Flush needs to occur to stop user duplication.
-            $manager->persist($user);
-            $manager->flush();
-
-            return $user;
-        }
     }
 
     private function getBCSampleID($sample_row)

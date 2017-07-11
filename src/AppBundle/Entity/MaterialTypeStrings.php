@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * MaterialTypeStrings
- *
  * @ORM\Table(name="material_type_strings")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MaterialTypeStringsRepository")
  */
@@ -15,7 +14,6 @@ class MaterialTypeStrings
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -24,7 +22,6 @@ class MaterialTypeStrings
 
     /**
      * @var string
-     *
      * @ORM\Column(name="type", type="string")
      */
     private $type;
@@ -48,7 +45,6 @@ class MaterialTypeStrings
 
     /**
      * Get id
-     *
      * @return int
      */
     public function getId()
@@ -58,9 +54,7 @@ class MaterialTypeStrings
 
     /**
      * Set type
-     *
      * @param string $type
-     *
      * @return MaterialTypeStrings
      */
     public function setType($type)
@@ -72,7 +66,6 @@ class MaterialTypeStrings
 
     /**
      * Get type
-     *
      * @return string
      */
     public function getType()
@@ -82,9 +75,7 @@ class MaterialTypeStrings
 
     /**
      * Add sample
-     *
      * @param \AppBundle\Entity\Sample $sample
-     *
      * @return MaterialTypeStrings
      */
     public function addSample(\AppBundle\Entity\Sample $sample)
@@ -97,7 +88,6 @@ class MaterialTypeStrings
 
     /**
      * Remove sample
-     *
      * @param \AppBundle\Entity\Sample $sample
      */
     public function removeSample(\AppBundle\Entity\Sample $sample)
@@ -107,7 +97,6 @@ class MaterialTypeStrings
 
     /**
      * Get samples
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSamples()
@@ -117,9 +106,7 @@ class MaterialTypeStrings
 
     /**
      * Add sequenceRun
-     *
      * @param \AppBundle\Entity\SequenceRun $sequenceRun
-     *
      * @return MaterialTypeStrings
      */
     public function addSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun)
@@ -131,7 +118,6 @@ class MaterialTypeStrings
 
     /**
      * Remove sequenceRun
-     *
      * @param \AppBundle\Entity\SequenceRun $sequenceRun
      */
     public function removeSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun)
@@ -141,7 +127,6 @@ class MaterialTypeStrings
 
     /**
      * Get sequenceRuns
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSequenceRuns()

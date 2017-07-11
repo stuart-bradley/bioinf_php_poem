@@ -32,35 +32,30 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", name="dn", nullable=true)
      */
     protected $dn;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", name="cn")
      */
     protected $cn;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", name="department", nullable=true)
      */
     protected $department;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", name="department_dn", nullable=true)
      */
     protected $departmentDn;
 
     /**
      * @var boolean
-     *
      * @ORM\Column(type="boolean", name="from_bio_control")
      */
     protected $fromBioControl;
@@ -96,6 +91,9 @@ class FOSUser extends BaseUser implements LdapUserInterface
         $this->samples = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getCn();
@@ -121,7 +119,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Get cn
-     *
      * @return string
      */
     public function getCn()
@@ -131,9 +128,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Set realName
-     *
      * @param string $realName
-     *
      * @return FOSUser
      */
     public function setCn($cn)
@@ -145,7 +140,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Get department
-     *
      * @return string
      */
     public function getDepartment()
@@ -155,9 +149,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Set department
-     *
      * @param string $department
-     *
      * @return FOSUser
      */
     public function setDepartment($department)
@@ -169,7 +161,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Get departmentDn
-     *
      * @return string
      */
     public function getDepartmentDn()
@@ -179,9 +170,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Set departmentDn
-     *
      * @param string $departmentDn
-     *
      * @return FOSUser
      */
     public function setDepartmentDn($departmentDn)
@@ -193,7 +182,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Get fromBioControl
-     *
      * @return boolean
      */
     public function getFromBioControl()
@@ -203,9 +191,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Set fromBioControl
-     *
      * @param string $fromBioControl
-     *
      * @return FOSUser
      */
     public function setFromBioControl($fromBioControl)
@@ -217,9 +203,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Add omicsExperiment
-     *
      * @param \AppBundle\Entity\OmicsExperiment $omicsExperiment
-     *
      * @return FOSUser
      */
     public function addOmicsExperiment(\AppBundle\Entity\OmicsExperiment $omicsExperiment)
@@ -231,7 +215,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Remove omicsExperiment
-     *
      * @param \AppBundle\Entity\OmicsExperiment $omicsExperiment
      */
     public function removeOmicsExperiment(\AppBundle\Entity\OmicsExperiment $omicsExperiment)
@@ -241,7 +224,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Get omicsExperiments
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getOmicsExperiments()
@@ -251,9 +233,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Add sequenceRun
-     *
      * @param \AppBundle\Entity\SequenceRun $sequenceRun
-     *
      * @return FOSUser
      */
     public function addSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun)
@@ -266,7 +246,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Remove sequenceRun
-     *
      * @param \AppBundle\Entity\SequenceRun $sequenceRun
      */
     public function removeSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun)
@@ -276,7 +255,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Get sequenceRuns
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSequenceRuns()
@@ -286,9 +264,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Add sample
-     *
      * @param \AppBundle\Entity\Sample $sample
-     *
      * @return FOSUser
      */
     public function addSample(\AppBundle\Entity\Sample $sample)
@@ -301,7 +277,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Remove sample
-     *
      * @param \AppBundle\Entity\Sample $sample
      */
     public function removeSample(\AppBundle\Entity\Sample $sample)
@@ -311,7 +286,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
 
     /**
      * Get samples
-     *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSamples()
