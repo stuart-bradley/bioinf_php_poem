@@ -82,10 +82,16 @@ class SequenceRun
      */
     private $samples;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Version", mappedBy="sequenceRun", cascade={"persist", "remove"})
+     */
+    private $versions;
+
     public function __construct()
     {
         $this->samples = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->versions = new ArrayCollection();
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
     }
@@ -309,5 +315,37 @@ class SequenceRun
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * Add version
+     * @param \AppBundle\Entity\Version $version
+     * @return SequenceRun
+     */
+    public function addVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions[] = $version;
+        $version->setSequenceRun($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove version
+     * @param \AppBundle\Entity\Version $version
+     */
+    public function removeVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions->removeElement($version);
+        $version->setSequenceRun(null);
+    }
+
+    /**
+     * Get versions
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVersions()
+    {
+        return $this->versions;
     }
 }

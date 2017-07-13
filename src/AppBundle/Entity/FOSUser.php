@@ -77,6 +77,11 @@ class FOSUser extends BaseUser implements LdapUserInterface
      */
     private $samples;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Version", mappedBy="user")
+     */
+    private $versions;
+
     public function __construct()
     {
         parent::__construct();
@@ -89,6 +94,7 @@ class FOSUser extends BaseUser implements LdapUserInterface
         $this->omicsExperiments = new ArrayCollection();
         $this->sequenceRuns = new ArrayCollection();
         $this->samples = new ArrayCollection();
+        $this->versions = new ArrayCollection();
     }
 
     /**
@@ -291,5 +297,36 @@ class FOSUser extends BaseUser implements LdapUserInterface
     public function getSamples()
     {
         return $this->samples;
+    }
+
+    /**
+     * Add version
+     * @param \AppBundle\Entity\Version $version
+     * @return FOSUser
+     */
+    public function addVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions[] = $version;
+        $version->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove version
+     * @param \AppBundle\Entity\Version $version
+     */
+    public function removeVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions->removeElement($version);
+    }
+
+    /**
+     * Get versions
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVersions()
+    {
+        return $this->versions;
     }
 }

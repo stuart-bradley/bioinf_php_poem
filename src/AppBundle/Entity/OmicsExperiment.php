@@ -92,6 +92,11 @@ class OmicsExperiment
     private $statuses;
 
     /**
+     * @ORM\OneToMany(targetEntity="Version", mappedBy="omicsExperiment", cascade={"persist", "remove"})
+     */
+    private $versions;
+
+    /**
      * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment", cascade={"persist", "remove"})
      */
     private $omicsExperimentTypes;
@@ -102,6 +107,7 @@ class OmicsExperiment
         $this->statuses = new ArrayCollection();
         $this->omicsExperimentTypes = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->versions = new ArrayCollection();
         $this->requestedDate = new \DateTime();
         $this->requestedEndDate = new \DateTime();
         $this->createdAt = new \DateTime();
@@ -405,5 +411,37 @@ class OmicsExperiment
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * Add version
+     * @param \AppBundle\Entity\Version $version
+     * @return OmicsExperiment
+     */
+    public function addVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions[] = $version;
+        $version->setOmicsExperiment($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove version
+     * @param \AppBundle\Entity\Version $version
+     */
+    public function removeVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions->removeElement($version);
+        $version->setOmicsExperiment(null);
+    }
+
+    /**
+     * Get versions
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVersions()
+    {
+        return $this->versions;
     }
 }
