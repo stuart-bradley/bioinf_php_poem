@@ -76,6 +76,7 @@ class OmicsExperimentController extends Controller
         $form->handleRequest($request);
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
+            $omics_experiment->setUpdatedAt(new \DateTime());
             $em->persist($omics_experiment);
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');

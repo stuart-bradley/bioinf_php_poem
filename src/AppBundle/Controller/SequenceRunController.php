@@ -68,6 +68,7 @@ class SequenceRunController extends Controller {
 
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
+            $sequence_run->setUpdatedAt(new \DateTime());
             $em->persist($sequence_run);
             $em->flush();
             return $this->redirectToRoute('sequence_run_index');

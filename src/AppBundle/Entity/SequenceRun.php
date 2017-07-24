@@ -66,6 +66,23 @@ class SequenceRun
     private $readLength;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="created_at", type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="updated_at", type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     */
+    private $updatedAt;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="sequenceRuns")
      * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
      */
@@ -94,6 +111,8 @@ class SequenceRun
         $this->versions = new ArrayCollection();
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
 
@@ -230,6 +249,48 @@ class SequenceRun
         $this->readLength = $readLength;
 
         return $this;
+    }
+
+    /**
+     * Set createdAt
+     * @param \DateTime $createdAt
+     * @return SequenceRun
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     * @param \DateTime $updatedAt
+     * @return SequenceRun
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
     /**

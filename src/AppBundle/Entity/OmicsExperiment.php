@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -74,6 +75,14 @@ class OmicsExperiment
     private $createdAt;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="updated_at", type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     */
+    private $updatedAt;
+
+    /**
      * Many Groups have Many Users.
      * @ORM\ManyToMany(targetEntity="FOSUser", mappedBy="omicsExperiments")
      */
@@ -111,6 +120,7 @@ class OmicsExperiment
         $this->requestedDate = new \DateTime();
         $this->requestedEndDate = new \DateTime();
         $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
     
     /**
@@ -255,6 +265,27 @@ class OmicsExperiment
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     * @param \DateTime $updatedAt
+     * @return OmicsExperiment
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 
     /**
