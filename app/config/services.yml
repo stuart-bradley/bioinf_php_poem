@@ -10,9 +10,14 @@ services:
   app.file_uploader:
           class: AppBundle\Uploader\FileUploader
           arguments: ['%file_directory%']
+
+  app.version_manager:
+          class: AppBundle\VersionManager\VersionManager
+          arguments: ['@doctrine.orm.default_entity_manager']
+
   app.doctrine_entity_listener:
           class: AppBundle\EventListener\EntityListener
-          arguments: ['@app.file_uploader', '@logger']
+          arguments: ['@app.file_uploader', '@app.version_manager']
           tags:
               - { name: doctrine.event_listener, event: prePersist }
               - { name: doctrine.event_listener, event: preUpdate }

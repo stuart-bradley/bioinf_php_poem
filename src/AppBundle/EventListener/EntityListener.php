@@ -3,6 +3,7 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\SequenceRun;
+use AppBundle\VersionManager\VersionManager;
 use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -22,16 +23,20 @@ class EntityListener
      * @var FileUploader
      */
     private $uploader;
+    /**
+     * @var VersionManager
+     */
+    private $versionManager;
 
     /**
      * EntityListener constructor.
      * @param FileUploader $uploader
-     * @param Logger $logger
+     * @param VersionManager $versionManager
      */
-    public function __construct(FileUploader $uploader, Logger $logger)
+    public function __construct(FileUploader $uploader, VersionManager $versionManager)
     {
         $this->uploader = $uploader;
-        $this->logger = $logger;
+        $this->versionManager = $versionManager;
     }
 
     /**
@@ -44,6 +49,10 @@ class EntityListener
 
         if ($entity instanceof File) {
             $this->uploadFile($entity);
+        } else if ($entity instanceof OmicsExperiment) {
+            $this->versionManager->generateOmicsExperimentCreateVersion($entity, $args);
+        } else if ($entity instanceof SequenceRun) {
+            $this->versionManager->generateSequenceRunCreateVersion($entity, $args);
         }
     }
 
@@ -57,6 +66,10 @@ class EntityListener
 
         if ($entity instanceof File) {
             $this->uploadFile($entity);
+        } else if ($entity instanceof OmicsExperiment) {
+            $this->versionManager->generateOmicsExperimentUpdateVersion($entity, $args);
+        } else if ($entity instanceof SequenceRun) {
+            $this->versionManager->generateSequenceRunUpdateVersion($entity, $args);
         }
     }
 
