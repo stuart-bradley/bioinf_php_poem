@@ -33,8 +33,9 @@ class OmicsExperiment
     /**
      * @var string
      * @ORM\Column(name="project_id", type="string", unique=true)
+     * @Assert\NotBlank()
      */
-    private $projectID;
+    private $projectId;
 
     /**
      * @var \DateTime
@@ -154,22 +155,22 @@ class OmicsExperiment
     }
 
     /**
-     * Get projectID
+     * Get projectId
      * @return string
      */
-    public function getProjectID()
+    public function getProjectId()
     {
-        return $this->projectID;
+        return $this->projectId;
     }
 
     /**
      * Set projectID
-     * @param string $projectID
+     * @param string $projectId
      * @return OmicsExperiment
      */
-    public function setProjectID($projectID)
+    public function setProjectId($projectId)
     {
-        $this->projectID = $projectID;
+        $this->projectId = $projectId;
 
         return $this;
     }

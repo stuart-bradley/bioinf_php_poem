@@ -39,18 +39,20 @@ class VersionManager
     }
 
     /**
-     * Creates the initial version for an OmicsExperiment.
-     * @param OmicsExperiment $entity
+     * Creates an initial base diff of an entity.
+     * @param OmicsExperiment | SequenceRun $entity
      */
-    public function generateOmicsExperimentCreateVersion(OmicsExperiment $entity)
+    public function createVersion($entity)
     {
         $version = new Version();
         $version->setUser($this->security_service->getToken()->getUser());
 
         $version_diff = [];
 
-        foreach (get_object_vars($entity) as $key => $value) {
-            $version_diff[$key] = $value;
+        if ($entity instanceof OmicsExperiment) {
+            $version_diff = $this->OmicsExperimentCreateDiff($entity);
+        } else if ($entity instanceof SequenceRun) {
+            $version_diff = $this->SequenceRunCreateDiff($entity);
         }
 
         $version->setDiff($version_diff);
@@ -58,50 +60,16 @@ class VersionManager
     }
 
     /**
-     * Creates a version for an OmicsExperiment.
+     * Creates an array version of an entity.
      * @param OmicsExperiment $entity
-     * @param PreUpdateEventArgs $args
+     * @return array
      */
-    public function generateOmicsExperimentUpdateVersion(OmicsExperiment $entity, PreUpdateEventArgs $args)
+    private function OmicsExperimentCreateDiff(OmicsExperiment $entity)
     {
-        $version = new Version();
-        $version->setUser($this->security_service->getToken()->getUser());
-
-        $version_diff = [];
-
-        $parentChanges = $args->getEntityChangeSet();
-
-        $version_diff[] = $parentChanges;
-
-        $version->setDiff($version_diff);
-        $entity->addVersion($version);
-    }
-
-    /**
-     * Creates the initial version for an SequenceRun.
-     * @param SequenceRun $entity
-     * @param LifecycleEventArgs $args
-     */
-    public function generateSequenceRunCreateVersion(SequenceRun $entity, LifecycleEventArgs $args)
-    {
-        $version = new Version();
-        $version->setUser($this->security_service->getToken()->getUser());
-
-        $entity->addVersion($version);
-    }
-
-    /**
-     * Creates a version for an SequenceRun.
-     * @param SequenceRun $entity
-     * @param PreUpdateEventArgs $args
-     */
-    public function generateSequenceRunUpdateVersion(SequenceRun $entity, PreUpdateEventArgs $args)
-    {
-        $version = new Version();
-        $version->setUser($this->security_service->getToken()->getUser());
-
-        $parentChanges = $args->getEntityChangeSet();
-
-        $entity->addVersion($version);
+        $array_diff = [];
+        $array_diff['id'] = $entity->getId();
+        $array_diff['projectName'] = $entity->getProjectName();
+        $array_diff['projectId'] = $entity->getProjectId();
+        return $array_diff;
     }
 }

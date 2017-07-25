@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\SequenceRun;
+use AppBundle\Entity\Version;
 use AppBundle\Form\SequenceRunType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,7 @@ class SequenceRunController extends Controller {
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
+            $sequence_run->addVersion(new Version());
             $sequence_run->setRunBy($user);
             $em->persist($sequence_run);
             $em->flush();

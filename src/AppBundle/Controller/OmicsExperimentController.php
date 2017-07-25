@@ -40,9 +40,7 @@ class OmicsExperimentController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
-            $version = new Version();
-            $version->setDiff(array("hi"));
-            $omics_experiment->addVersion($version);
+            $this->get('app.version_manager')->createVersion($omics_experiment);
             $omics_experiment->addUser($user);
             $em->persist($omics_experiment);
 
@@ -61,7 +59,12 @@ class OmicsExperimentController extends Controller
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiment = $repository->find($id);
 
-        return $this->render('omics_experiment/show.html.twig', array('omics_experiment' => $omics_experiment));
+        $omics_experiment->getVersions();
+
+        $versions_repository = $this->getDoctrine()->getRepository('AppBundle:Version');
+        $versions = $versions_repository->findBy(array('omicsExperiment' => $omics_experiment));
+
+        return $this->render('omics_experiment/show.html.twig', array('omics_experiment' => $omics_experiment, 'versions' => $versions));
     }
 
     /**
