@@ -230,4 +230,6 @@
     <a href="{{ path('omics_experiment_export', {'id': omics_experiment.id}) }}" class="btn btn-default">Export to
         CSV</a>
 
+    {{ dump(omics_experiment.versions()) }}
+
 {% endblock %}

@@ -24,19 +24,19 @@ class EntityListener
      */
     private $uploader;
     /**
-     * @var VersionManager
+     * @var Logger
      */
-    private $versionManager;
+    private $logger;
 
     /**
      * EntityListener constructor.
      * @param FileUploader $uploader
-     * @param VersionManager $versionManager
+     * @param Logger $logger
      */
-    public function __construct(FileUploader $uploader, VersionManager $versionManager)
+    public function __construct(FileUploader $uploader, Logger $logger)
     {
         $this->uploader = $uploader;
-        $this->versionManager = $versionManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -49,10 +49,6 @@ class EntityListener
 
         if ($entity instanceof File) {
             $this->uploadFile($entity);
-        } else if ($entity instanceof OmicsExperiment) {
-            $this->versionManager->generateOmicsExperimentCreateVersion($entity, $args);
-        } else if ($entity instanceof SequenceRun) {
-            $this->versionManager->generateSequenceRunCreateVersion($entity, $args);
         }
     }
 
@@ -66,10 +62,6 @@ class EntityListener
 
         if ($entity instanceof File) {
             $this->uploadFile($entity);
-        } else if ($entity instanceof OmicsExperiment) {
-            $this->versionManager->generateOmicsExperimentUpdateVersion($entity, $args);
-        } else if ($entity instanceof SequenceRun) {
-            $this->versionManager->generateSequenceRunUpdateVersion($entity, $args);
         }
     }
 

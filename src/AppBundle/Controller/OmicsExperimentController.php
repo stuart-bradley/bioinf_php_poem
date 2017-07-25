@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OmicsExperiment;
+use AppBundle\Entity\Version;
 use AppBundle\Form\OmicsExperimentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,6 +40,9 @@ class OmicsExperimentController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
+            $version = new Version();
+            $version->setDiff(array("hi"));
+            $omics_experiment->addVersion($version);
             $omics_experiment->addUser($user);
             $em->persist($omics_experiment);
 
@@ -77,6 +81,7 @@ class OmicsExperimentController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $omics_experiment->setUpdatedAt(new \DateTime());
+
             $em->persist($omics_experiment);
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');

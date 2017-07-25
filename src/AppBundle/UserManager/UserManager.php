@@ -100,7 +100,7 @@ class UserManager
     public function createAllUsers()
     {
         $filter = '(&(&(ObjectClass=user))(samaccountname=*))';
-        $attributes = ['samaccountname', 'dn', 'memberof', 'cn', 'mail'];
+        $attributes = ['samaccountname', 'dn', 'memberof', 'cn'];
         $result = $this->ldap->searchEntries($filter, $this->ldap_baseDn_users, Ldap::SEARCH_SCOPE_SUB, $attributes);
 
         foreach ($result as $item) {
@@ -167,9 +167,9 @@ class UserManager
             $user->setEnabled(1);
             $user->setUsername($ldap_result["samaccountname"][0]);
             $user->setUsernameCanonical(strtolower($ldap_result["samaccountname"][0]));
-
-            $user->setEmail($ldap_result["mail"][0]);
-            $user->setEmailCanonical($ldap_result["mail"][0]);
+            $email = $ldap_result["samaccountname"][0] . "@" . $this->ldap_domain_name_long;
+            $user->setEmail($email);
+            $user->setEmailCanonical(strtolower($email));
             $this->setDepartmentForUser($user, $ldap_result["memberof"]);
             $user->setCn($ldap_result['cn'][0]);
             $user->setFromBioControl(false);

@@ -10,6 +10,7 @@ use AppBundle\Entity\OmicsExperiment;
 use AppBundle\Entity\OmicsExperimentSubType;
 use AppBundle\Entity\OmicsExperimentType;
 use AppBundle\Entity\Sample;
+use AppBundle\Entity\Version;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -130,6 +131,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                     }
                 }
             }
+            $omics_experiment->addVersion(new Version());
             $manager->persist($omics_experiment);
         }
         $manager->flush();
