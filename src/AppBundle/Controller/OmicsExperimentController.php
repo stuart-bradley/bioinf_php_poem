@@ -43,6 +43,7 @@ class OmicsExperimentController extends Controller
             $omics_experiment->addUser($user);
             // Persist twice to first generate associations, and then generate version.
             $em->persist($omics_experiment);
+            $em->flush();
             $this->get('app.version_manager')->createVersion($omics_experiment);
             $em->persist($omics_experiment);
 

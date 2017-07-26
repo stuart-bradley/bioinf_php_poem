@@ -24,23 +24,26 @@ class VersionExtension extends \Twig_Extension
 
     /**
      * Actual function that converts a Version object into a HTML string.
-     * @param Version $version
+     * @param array $hydrated_entity
      * @return string
      */
-    public function versionFunction(Version $version)
+    public function versionFunction($hydrated_entity, $title = null, $indent = 0)
     {
         $result_html = '';
-        foreach ($version->getDiff() as $key => $value) {
+        if (!empty($hydrated_entity) and $title != null) {
+            $result_html .= '<div style="text-indent:' . (intval($indent) * 20) . 'px"><strong>' . $title . '</strong></div>';
+        }
+        foreach ($hydrated_entity as $key => $value) {
             // Ignore meta attributes.
             if (in_array($key, array("ID", "Updated At", "Created At"))) {
                 continue;
             }
 
             if (is_array($value)) {
-                $result_html .= $this->processArrayToHTML($key, $value);
+                $result_html .= $this->versionFunction($value, $key, ($indent + 0.5));
             } else {
                 $value = $this->tidyValue($value);
-                $result_html .= '<div class="bg-success">' . $key . ': ' . '<p>' . $value . '</p>' . '</div>';
+                $result_html .= '<div class="bg-success" style="text-indent:' . (intval($indent) * 20) . 'px">' . $key . ': ' . '<p>' . $value . '</p>' . '</div>';
             }
         }
         return $result_html;
@@ -49,9 +52,7 @@ class VersionExtension extends \Twig_Extension
     private function processArrayToHTML($key, $value)
     {
         $result_html = '';
-        if (!empty($value)) {
-            $result_html .= '<strong>' . $key . '</strong>';
-        }
+
 
         foreach ($value as $inner_key => $inner_value) {
             if (is_array($inner_value)) {
