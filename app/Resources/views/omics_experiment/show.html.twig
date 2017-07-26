@@ -225,27 +225,17 @@
         </div>
     {% endif %}
 
-    <a href="{{ path('omics_experiment_edit', {'id': omics_experiment.id}) }}" class="btn btn-default">Edit</a>
-    <a href="{{ path('omics_experiment_index') }}" class="btn btn-default">Back</a>
-    <a href="{{ path('omics_experiment_delete', {'id': omics_experiment.id}) }}" class="btn btn-default"
-       onclick="return confirm('Are you sure you want to delete {{ omics_experiment.id }}?')">Delete</a>
-    <a href="{{ path('omics_experiment_export', {'id': omics_experiment.id}) }}" class="btn btn-default">Export to
-        CSV</a>
-
-    {{ dump(versions) }}
-    {{ dump(omics_experiment.versions) }}
-
     {% if omics_experiment.versions is not empty %}
         <div class="row">
             <div class="col-md-12">
                 <h3>Versions</h3>
-                <ul style="list-style-type:none;padding-left:0;" class="col-statuses">
+                <ul style="list-style-type:none;padding-left:0;" class="versions">
                     {% for version in omics_experiment.versions %}
                         <li class="panel panel-body panel-default">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <strong>Version</strong>
-                                    <p>{{ version.diff |join(', ') }}</p>
+                                    <strong>Omics Experiment</strong>
+                                    {{ version(version) | raw }}
                                 </div>
                             </div>
                         </li>
@@ -254,5 +244,12 @@
             </div>
         </div>
     {% endif %}
+
+    <a href="{{ path('omics_experiment_edit', {'id': omics_experiment.id}) }}" class="btn btn-default">Edit</a>
+    <a href="{{ path('omics_experiment_index') }}" class="btn btn-default">Back</a>
+    <a href="{{ path('omics_experiment_delete', {'id': omics_experiment.id}) }}" class="btn btn-default"
+       onclick="return confirm('Are you sure you want to delete {{ omics_experiment.id }}?')">Delete</a>
+    <a href="{{ path('omics_experiment_export', {'id': omics_experiment.id}) }}" class="btn btn-default">Export to
+        CSV</a>
 
 {% endblock %}

@@ -40,8 +40,10 @@ class OmicsExperimentController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
-            $this->get('app.version_manager')->createVersion($omics_experiment);
             $omics_experiment->addUser($user);
+            // Persist twice to first generate associations, and then generate version.
+            $em->persist($omics_experiment);
+            $this->get('app.version_manager')->createVersion($omics_experiment);
             $em->persist($omics_experiment);
 
             $em->flush();
