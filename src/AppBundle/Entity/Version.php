@@ -36,6 +36,13 @@ class Version
     private $diff;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="hydration", type="array")
+     */
+    private $hydration;
+
+    /**
      * @ORM\ManyToOne(targetEntity="FOSUSer", inversedBy="versions")
      * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
      */
@@ -115,6 +122,30 @@ class Version
     public function getDiff()
     {
         return $this->diff;
+    }
+
+    /**
+     * Set hydration
+     *
+     * @param array $hydration
+     *
+     * @return Version
+     */
+    public function setHydration($hydration)
+    {
+        $this->hydration = $hydration;
+
+        return $this;
+    }
+
+    /**
+     * Get hydration
+     *
+     * @return array
+     */
+    public function getHydration()
+    {
+        return $this->hydration;
     }
 
     /**

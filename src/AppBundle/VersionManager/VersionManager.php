@@ -3,6 +3,9 @@
 namespace AppBundle\VersionManager;
 
 use AppBundle\Entity\FOSUser;
+use AppBundle\Entity\OmicsExperimentSubType;
+use AppBundle\Entity\OmicsExperimentType;
+use AppBundle\Entity\Sample;
 use AppBundle\Entity\OmicsExperiment;
 use AppBundle\Entity\SequenceRun;
 use AppBundle\Entity\Version;
@@ -47,16 +50,67 @@ class VersionManager
         $version = new Version();
         $version->setUser($this->security_service->getToken()->getUser());
 
-        $version_diff = [];
+        $version_hydration = [];
 
         if ($entity instanceof OmicsExperiment) {
-            $version_diff = $this->OmicsExperimentCreateDiff($entity);
+            $version_hydration = $this->OmicsExperimentCreateHydration($entity);
         } else if ($entity instanceof SequenceRun) {
-            $version_diff = $this->SequenceRunCreateDiff($entity);
+            $version_hydration = $this->SequenceRunCreateHydration($entity);
+        } else {
+            $version_hydration = [];
         }
 
-        $version->setDiff($version_diff);
+        $version->setHydration($version_hydration);
+        $version->setDiff($version_hydration);
         $entity->addVersion($version);
+    }
+
+    /**
+     * Creates an array version of an entity.
+     * @param SequenceRun $entity
+     * @return array
+     */
+    private function SequenceRunCreateHydration($entity)
+    {
+        $array_hydration = [];
+        $array_hydration['ID'] = $entity->getId();
+        $array_hydration['Start Date'] = $entity->getStartDate();
+        $array_hydration['End Date'] = $entity->getEndDate();
+        $array_hydration['Kit'] = $entity->getKit();
+        $array_hydration['Material Type'] = $entity->getMaterialTypeString()->getType();
+        $array_hydration['Run Coverage Target'] = $entity->getRunCoverageTarget();
+        $array_hydration['Read Length'] = $entity->getReadLength();
+        $array_hydration['Created At'] = $entity->getCreatedAt();
+        $array_hydration['Updated At'] = $entity->getUpdatedAt();
+
+        $array_hydration['Users'] = array();
+        foreach ($entity->getUsers() as $user) {
+            $result = array();
+            $result['User'] = $user->getCn();
+            $array_hydration['Users'][$user->getId()] = $result;
+        }
+
+        $array_hydration['Files'] = array();
+        foreach ($entity->getFiles() as $file) {
+            $result = array();
+            $result['File'] = $file->getName();
+            $array_hydration['Files'][$file->getId()] = $result;
+        }
+
+        $array_hydration['Samples'] = array();
+        foreach ($entity->getSamples() as $sample) {
+            $result = array();
+            $result['Sample Name'] = $sample->getSampleName();
+            $result['BC Sample ID'] = $sample->getBCSampleID();
+            $result['BC Run ID'] = $sample->getBCRunID();
+            $result['BC Experiment ID'] = $sample->getBCExperimentID();
+            $result['Sampled By'] = $sample->getSampledBy()->getCn();
+            $result['RNA Later Treated'] = $sample->getRNALaterTreated();
+            $result['Material Type'] = $sample->getMaterialTypeString()->getType();
+            $array_hydration['Samples'][$sample->getId()] = $result;
+        }
+
+        return $array_hydration;
     }
 
     /**
@@ -64,52 +118,54 @@ class VersionManager
      * @param OmicsExperiment $entity
      * @return array
      */
-    private function OmicsExperimentCreateDiff(OmicsExperiment $entity)
+    private function OmicsExperimentCreateHydration(OmicsExperiment $entity)
     {
-        $array_diff = [];
-        $array_diff['ID'] = $entity->getId();
-        $array_diff['Project Name'] = $entity->getProjectName();
-        $array_diff['Project ID'] = $entity->getProjectId();
-        $array_diff['Requested Date'] = $entity->getRequestedDate();
-        // Removes extra <p> tags.
-        $array_diff['Description'] = $entity->getDescription();
-        $array_diff['Questions'] = $entity->getQuestions();
-        $array_diff['Requested End Date'] = $entity->getRequestedEndDate();
-        $array_diff['Created At'] = $entity->getCreatedAt();
-        $array_diff['Updated At'] = $entity->getUpdatedAt();
+        $array_hydration = [];
+        $array_hydration['ID'] = $entity->getId();
+        $array_hydration['Project Name'] = $entity->getProjectName();
+        $array_hydration['Project ID'] = $entity->getProjectId();
+        $array_hydration['Requested Date'] = $entity->getRequestedDate();
+        $array_hydration['Description'] = $entity->getDescription();
+        $array_hydration['Questions'] = $entity->getQuestions();
+        $array_hydration['Requested End Date'] = $entity->getRequestedEndDate();
+        $array_hydration['Created At'] = $entity->getCreatedAt();
+        $array_hydration['Updated At'] = $entity->getUpdatedAt();
 
-        $array_diff['Users'] = array();
+        $array_hydration['Users'] = array();
         foreach ($entity->getUsers() as $user) {
             $result = array();
             $result['User'] = $user->getCn();
-            $array_diff['Users'][$user->getId()] = $result;
+            $array_hydration['Users'][$user->getId()] = $result;
         }
 
-        $array_diff['Files'] = array();
+        $array_hydration['Files'] = array();
         foreach ($entity->getFiles() as $file) {
             $result = array();
             $result['File'] = $file->getName();
-            $array_diff['Files'][$file->getId()] = $result;
+            $array_hydration['Files'][$file->getId()] = $result;
         }
 
-        $array_diff['Statuses'] = array();
+        $array_hydration['Statuses'] = array();
         foreach ($entity->getStatuses() as $status) {
             $result = array();
             $result['Date'] = $status->getDate();
             $result['Status'] = $status->getStatusString()->getType();
-            $array_diff['Statuses'][$status->getId()] = $result;
+            $array_hydration['Statuses'][$status->getId()] = $result;
         }
 
-        $array_diff['Omics Experiment Types'] = array();
+        $array_hydration['Omics Experiment Types'] = array();
         foreach ($entity->getOmicsExperimentTypes() as $exptype) {
+            /** @var OmicsExperimentType $exptype */
             $result = array();
             $result['Omics Experiment Type'] = $exptype->getOmicsExperimentTypeString()->getType();
             $result['Omics Experiment Subtypes'] = array();
             foreach ($exptype->getOmicsExperimentSubTypes() as $expsubtype) {
+                /** @var OmicsExperimentSubType $expsubtype */
                 $sub_result = array();
                 $sub_result['Omics Experiment Subtype'] = $expsubtype->getOmicsExperimentSubTypeString()->getType();
                 $sub_result['Samples'] = array();
                 foreach ($expsubtype->getSamples() as $sample) {
+                    /** @var Sample $sample */
                     $sam_result = array();
                     $sam_result['Sample Name'] = $sample->getSampleName();
                     $sam_result['BC Sample ID'] = $sample->getBCSampleID();
@@ -122,9 +178,9 @@ class VersionManager
                 }
                 $result['Omics Experiment Subtypes'][$expsubtype->getId()] = $sub_result;
             }
-            $array_diff['Omics Experiment Types'][$exptype->getId()] = $result;
+            $array_hydration['Omics Experiment Types'][$exptype->getId()] = $result;
         }
 
-        return $array_diff;
+        return $array_hydration;
     }
 }

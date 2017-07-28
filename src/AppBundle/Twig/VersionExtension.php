@@ -24,7 +24,13 @@ class VersionExtension extends \Twig_Extension
 
     /**
      * Actual function that converts a Version object into a HTML string.
+     *
+     * Indent indents the associated entities within each other, but NOT
+     * the individual items, it does this by incrementing in 0.5 and truncating
+     * $indent with intval()
      * @param array $hydrated_entity
+     * @param string $title
+     * @param indent
      * @return string
      */
     public function versionFunction($hydrated_entity, $title = null, $indent = 0)
@@ -46,23 +52,6 @@ class VersionExtension extends \Twig_Extension
                 $result_html .= '<div class="bg-success" style="text-indent:' . (intval($indent) * 20) . 'px">' . $key . ': ' . '<p>' . $value . '</p>' . '</div>';
             }
         }
-        return $result_html;
-    }
-
-    private function processArrayToHTML($key, $value)
-    {
-        $result_html = '';
-
-
-        foreach ($value as $inner_key => $inner_value) {
-            if (is_array($inner_value)) {
-                $result_html .= $this->processArrayToHTML($inner_key, $inner_value);
-            } else {
-                $inner_value = $this->tidyValue($inner_value);
-                $result_html .= '<div class="bg-success">' . $inner_key . ': ' . '<p>' . $inner_value . '</p>' . '</div>';
-            }
-        }
-
         return $result_html;
     }
 

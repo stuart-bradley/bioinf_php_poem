@@ -68,7 +68,9 @@ class FOSUser extends BaseUser implements LdapUserInterface
     private $omicsExperiments;
 
     /**
-     * @ORM\OneToMany(targetEntity="SequenceRun", mappedBy="runBy")
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="SequenceRun", inversedBy="users")
+     * @ORM\JoinTable(name="users_sequence_runs")
      */
     private $sequenceRuns;
 
@@ -245,7 +247,6 @@ class FOSUser extends BaseUser implements LdapUserInterface
     public function addSequenceRun(\AppBundle\Entity\SequenceRun $sequenceRun)
     {
         $this->sequenceRuns[] = $sequenceRun;
-        $sequenceRun->setRunBy($this);
 
         return $this;
     }

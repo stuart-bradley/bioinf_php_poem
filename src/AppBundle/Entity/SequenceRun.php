@@ -83,10 +83,10 @@ class SequenceRun
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="sequenceRuns")
-     * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="FOSUser", mappedBy="SequenceRuns")
      */
-    private $runBy;
+    private $users;
 
     /**
      * @var File
@@ -108,6 +108,7 @@ class SequenceRun
     {
         $this->samples = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->users = new ArrayCollection();
         $this->versions = new ArrayCollection();
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
@@ -126,24 +127,35 @@ class SequenceRun
     }
 
     /**
-     * Get runBy
-     * @return FOSUser
+     * Add user
+     * @param \AppBundle\Entity\FOSUser $user
+     * @return SequenceRun
      */
-    public function getRunBy()
+    public function addUser(\AppBundle\Entity\FOSUser $user)
     {
-        return $this->runBy;
+        $this->users[] = $user;
+        $user->addSequenceRun($this);
+
+        return $this;
     }
 
     /**
-     * Set runBy
-     * @param FOSUser $runBy
-     * @return SequenceRun
+     * Remove user
+     * @param \AppBundle\Entity\FOSUser $user
      */
-    public function setRunBy($runBy)
+    public function removeUser(\AppBundle\Entity\FOSUser $user)
     {
-        $this->runBy = $runBy;
+        $this->users->removeElement($user);
+        $user->removeSequenceRun(null);
+    }
 
-        return $this;
+    /**
+     * Get users
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 
     /**

@@ -103,6 +103,7 @@ class OmicsExperiment
 
     /**
      * @ORM\OneToMany(targetEntity="Version", mappedBy="omicsExperiment", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"createdAt" = "ASC"})
      */
     private $versions;
 
@@ -320,7 +321,7 @@ class OmicsExperiment
      */
     public function removeUser(\AppBundle\Entity\FOSUser $user)
     {
-        $this->statuses->removeElement($user);
+        $this->users->removeElement($user);
         $user->removeOmicsExperiment(null);
     }
 
