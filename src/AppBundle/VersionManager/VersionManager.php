@@ -50,8 +50,6 @@ class VersionManager
         $version = new Version();
         $version->setUser($this->security_service->getToken()->getUser());
 
-        $version_hydration = [];
-
         if ($entity instanceof OmicsExperiment) {
             $version_hydration = $this->OmicsExperimentCreateHydration($entity);
         } else if ($entity instanceof SequenceRun) {
@@ -61,10 +59,100 @@ class VersionManager
         }
 
         $version->setHydration($version_hydration);
-        $version->setDiff($version_hydration);
+
+        $previous_version = $entity->getVersions()->first();
+
+        if ($previous_version) {
+            $diff = $this->createDiff($previous_version->getHydration(), $version_hydration);
+        } else {
+            $diff = $version_hydration;
+        }
+
+        $version->setDiff($diff);
         $entity->addVersion($version);
     }
 
+    /**
+     * Compares two array hydrations and produces a diff. $array_2 is the newest version.
+     * @param array $array_1
+     * @param array $array_2
+     * @param boolean $isCollection
+     * @return array
+     */
+    private function createDiff($array_1, $array_2, $isCollection = False)
+    {
+        $keys_added = [];
+        $keys_removed = [];
+        $result = [];
+        if ($isCollection) {
+            $keys_1 = array_keys($array_1);
+            $keys_2 = array_keys($array_2);
+            $keys_added = array_diff($keys_2, $keys_1);
+            $keys_removed = array_diff($keys_1, $keys_2);
+
+            foreach ($keys_added as $key) {
+                $result[$key] = $this->Addition($array_2[$key], !$isCollection);
+            }
+
+            foreach ($keys_removed as $key) {
+                $result[$key] = $this->Removal($array_1[$key], !$isCollection);
+            }
+        }
+
+        foreach ($array_1 as $key => $value) {
+            if (in_array($key, array_merge($keys_added, $keys_removed))) {
+                continue;
+            }
+            if (is_array($array_1[$key])) {
+                $result[$key] = $this->createDiff($array_1[$key], $array_2[$key], !$isCollection);
+            } else {
+                if ($array_1[$key] != $array_2[$key]) {
+                    $result[$key] = $array_2[$key];
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Marks array_hydration sub-collection as added recursively.
+     * @param array $array_1
+     * @param boolean $isCollection
+     * @return array
+     */
+    function Addition($array_1, $isCollection = False)
+    {
+        $result = [];
+        foreach ($array_1 as $key => $value) {
+            if (is_array($array_1[$key])) {
+                $result[$key] = $this->Addition($array_1[$key], !$isCollection);
+            } else {
+                $result['added_' . $key] = $array_1[$key];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Marks array_hydration sub-collection as removed recursively.
+     * @param array $array_1
+     * @param boolean $isCollection
+     * @return array
+     */
+    function Removal($array_1, $isCollection = False)
+    {
+        $result = [];
+        foreach ($array_1 as $key => $value) {
+            if (is_array($array_1[$key])) {
+                $result[$key] = $this->Removal($array_1[$key], !$isCollection);
+            } else {
+                $result['removed_' . $key] = $array_1[$key];
+            }
+        }
+
+        return $result;
+    }
     /**
      * Creates an array version of an entity.
      * @param SequenceRun $entity
