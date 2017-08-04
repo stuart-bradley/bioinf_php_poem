@@ -46,7 +46,6 @@ class OmicsExperimentController extends Controller
             $em->flush();
             $this->get('app.version_manager')->createVersion($omics_experiment);
             $em->persist($omics_experiment);
-
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');
         }
@@ -87,7 +86,10 @@ class OmicsExperimentController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $omics_experiment->setUpdatedAt(new \DateTime());
-
+            // Persist twice to first generate associations, and then generate version.
+            $em->persist($omics_experiment);
+            $em->flush();
+            $this->get('app.version_manager')->createVersion($omics_experiment);
             $em->persist($omics_experiment);
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');

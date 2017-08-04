@@ -43,6 +43,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         $exp_sub_type = null;
         $bioControlManager = $this->container->get('app.biocontrol_manager');
         $userManager = $this->container->get('app.user_manager');
+        $versionManager = $this->container->get('app.version_manager');
 
         print("Loading experiments to database." . PHP_EOL);
 
@@ -131,7 +132,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                     }
                 }
             }
-            $omics_experiment->addVersion(new Version());
+            $versionManager->createVersion($omics_experiment);
             $manager->persist($omics_experiment);
         }
         $manager->flush();

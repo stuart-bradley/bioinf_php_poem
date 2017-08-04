@@ -103,7 +103,7 @@ class OmicsExperiment
 
     /**
      * @ORM\OneToMany(targetEntity="Version", mappedBy="omicsExperiment", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"createdAt" = "ASC"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $versions;
 

@@ -36,8 +36,11 @@ class SequenceRunController extends Controller {
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
-            $sequence_run->addVersion(new Version());
             $sequence_run->addUser($user);
+            // Persist twice to first generate associations, and then generate version.
+            $em->persist($sequence_run);
+            $em->flush();
+            $this->get('app.version_manager')->createVersion($sequence_run);
             $em->persist($sequence_run);
             $em->flush();
             return $this->redirectToRoute('sequence_run_index');
@@ -71,6 +74,9 @@ class SequenceRunController extends Controller {
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $sequence_run->setUpdatedAt(new \DateTime());
+            $em->persist($sequence_run);
+            $em->flush();
+            $this->get('app.version_manager')->createVersion($sequence_run);
             $em->persist($sequence_run);
             $em->flush();
             return $this->redirectToRoute('sequence_run_index');

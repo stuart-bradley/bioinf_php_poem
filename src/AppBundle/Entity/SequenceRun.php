@@ -84,7 +84,7 @@ class SequenceRun
 
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="FOSUser", mappedBy="SequenceRuns")
+     * @ORM\ManyToMany(targetEntity="FOSUser", mappedBy="sequenceRuns")
      */
     private $users;
 
