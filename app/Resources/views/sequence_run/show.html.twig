@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-12">
             <strong>Run by</strong>
-            <p>{{ sequence_run.runBy }}</p>
+            <p>{{ sequence_run.users | join(', ') }}</p>
         </div>
     </div>
 
@@ -161,5 +161,4 @@
     <a href="{{ path('sequence_run_index') }}" class="btn btn-default">Back</a>
     <a href="{{ path('sequence_run_delete', {'id': sequence_run.id}) }}" class="btn btn-default"
        onclick="return confirm('Are you sure you want to delete {{ sequence_run.id }}?')">Delete</a>
-    {{ dump(sequence_run.versions) }}
 {% endblock %}

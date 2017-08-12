@@ -235,7 +235,8 @@
                         <li class="panel panel-body panel-default">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4>Version {{ loop.index }} ({{ version.createdAt|date('Y-m-d H:i') }})</h4>
+                                    <h4>Version {{ loop.index }} ({{ version.createdAt|date('Y-m-d H:i') }})
+                                        by {{ version.user }} </h4>
                                     <strong>Omics Experiment</strong>
                                     {{ version(version.diff) | raw }}
                                     <hr>
