@@ -57,11 +57,11 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
             // Handle omics_experiment top level.
             $omics_experiment = $manager
                 ->getRepository('AppBundle:OmicsExperiment')
-                ->findOneBy(array('projectID' => $omics_experiment_array["projectID"]));
+                ->findOneBy(array('projectId' => $omics_experiment_array["projectID"]));
             if ($omics_experiment == null) {
                 $omics_experiment = new OmicsExperiment();
                 $omics_experiment->setProjectName($projectName);
-                $omics_experiment->setProjectID($omics_experiment_array["projectID"]);
+                $omics_experiment->setProjectId($omics_experiment_array["projectID"]);
                 $omics_experiment->setCreatedAt(new \DateTime());
                 $omics_experiment->setDescription($omics_experiment_array["comments"]);
                 $omics_experiment->setRequestedDate($omics_experiment_array["date"]);
@@ -132,7 +132,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                     }
                 }
             }
-            $versionManager->createVersion($omics_experiment);
+            $versionManager->createVersion($omics_experiment, $sample_user);
             $manager->persist($omics_experiment);
         }
         $manager->flush();

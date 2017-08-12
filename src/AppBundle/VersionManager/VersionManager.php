@@ -44,11 +44,15 @@ class VersionManager
     /**
      * Creates an initial base diff of an entity.
      * @param OmicsExperiment | SequenceRun $entity
+     * @param FOSUser | null $user
      */
-    public function createVersion($entity)
+    public function createVersion($entity, $user = null)
     {
         $version = new Version();
-        $version->setUser($this->security_service->getToken()->getUser());
+        if ($user == null) {
+            $user = $this->security_service->getToken()->getUser();
+        }
+        $version->setUser($user);
 
         if ($entity instanceof OmicsExperiment) {
             $version_hydration = $this->OmicsExperimentCreateHydration($entity);
