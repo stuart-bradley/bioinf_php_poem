@@ -156,6 +156,30 @@
         </div>
     {% endif %}
 
+    {% if sequence_run.versions is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Versions</h3>
+                <ul style="list-style-type:none;padding-left:0;" class="versions-hide">
+                    {% for version in sequence_run.versions %}
+                        {% dump(version) %}
+                        <li class="panel panel-body panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Version {{ loop.index }} ({{ version.createdAt|date('Y-m-d H:i') }})
+                                        by {{ version.user }} </h4>
+                                    <strong>Sequence Run</strong>
+                                    {{ version(version.diff) | raw }}
+                                    <hr>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
 
     <a href="{{ path('sequence_run_edit', {'id': sequence_run.id}) }}" class="btn btn-default">Edit</a>
     <a href="{{ path('sequence_run_index') }}" class="btn btn-default">Back</a>
