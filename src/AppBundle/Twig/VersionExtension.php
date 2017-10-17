@@ -49,7 +49,13 @@ class VersionExtension extends \Twig_Extension
                 $result_html .= $this->versionFunction($value, $key, ($indent + 0.5));
             } else {
                 $value = $this->tidyValue($value);
-                $result_html .= '<div class="bg-success" style="text-indent:' . (intval($indent) * 20) . 'px">' . $key . ': ' . '<p>' . $value . '</p>' . '</div>';
+                if ($this->startsWith($key, "added_")) {
+                    $result_html .= '<div class="bg-success" style="text-indent:' . (intval($indent) * 20) . 'px">' . explode("_", $key)[1] . ': ' . '<p>' . $value . '</p>' . '</div>';
+                } else if ($this->startsWith($key, "removed_")) {
+                    $result_html .= '<div class="bg-danger" style="text-indent:' . (intval($indent) * 20) . 'px">' . explode("_", $key)[1] . ': ' . '<p>' . $value . '</p>' . '</div>';
+                } else {
+                    $result_html .= '<div class="bg-info" style="text-indent:' . (intval($indent) * 20) . 'px">' . $key . ': ' . '<p>' . $value . '</p>' . '</div>';
+                }
             }
         }
         return $result_html;
@@ -72,5 +78,17 @@ class VersionExtension extends \Twig_Extension
             $value = preg_replace('!^<p>(.*?)</p>$!i', '$1', $value);
         }
         return $value;
+    }
+
+    /**
+     * Checks whether a string begins with a another string.
+     * @param $haystack
+     * @param $needle
+     * @return bool
+     */
+    private function startsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        return (substr($haystack, 0, $length) === $needle);
     }
 }
