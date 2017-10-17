@@ -36,7 +36,7 @@ class VersionExtension extends \Twig_Extension
     public function versionFunction($hydrated_entity, $title = null, $indent = 0)
     {
         $result_html = '';
-        if ($title != null) {
+        if (!empty($hydrated_entity) and $title != null) {
             $result_html .= '<div style="text-indent:' . (intval($indent) * 20) . 'px"><strong>' . $title . '</strong></div>';
         }
         foreach ($hydrated_entity as $key => $value) {
