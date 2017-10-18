@@ -23,7 +23,7 @@
                         {{ seq.startDate|date('Y-m-d') }} / {{ seq.endDate|date('Y-m-d') }}
                     </td>
                     <td>
-                        {{ seq.runBy }}
+                        {{ seq.users | join(", ") }}
                     </td>
                     <td>
                         {{ seq.kit }}

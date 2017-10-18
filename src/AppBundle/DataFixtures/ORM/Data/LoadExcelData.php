@@ -10,6 +10,7 @@ use AppBundle\Entity\OmicsExperiment;
 use AppBundle\Entity\OmicsExperimentSubType;
 use AppBundle\Entity\OmicsExperimentType;
 use AppBundle\Entity\Sample;
+use AppBundle\Entity\Version;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -42,6 +43,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         $exp_sub_type = null;
         $bioControlManager = $this->container->get('app.biocontrol_manager');
         $userManager = $this->container->get('app.user_manager');
+        $versionManager = $this->container->get('app.version_manager');
 
         print("Loading experiments to database." . PHP_EOL);
 
@@ -55,11 +57,11 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
             // Handle omics_experiment top level.
             $omics_experiment = $manager
                 ->getRepository('AppBundle:OmicsExperiment')
-                ->findOneBy(array('projectID' => $omics_experiment_array["projectID"]));
+                ->findOneBy(array('projectId' => $omics_experiment_array["projectID"]));
             if ($omics_experiment == null) {
                 $omics_experiment = new OmicsExperiment();
                 $omics_experiment->setProjectName($projectName);
-                $omics_experiment->setProjectID($omics_experiment_array["projectID"]);
+                $omics_experiment->setProjectId($omics_experiment_array["projectID"]);
                 $omics_experiment->setCreatedAt(new \DateTime());
                 $omics_experiment->setDescription($omics_experiment_array["comments"]);
                 $omics_experiment->setRequestedDate($omics_experiment_array["date"]);
@@ -130,6 +132,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                     }
                 }
             }
+            $versionManager->createVersion($omics_experiment, $sample_user);
             $manager->persist($omics_experiment);
         }
         $manager->flush();

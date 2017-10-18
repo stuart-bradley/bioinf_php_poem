@@ -48,7 +48,7 @@ class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
     public function getSpecificSample($projectID, $sampleName)
     {
         $qm = $this->getEntityManager()->createQueryBuilder();
-        $qm->select('*')
+        $qm->select('sample')
             ->from('AppBundle:OmicsExperiment', 'omics')
             ->leftJoin('omics.omicsExperimentTypes', 'exp')
             ->leftJoin('exp.omicsExperimentSubTypes', 'subexp')

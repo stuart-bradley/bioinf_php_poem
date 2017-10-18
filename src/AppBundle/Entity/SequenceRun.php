@@ -66,10 +66,27 @@ class SequenceRun
     private $readLength;
 
     /**
-     * @ORM\ManyToOne(targetEntity="FOSUser", inversedBy="sequenceRuns")
-     * @ORM\JoinColumn(name="fos_user_id", referencedColumnName="id")
+     * @var \DateTime
+     * @ORM\Column(name="created_at", type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
      */
-    private $runBy;
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="updated_at", type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     */
+    private $updatedAt;
+
+
+    /**
+     * Many Groups have Many Users.
+     * @ORM\ManyToMany(targetEntity="FOSUser", mappedBy="sequenceRuns")
+     */
+    private $users;
 
     /**
      * @var File
@@ -82,12 +99,21 @@ class SequenceRun
      */
     private $samples;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Version", mappedBy="sequenceRun", cascade={"persist", "remove"})
+     */
+    private $versions;
+
     public function __construct()
     {
         $this->samples = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->versions = new ArrayCollection();
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
 
@@ -101,24 +127,35 @@ class SequenceRun
     }
 
     /**
-     * Get runBy
-     * @return FOSUser
+     * Add user
+     * @param \AppBundle\Entity\FOSUser $user
+     * @return SequenceRun
      */
-    public function getRunBy()
+    public function addUser(\AppBundle\Entity\FOSUser $user)
     {
-        return $this->runBy;
+        $this->users[] = $user;
+        $user->addSequenceRun($this);
+
+        return $this;
     }
 
     /**
-     * Set runBy
-     * @param FOSUser $runBy
-     * @return SequenceRun
+     * Remove user
+     * @param \AppBundle\Entity\FOSUser $user
      */
-    public function setRunBy($runBy)
+    public function removeUser(\AppBundle\Entity\FOSUser $user)
     {
-        $this->runBy = $runBy;
+        $this->users->removeElement($user);
+        $user->removeSequenceRun(null);
+    }
 
-        return $this;
+    /**
+     * Get users
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 
     /**
@@ -227,6 +264,48 @@ class SequenceRun
     }
 
     /**
+     * Set createdAt
+     * @param \DateTime $createdAt
+     * @return SequenceRun
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     * @param \DateTime $updatedAt
+     * @return SequenceRun
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
      * Add sample
      * @param \AppBundle\Entity\Sample $sample
      * @return SequenceRun
@@ -309,5 +388,37 @@ class SequenceRun
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * Add version
+     * @param \AppBundle\Entity\Version $version
+     * @return SequenceRun
+     */
+    public function addVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions[] = $version;
+        $version->setSequenceRun($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove version
+     * @param \AppBundle\Entity\Version $version
+     */
+    public function removeVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions->removeElement($version);
+        $version->setSequenceRun(null);
+    }
+
+    /**
+     * Get versions
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVersions()
+    {
+        return $this->versions;
     }
 }

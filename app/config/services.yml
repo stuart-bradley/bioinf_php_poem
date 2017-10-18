@@ -10,6 +10,11 @@ services:
   app.file_uploader:
           class: AppBundle\Uploader\FileUploader
           arguments: ['%file_directory%']
+
+  app.version_manager:
+          class: AppBundle\VersionManager\VersionManager
+          arguments: ['@doctrine.orm.default_entity_manager', '@security.token_storage']
+
   app.doctrine_entity_listener:
           class: AppBundle\EventListener\EntityListener
           arguments: ['@app.file_uploader', '@logger']
@@ -25,3 +30,9 @@ services:
   app.biocontrol_manager:
           class: AppBundle\BioControl\BioControlManager
           arguments: ['@doctrine.dbal.bio_control_connection', '@doctrine.orm.default_entity_manager', '%ldap_domain_long%', '@app.user_manager']
+
+  app.twig_version:
+          class: AppBundle\Twig\VersionExtension
+          public: false
+          tags:
+              - { name: twig.extension }

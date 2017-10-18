@@ -3,6 +3,7 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\SequenceRun;
+use AppBundle\VersionManager\VersionManager;
 use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -22,6 +23,10 @@ class EntityListener
      * @var FileUploader
      */
     private $uploader;
+    /**
+     * @var Logger
+     */
+    private $logger;
 
     /**
      * EntityListener constructor.

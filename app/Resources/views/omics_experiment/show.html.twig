@@ -8,9 +8,11 @@
             <h1>  {{ omics_experiment.projectName }} </h1>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
-            <h1>  {{ omics_experiment.projectID }} </h1>
+            <strong>Project ID</strong>
+            <p>{{ omics_experiment.projectId }}</p>
         </div>
     </div>
 
@@ -214,6 +216,29 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if omics_experiment.versions is not empty %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3><a href="#versions" data-toggle="collapse">Versions</a></h3>
+                <ul style="list-style-type:none;padding-left:0;" class="collapse" id="versions">
+                    {% for version in omics_experiment.versions %}
+                        <li class="panel panel-body panel-default">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Version {{ loop.revindex }} ({{ version.createdAt|date('Y-m-d H:i') }})
+                                        by {{ version.user }} </h4>
+                                    <strong>Omics Experiment</strong>
+                                    {{ version(version.diff) | raw }}
                                 </div>
                             </div>
                         </li>

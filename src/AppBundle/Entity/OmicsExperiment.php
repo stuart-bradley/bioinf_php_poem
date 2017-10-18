@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -32,8 +33,9 @@ class OmicsExperiment
     /**
      * @var string
      * @ORM\Column(name="project_id", type="string", unique=true)
+     * @Assert\NotBlank()
      */
-    private $projectID;
+    private $projectId;
 
     /**
      * @var \DateTime
@@ -74,6 +76,14 @@ class OmicsExperiment
     private $createdAt;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="updated_at", type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     */
+    private $updatedAt;
+
+    /**
      * Many Groups have Many Users.
      * @ORM\ManyToMany(targetEntity="FOSUser", mappedBy="omicsExperiments")
      */
@@ -92,6 +102,12 @@ class OmicsExperiment
     private $statuses;
 
     /**
+     * @ORM\OneToMany(targetEntity="Version", mappedBy="omicsExperiment", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
+     */
+    private $versions;
+
+    /**
      * @ORM\OneToMany(targetEntity="OmicsExperimentType", mappedBy="omicsExperiment", cascade={"persist", "remove"})
      */
     private $omicsExperimentTypes;
@@ -102,9 +118,11 @@ class OmicsExperiment
         $this->statuses = new ArrayCollection();
         $this->omicsExperimentTypes = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->versions = new ArrayCollection();
         $this->requestedDate = new \DateTime();
         $this->requestedEndDate = new \DateTime();
         $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
     
     /**
@@ -138,22 +156,22 @@ class OmicsExperiment
     }
 
     /**
-     * Get projectID
+     * Get projectId
      * @return string
      */
-    public function getProjectID()
+    public function getProjectId()
     {
-        return $this->projectID;
+        return $this->projectId;
     }
 
     /**
      * Set projectID
-     * @param string $projectID
+     * @param string $projectId
      * @return OmicsExperiment
      */
-    public function setProjectID($projectID)
+    public function setProjectId($projectId)
     {
-        $this->projectID = $projectID;
+        $this->projectId = $projectId;
 
         return $this;
     }
@@ -252,6 +270,27 @@ class OmicsExperiment
     }
 
     /**
+     * Set updatedAt
+     * @param \DateTime $updatedAt
+     * @return OmicsExperiment
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
      * Set requestedEndDate
      * @param \DateTime $requestedEndDate
      * @return OmicsExperiment
@@ -282,7 +321,7 @@ class OmicsExperiment
      */
     public function removeUser(\AppBundle\Entity\FOSUser $user)
     {
-        $this->statuses->removeElement($user);
+        $this->users->removeElement($user);
         $user->removeOmicsExperiment(null);
     }
 
@@ -405,5 +444,37 @@ class OmicsExperiment
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * Add version
+     * @param \AppBundle\Entity\Version $version
+     * @return OmicsExperiment
+     */
+    public function addVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions[] = $version;
+        $version->setOmicsExperiment($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove version
+     * @param \AppBundle\Entity\Version $version
+     */
+    public function removeVersion(\AppBundle\Entity\Version $version)
+    {
+        $this->versions->removeElement($version);
+        $version->setOmicsExperiment(null);
+    }
+
+    /**
+     * Get versions
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVersions()
+    {
+        return $this->versions;
     }
 }

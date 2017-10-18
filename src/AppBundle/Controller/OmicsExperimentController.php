@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\OmicsExperiment;
+use AppBundle\Entity\Version;
 use AppBundle\Form\OmicsExperimentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,8 +41,11 @@ class OmicsExperimentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $omics_experiment->addUser($user);
+            // Persist twice to first generate associations, and then generate version.
             $em->persist($omics_experiment);
-
+            $em->flush();
+            $this->get('app.version_manager')->createVersion($omics_experiment);
+            $em->persist($omics_experiment);
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');
         }
@@ -57,7 +61,12 @@ class OmicsExperimentController extends Controller
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiment = $repository->find($id);
 
-        return $this->render('omics_experiment/show.html.twig', array('omics_experiment' => $omics_experiment));
+        $omics_experiment->getVersions();
+
+        $versions_repository = $this->getDoctrine()->getRepository('AppBundle:Version');
+        $versions = $versions_repository->findBy(array('omicsExperiment' => $omics_experiment));
+
+        return $this->render('omics_experiment/show.html.twig', array('omics_experiment' => $omics_experiment, 'versions' => $versions));
     }
 
     /**
@@ -76,6 +85,11 @@ class OmicsExperimentController extends Controller
         $form->handleRequest($request);
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
+            $omics_experiment->setUpdatedAt(new \DateTime());
+            // Persist twice to first generate associations, and then generate version.
+            $em->persist($omics_experiment);
+            $em->flush();
+            $this->get('app.version_manager')->createVersion($omics_experiment);
             $em->persist($omics_experiment);
             $em->flush();
             return $this->redirectToRoute('omics_experiment_index');
