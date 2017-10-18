@@ -159,17 +159,16 @@
     {% if sequence_run.versions is not empty %}
         <div class="row">
             <div class="col-md-12">
-                <h3>Versions</h3>
-                <ul style="list-style-type:none;padding-left:0;" class="versions-hide">
+                <h3><a href="#versions" data-toggle="collapse">Versions</a></h3>
+                <ul style="list-style-type:none;padding-left:0;" class="collapse" id="versions">
                     {% for version in sequence_run.versions %}
                         <li class="panel panel-body panel-default">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4>Version {{ loop.index }} ({{ version.createdAt|date('Y-m-d H:i') }})
+                                    <h4>Version {{ loop.revindex }} ({{ version.createdAt|date('Y-m-d H:i') }})
                                         by {{ version.user }} </h4>
                                     <strong>Sequence Run</strong>
                                     {{ version(version.diff) | raw }}
-                                    <hr>
                                 </div>
                             </div>
                         </li>
