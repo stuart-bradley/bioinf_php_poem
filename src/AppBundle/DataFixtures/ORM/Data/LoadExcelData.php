@@ -132,8 +132,11 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                     }
                 }
             }
+            $manager->persist($omics_experiment);
+            $manager->flush();
             $versionManager->createVersion($omics_experiment, $sample_user);
             $manager->persist($omics_experiment);
+            $manager->flush();
         }
         $manager->flush();
     }
