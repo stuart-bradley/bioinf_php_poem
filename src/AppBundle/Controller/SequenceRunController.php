@@ -7,18 +7,69 @@ use AppBundle\Entity\Version;
 use AppBundle\Form\SequenceRunType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class SequenceRunController extends Controller {
     /**
+     * set datatable configs
+     * @return \Waldo\DatatableBundle\Util\Datatable
+     */
+    private function datatable()
+    {
+        return $this->get('datatable')
+            ->setEntity("AppBundle:SequenceRun", "x")
+            ->setFields(
+            // Render replaces ID with required field
+                array(
+                    "ID" => 'x.id',
+                    "Start/End Dates" => 'x.id',
+                    "Author" => 'x.id',
+                    "Kit" => 'x.kit',
+                    "Material Type" => 'm.type',
+                    "" => "x.id",
+                    "_identifier_" => 'x.id')
+            )
+            // users join not required as it's done inside renderer.
+            ->addJoin('x.materialTypeString', 'm', \Doctrine\ORM\Query\Expr\Join::LEFT_JOIN)
+            ->setRenderers(
+                array(
+                    1 => array(
+                        'view' => 'sequence_run/datatables/_sequence_run_dates.html.twig'
+                    ),
+                    2 => array(
+                        'view' => 'sequence_run/datatables/_sequence_run_users.html.twig'
+                    ),
+                    5 => array(
+                        'view' => 'sequence_run/datatables/_sequence_run_buttons.html.twig'
+                    ),
+                )
+            )
+            ->setGlobalSearch(true);
+    }
+
+    /**
+     * Grid action
+     * @Route("/sequence_run/datatable", name="sequence_run_datatable")
+     * @return Response
+     */
+    public function gridAction()
+    {
+        return $this->datatable()->execute();
+    }
+
+    /**
      * @Route("/sequence_run/index", name="sequence_run_index")
      */
     public function indexAction() {
         // Grab all experiments from database and hand them to template.
-        $repository = $this->getDoctrine()->getRepository('AppBundle:SequenceRun');
-        $sequence_runs = $repository->findAll();
-        return $this->render('sequence_run/index.html.twig',['sequence_runs' => $sequence_runs]);
+        //$repository = $this->getDoctrine()->getRepository('AppBundle:SequenceRun');
+        //$sequence_runs = $repository->findAll();
+        //return $this->render('sequence_run/index.html.twig',['sequence_runs' => $sequence_runs]);
+
+        $this->datatable();
+        return $this->render('sequence_run/index.html.twig');
     }
 
     /**

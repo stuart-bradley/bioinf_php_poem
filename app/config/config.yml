@@ -118,6 +118,11 @@ doctrine_migrations:
     table_name: migration_versions
     name: Application Migrations
 
+# Datatable configuration
+waldo_datatable:
+    all:    ~
+    js:     ~
+
 # Asset configuration
 assetic:
     debug:          '%kernel.debug%'
@@ -213,6 +218,17 @@ assetic:
                 inputs:
                   - "%kernel.root_dir%/../src/AppBundle/Resources/public/fonts/summernote.woff"
                 output: "font/summernote.woff"
+
+            datatables_css:
+                inputs:
+                  - "%kernel.root_dir%/../src/AppBundle/Resources/public/css/datatables.min.css"
+                output: "css/datatables_min.css"
+                filters: [cssrewrite]
+            datatables_js:
+                inputs:
+                  - "%kernel.root_dir%/../src/AppBundle/Resources/public/js/datatables.min.js"
+                output: "js/datatables_min.css"
+
 
 
 
