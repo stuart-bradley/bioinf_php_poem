@@ -13,15 +13,24 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class OmicsExperimentController extends Controller
 {
+
+    /**
+     * Grid action
+     * @Route("/omics_experiment/datatable", name="omics_experiment_datatable")
+     * @return Response
+     */
+    public function gridAction()
+    {
+        return $this->datatable()->execute();
+    }
+
     /**
      * @Route("/omics_experiment/index", name="omics_experiment_index")
      */
     public function indexAction()
     {
-        // Grab all experiments from database and hand them to template.
-        $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
-        $omics_experiments = $repository->findAll();
-        return $this->render('omics_experiment/index.html.twig', ['omics_experiments' => $omics_experiments]);
+        $this->datatable();
+        return $this->render('omics_experiment/index.html.twig');
     }
 
     /**
@@ -140,5 +149,44 @@ class OmicsExperimentController extends Controller
         $response->send();
 
         return new Response();
+    }
+
+    /**
+     * set datatable configs
+     * @return \Waldo\DatatableBundle\Util\Datatable
+     */
+    private function datatable()
+    {
+        return $this->get('datatable')
+            ->setEntity("AppBundle:OmicsExperiment", "x")
+            ->setFields(
+            // Render replaces ID with required field
+                array(
+                    "ID" => 'x.id',
+                    "Date" => 'x.requestedDate',
+                    "Author" => 'x.id',
+                    "Title" => 'x.projectName',
+                    "Description" => 'x.description',
+                    "" => "x.id",
+                    "_identifier_" => 'x.id')
+            )
+            // users join not required as it's done inside renderer.
+            ->setRenderers(
+                array(
+                    1 => array(
+                        'view' => 'omics_experiment/datatables/_omics_experiment_dates.html.twig'
+                    ),
+                    2 => array(
+                        'view' => 'omics_experiment/datatables/_omics_experiment_users.html.twig'
+                    ),
+                    4 => array(
+                        'view' => 'omics_experiment/datatables/_omics_experiment_description.html.twig'
+                    ),
+                    5 => array(
+                        'view' => 'sequence_run/datatables/_sequence_run_buttons.html.twig'
+                    ),
+                )
+            )
+            ->setGlobalSearch(true);
     }
 }
