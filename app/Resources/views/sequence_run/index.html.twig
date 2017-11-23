@@ -5,38 +5,11 @@
     {{ parent() }}
     <div class="sequence-index-div">
         <h1>Sequence Runs</h1>
-        <table class="table table-bordered">
-            <tr>
-                <th>ID</th>
-                <th>Start/End Dates</th>
-                <th>Author</th>
-                <th>Kit</th>
-                <th>Material</th>
-                <th></th>
-            </tr>
-            {% for seq in sequence_runs %}
-                <tr>
-                    <td>
-                        {{ seq.id }}
-                    </td>
-                    <td>
-                        {{ seq.startDate|date('Y-m-d') }} / {{ seq.endDate|date('Y-m-d') }}
-                    </td>
-                    <td>
-                        {{ seq.users | join(", ") }}
-                    </td>
-                    <td>
-                        {{ seq.kit }}
-                    </td>
-                    <td>
-                        {{ seq.materialTypeString.type }}
-                    </td>
-                    <td align="center" valign="middle" style="width:10%">
-                        <a href="{{ path('sequence_run_show', {'id': seq.id}) }}" class="btn btn-default">Show</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+        {{ datatable({
+            'js' : {
+                'ajax' : path('sequence_run_datatable')
+            }
+        }) }}
         <a href="{{ path('sequence_run_new') }}" class="btn btn-primary btn-lg btn-block">New Sequence Run</a>
     </div>
 {% endblock %}

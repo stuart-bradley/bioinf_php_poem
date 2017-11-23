@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FR3D\LdapBundle\FR3DLdapBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Waldo\DatatableBundle\WaldoDatatableBundle(),
             new AppBundle\AppBundle(),
         ];
 

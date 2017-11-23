@@ -2,11 +2,15 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
+
+    <!--Datatables requires Jquery be loaded this way (for some reason)  -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <title>{% block title %}POEM{% endblock %}</title>
     {% block stylesheets %}
         {% stylesheets filter='cssrewrite'
         '@bootstrap_css'
         '@summernote_css'
+        '@datatables_css'
         '@poem_css' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
@@ -66,6 +70,7 @@
     '@jquery'
     '@bootstrap_js'
     '@summernote_js'
+    '@datatables_js'
     '@form_collection'
     '@exp_sub_type_selection_updater'
     '@bio_control_sample_updater'
