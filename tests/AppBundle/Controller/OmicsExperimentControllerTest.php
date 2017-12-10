@@ -13,7 +13,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
     {
         $this->helper = new ControllerHelperMethods();
         $this->helper->loadTestFixtures();
-        $this->loginAs($this->helper->fixtures->getReference('Stuart.Bradley'), 'main');
+        $this->loginAs($this->helper->fixtures->getReference('test_user'), 'main');
     }
 
     public function testIndex()
@@ -21,7 +21,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/omics_experiment/index');
         $this->assertStatusCode(200, $client);
-        $this->assertGreaterThan(1, $crawler->filter('tr')->count());
+        $this->assertEquals(1, $crawler->filter('table')->count());
     }
 
     public function testShow()
@@ -46,7 +46,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
 
         // Test Omics Experiment Sub-Type.
         $this->assertEquals(1, $crawler->filter('strong:contains("Experiment sub-type")')->count());
-        $this->assertEquals(1, $crawler->filter('p:contains("Mutation Analysis")')->count());
+        $this->assertEquals(1, $crawler->filter('p:contains("Time Course")')->count());
 
         //Test Sample.
         $this->assertEquals(1, $crawler->filter('strong:contains("Material")')->count());
@@ -63,9 +63,9 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $values = $form->getPhpValues();
 
         $values['omics_experiment']['projectName'] = 'test experiment';
-        $values['omics_experiment']['projectID'] = 'P01';
+        $values['omics_experiment']['projectId'] = 'project id test';
         $values['omics_experiment']['users'] = [];
-        $values['omics_experiment']['users'][0] = $this->helper->fixtures->getReference('Stuart.Bradley');
+        $values['omics_experiment']['users'][0] = $this->helper->fixtures->getReference('test_user');
         $values['omics_experiment']['description'] = 'description';
         $values['omics_experiment']['questions'] = 'questions';
 
@@ -82,7 +82,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
         $crawler = $client->followRedirect();
-        $this->assertEquals(3, $crawler->filter('tr')->count());
+        $this->assertStatusCode(200, $client);
     }
 
     public function testUpdate()
@@ -99,6 +99,6 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
         $crawler = $client->followRedirect();
-        $this->assertEquals(2, $crawler->filter('tr')->count());
+        $this->assertStatusCode(200, $client);
     }
 }

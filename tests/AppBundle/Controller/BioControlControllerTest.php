@@ -13,7 +13,7 @@ class BioControllerControllerControllerTest extends WebTestCase
     {
         $this->helper = new ControllerHelperMethods();
         $this->helper->loadTestFixtures();
-        $this->loginAs($this->helper->fixtures->getReference('Stuart.Bradley'), 'main');
+        $this->loginAs($this->helper->fixtures->getReference('test_user'), 'main');
     }
 
     public function testGetBioControlSample()

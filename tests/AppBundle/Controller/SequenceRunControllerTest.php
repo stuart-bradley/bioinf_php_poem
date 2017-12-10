@@ -14,7 +14,7 @@ class SequenceRunControllerTest extends WebTestCase
     {
         $this->helper = new ControllerHelperMethods();
         $this->helper->loadTestFixtures();
-        $this->loginAs($this->helper->fixtures->getReference('Stuart.Bradley'), 'main');
+        $this->loginAs($this->helper->fixtures->getReference('test_user'), 'main');
     }
 
     public function testIndex()
@@ -24,7 +24,7 @@ class SequenceRunControllerTest extends WebTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/sequence_run/index');
         $this->assertStatusCode(200, $client);
-        $this->assertEquals(2, $crawler->filter('tr')->count());
+        $this->assertEquals(1, $crawler->filter('table')->count());
     }
 
     public function testShow()
@@ -50,7 +50,8 @@ class SequenceRunControllerTest extends WebTestCase
         $form = $crawler->selectButton("Create Sequence Run")->form();
         $values = $form->getPhpValues();
 
-        $values['sequence_run']['runBy'] = 'stuart.bradley';
+        $values['sequence_run']['users'] = [];
+        $values['sequence_run']['users'][0] = $this->helper->fixtures->getReference('test_user');
         $values['sequence_run']['kit'] = "Illumina";
         $values['sequence_run']['materialTypeString'] = 1;
         $values['sequence_run']['runCoverageTarget'] = 10;
@@ -62,7 +63,7 @@ class SequenceRunControllerTest extends WebTestCase
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
         $crawler = $client->followRedirect();
-        $this->assertEquals(3, $crawler->filter('tr')->count());
+        $this->assertStatusCode(200, $client);
     }
 
     public function testUpdate()
@@ -81,6 +82,6 @@ class SequenceRunControllerTest extends WebTestCase
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
         $crawler = $client->followRedirect();
-        $this->assertEquals(2, $crawler->filter('tr')->count());
+        $this->assertStatusCode(200, $client);
     }
 }
