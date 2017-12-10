@@ -21,7 +21,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/omics_experiment/index');
         $this->assertStatusCode(200, $client);
-        $this->assertGreaterThan(1, $crawler->filter('tr')->count());
+        $this->assertEquals(1, $crawler->filter('table')->count());
     }
 
     public function testShow()
@@ -46,7 +46,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
 
         // Test Omics Experiment Sub-Type.
         $this->assertEquals(1, $crawler->filter('strong:contains("Experiment sub-type")')->count());
-        $this->assertEquals(1, $crawler->filter('p:contains("Mutation Analysis")')->count());
+        $this->assertEquals(1, $crawler->filter('p:contains("Time Course")')->count());
 
         //Test Sample.
         $this->assertEquals(1, $crawler->filter('strong:contains("Material")')->count());
@@ -81,7 +81,8 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $values['omics_experiment']['omicsExperimentTypes'][0]['omicsExperimentSubTypes'][0]['samples'][0] = $helper->createSample();
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
-        $this->assertEquals(3, $crawler->filter('tr')->count());
+        $crawler = $client->followRedirect();
+        $this->assertStatusCode(200, $client);
     }
 
     public function testUpdate()
@@ -98,6 +99,6 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
         $crawler = $client->followRedirect();
-        $this->assertEquals(2, $crawler->filter('tr')->count());
+        $this->assertStatusCode(200, $client);
     }
 }
