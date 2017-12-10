@@ -57,6 +57,7 @@ class OmicsExperimentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\OmicsExperiment',
+            'allow_extra_fields' => true
         ));
     }
 }

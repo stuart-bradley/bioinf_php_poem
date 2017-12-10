@@ -8,6 +8,7 @@ use AppBundle\Entity\FOSUser;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use FOS\UserBundle\Model\User;
 use Zend\Ldap\Ldap;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -29,6 +30,8 @@ class LoadFOSUsers extends AbstractFixture implements OrderedFixtureInterface, C
     {
         $userManager = $this->container->get('app.user_manager');
         $userManager->createAllUsers();
+        $test_user = $manager->getRepository('AppBundle:FOSUser')->findAll()[0];
+        $this->setReference("test_user", $test_user);
     }
 
     public function getOrder()

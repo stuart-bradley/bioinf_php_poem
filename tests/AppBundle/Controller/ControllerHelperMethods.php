@@ -78,7 +78,7 @@ class ControllerHelperMethods extends WebTestCase
         $sampleArray['BCExperimentID'] = 10;
         $sampleArray['BCSampleID'] = 10;
         $sampleArray['BCRunID'] = 10;
-        $sampleArray['sampledBy'] = $this->fixtures->getReference('Stuart.Bradley');
+        $sampleArray['sampledBy'] = 5;
         $sampleArray['materialTypeString'] = 1;
         $sampleArray['RNALaterTreated'] = 1;
 

@@ -13,7 +13,7 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
     {
         $this->helper = new ControllerHelperMethods();
         $this->helper->loadTestFixtures();
-        $this->loginAs($this->helper->fixtures->getReference('Stuart.Bradley'), 'main');
+        $this->loginAs($this->helper->fixtures->getReference('test_user'), 'main');
     }
 
     public function testIndex()
@@ -63,9 +63,9 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $values = $form->getPhpValues();
 
         $values['omics_experiment']['projectName'] = 'test experiment';
-        $values['omics_experiment']['projectID'] = 'P01';
+        $values['omics_experiment']['projectId'] = 'project id test';
         $values['omics_experiment']['users'] = [];
-        $values['omics_experiment']['users'][0] = $this->helper->fixtures->getReference('Stuart.Bradley');
+        $values['omics_experiment']['users'][0] = $this->helper->fixtures->getReference('test_user');
         $values['omics_experiment']['description'] = 'description';
         $values['omics_experiment']['questions'] = 'questions';
 
@@ -81,7 +81,6 @@ class OmicsExperimentControllerControllerTest extends WebTestCase
         $values['omics_experiment']['omicsExperimentTypes'][0]['omicsExperimentSubTypes'][0]['samples'][0] = $helper->createSample();
         $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
             $form->getPhpFiles());
-        $crawler = $client->followRedirect();
         $this->assertEquals(3, $crawler->filter('tr')->count());
     }
 
