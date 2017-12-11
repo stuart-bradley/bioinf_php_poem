@@ -183,7 +183,7 @@ class OmicsExperimentController extends Controller
                         'view' => 'omics_experiment/datatables/_omics_experiment_description.html.twig'
                     ),
                     5 => array(
-                        'view' => 'sequence_run/datatables/_omics_experiment_buttons.html.twig'
+                        'view' => 'omics_experiment/datatables/_omics_experiment_buttons.html.twig'
                     ),
                 )
             )
