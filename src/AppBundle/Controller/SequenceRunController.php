@@ -135,6 +135,7 @@ class SequenceRunController extends Controller
             )
             // users join not required as it's done inside renderer.
             ->addJoin('x.materialTypeString', 'm', \Doctrine\ORM\Query\Expr\Join::LEFT_JOIN)
+            ->setOrder("x.id", "DESC")
             ->setRenderers(
                 array(
                     1 => array(
