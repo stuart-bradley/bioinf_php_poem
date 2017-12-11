@@ -170,6 +170,7 @@ class OmicsExperimentController extends Controller
                     "" => "x.id",
                     "_identifier_" => 'x.id')
             )
+            ->setOrder("x.id", "DESC")
             // users join not required as it's done inside renderer.
             ->setRenderers(
                 array(
