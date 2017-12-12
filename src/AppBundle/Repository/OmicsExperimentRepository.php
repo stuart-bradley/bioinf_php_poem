@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\Query;
+
 /**
  * OmicsExperimentRepository
  *
@@ -10,6 +12,11 @@ namespace AppBundle\Repository;
  */
 class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Creates a CSV of an OmicsExperiment with specific fields.
+     * @param array $fields
+     * @return string $str_result
+     */
     public function getExport($id, $fields)
     {
         $qm = $this->getEntityManager()->createQueryBuilder();
@@ -45,6 +52,12 @@ class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
         return $str_result;
     }
 
+    /**
+     * Gets a specific sample based on OmicsExperiment projectID and sampleName.
+     * @param string $projectID
+     * @param string $sampleName
+     * @return Query $result
+     */
     public function getSpecificSample($projectID, $sampleName)
     {
         $qm = $this->getEntityManager()->createQueryBuilder();
@@ -56,8 +69,8 @@ class OmicsExperimentRepository extends \Doctrine\ORM\EntityRepository
             ->where('omics.projectID= :projectID AND sample.sampleName = :sampleName')
             ->setParameter('projectID', $projectID)
             ->setParameter('sampleName', $sampleName);
-        $results = $qm->getQuery()->getSingleResult();
+        $result = $qm->getQuery()->getSingleResult();
 
-        return $results;
+        return $result;
     }
 }

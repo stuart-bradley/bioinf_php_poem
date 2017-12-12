@@ -167,6 +167,7 @@ class OmicsExperimentController extends Controller
                     "Author" => 'x.id',
                     "Title" => 'x.projectName',
                     "Description" => 'x.description',
+                    "Statuses" => 'x.id',
                     "" => "x.id",
                     "_identifier_" => 'x.id')
             )
@@ -184,6 +185,9 @@ class OmicsExperimentController extends Controller
                         'view' => 'omics_experiment/datatables/_omics_experiment_description.html.twig'
                     ),
                     5 => array(
+                        'view' => 'omics_experiment/datatables/_omics_experiment_statuses.html.twig'
+                    ),
+                    6 => array(
                         'view' => 'omics_experiment/datatables/_omics_experiment_buttons.html.twig'
                     ),
                 )
