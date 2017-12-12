@@ -60,6 +60,12 @@ class OmicsExperiment
     private $questions;
 
     /**
+     * @var int
+     * @ORM\Column(name="bcrun_id", type="integer", nullable=true)
+     */
+    private $BCRunID;
+
+    /**
      * @var \DateTime
      * @ORM\Column(name="requested_end_date", type="date")
      * @Assert\NotBlank()
@@ -237,6 +243,27 @@ class OmicsExperiment
         $this->questions = $questions;
 
         return $this;
+    }
+
+    /**
+     * Set bCRunID
+     * @param integer $bCRunID
+     * @return OmicsExperiment
+     */
+    public function setBCRunID($bCRunID)
+    {
+        $this->BCRunID = $bCRunID;
+
+        return $this;
+    }
+
+    /**
+     * Get bCRunID
+     * @return int
+     */
+    public function getBCRunID()
+    {
+        return $this->BCRunID;
     }
 
     /**

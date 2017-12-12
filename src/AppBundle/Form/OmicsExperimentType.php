@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,8 @@ class OmicsExperimentType extends AbstractType
             ->add('requestedDate', DateType::class)
             ->add('description', TextareaType::class, array('required' => false, 'attr' => array('class' => 'summernote')))
             ->add('questions', TextareaType::class, array('required' => false, 'label' => 'Questions to be answered', 'attr' => array('class' => 'summernote')))
+            ->add('BCRunID', IntegerType::class, array(
+                'label' => 'BioControl run ID', 'required' => false))
             ->add('requestedEndDate', DateType::class)
             ->add('files', CollectionType::class, array(
                 'entry_type' => DataFileType::class,
