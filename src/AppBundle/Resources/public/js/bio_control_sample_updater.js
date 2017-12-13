@@ -13,13 +13,18 @@ function BioControlSampleUpdater() {
     var sampledBy_field;
     var comments_field;
 
+    /**
+     * Watches empty fields for input.
+     */
     self.construct_sample_fields = function () {
         var form = $('form');
+        // Blurs pre-existing fields.
         $('input[id$="BCSampleID"]').each(function (index, value) {
             if ($(value).val().length > 0) {
                 self.blur_selects_toggle(value, true);
             }
         });
+        // Parses sampleName inputs to get BC IDs out of them.
         form.on('change', 'input[id$="sampleName"]', function (e) {
             var value = $(e.target).val();
             var res = value.split("-");
@@ -29,13 +34,19 @@ function BioControlSampleUpdater() {
                 self.modify_sample_fields(BCSampleID_field);
             }
         });
+        // Watches for BC Sample IDs.
         form.on('change', 'input[id$="BCSampleID"]', function (e) {
             self.modify_sample_fields(e.target);
         });
     };
 
+    /**
+     * Modifies fields based on AJAX query.
+     * @param input_field
+     */
     self.modify_sample_fields = function (input_field) {
 
+        // All the fields for a specific sample.
         BCRunID_field = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCRunID']");
         BCExperiment_field = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCExperimentID']");
         datetime_fields = $(input_field).closest(".form-group").parent().find("div.form-group > div[id$='sampledDateTime']");
@@ -43,12 +54,14 @@ function BioControlSampleUpdater() {
         comments_field = $(input_field).closest(".form-group").parent().find("div.form-group > textarea[id$='comments']");
 
 
+        // AJAX Query.
         if ($(input_field).val().length > 0) {
             $.ajax({
                 url: '/bio_control/sample',
                 type: 'POST',
                 dataType: 'json',
                 data: {sample_number: $(input_field).val()},
+                // Progress bar to keep user calm.
                 beforeSend: function () {
                     $('.progress').show()
                 },
@@ -61,6 +74,7 @@ function BioControlSampleUpdater() {
                         $(BCRunID_field).val(response.sample_data['RunID']);
                         $(BCExperiment_field).val(response.sample_data['ExpID']);
                         self.setDateTime(datetime_fields, response.sample_data['Dat']);
+                        // If BioControl user is new, it must be mocked.
                         if (response.new_user) {
                             self.add_new_user(sampledBy_field, response.sample_data['PerNam'], response.user_id)
                         }
@@ -81,6 +95,11 @@ function BioControlSampleUpdater() {
         }
     };
 
+    /**
+     * Sets datetime_fields based on a JS dateTime.
+     * @param datetime_fields
+     * @param dateTimeString
+     */
     self.setDateTime = function (datetime_fields, dateTimeString) {
         var dateTime = new Date(dateTimeString);
 
@@ -92,6 +111,10 @@ function BioControlSampleUpdater() {
         $(datetime_fields).find("select[id$='time_minute']").val(dateTime.getMinutes());
     };
 
+    /**
+     * Resets fields back to nothing if AJAX fails.
+     * @param input_field
+     */
     self.resetFields = function (input_field) {
         $(input_field).parent().attr("class", "form-group has-error");
         self.blur_selects_toggle(input_field, false);
@@ -101,6 +124,12 @@ function BioControlSampleUpdater() {
         $(sampledBy_field).removeAttr('selected').find('option:first').attr('selected', 'selected');
     };
 
+    /**
+     * Appends a new user option to the select box so it can be selected.
+     * @param input_field
+     * @param cn
+     * @param user_id
+     */
     self.add_new_user = function (input_field, cn, user_id) {
         $(input_field).append($('<option>', {
             value: user_id,
@@ -108,6 +137,11 @@ function BioControlSampleUpdater() {
         }));
     };
 
+    /**
+     * Blurs fields so they cannot accessed after AJAX is successful.
+     * @param input_field
+     * @param toggle
+     */
     self.blur_selects_toggle = function (input_field, toggle) {
         var BCRunID = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCRunID']");
         var BCExperiment = $(input_field).closest(".form-group").parent().find("div.form-group > input[id$='BCExperimentID']");
@@ -126,6 +160,11 @@ function BioControlSampleUpdater() {
         self.blur_field($(datetime).find("select[id$='time_minute']"), toggle);
     };
 
+    /**
+     * Blurs an individual field.
+     * @param field
+     * @param toggle
+     */
     self.blur_field = function (field, toggle) {
         if (toggle) {
             $(field).css('background-color', '#eee');

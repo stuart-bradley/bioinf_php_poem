@@ -37,6 +37,13 @@ class StatusStrings
         $this->statuses = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getType();
+    }
 
     /**
      * Get id

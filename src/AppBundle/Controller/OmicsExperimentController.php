@@ -128,6 +128,7 @@ class OmicsExperimentController extends Controller
     }
 
     /**
+     * Action to export to CSV.
      * @Route("/omics_experiment/export/{id}", name="omics_experiment_export")
      */
     public function exportAction(Request $request, $id)
