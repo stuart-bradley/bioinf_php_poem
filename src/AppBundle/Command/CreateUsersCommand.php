@@ -11,8 +11,15 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class CreateUsersCommand - Creates users from the LDAP server.
+ * @package AppBundle\Command
+ */
 class CreateUsersCommand extends ContainerAwareCommand
 {
+    /**
+     * Defines the command and argument structure for creating FOSUsers.
+     */
     protected function configure()
     {
         $this->setName('poem:user:create')
@@ -23,6 +30,11 @@ class CreateUsersCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * Calls the UserManager to create FOSUsers. If a user already exists, it still returns successful.
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $userManager = $this->getContainer()->get('app.user_manager');

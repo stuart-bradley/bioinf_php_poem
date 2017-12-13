@@ -11,8 +11,15 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class UpdateUserDnCommand - Updates DNs for FOSUsers via LDAP.
+ * @package AppBundle\Command
+ */
 class UpdateUserDnCommand extends ContainerAwareCommand
 {
+    /**
+     * Defines the command and argument structure for updating DNs.
+     */
     protected function configure()
     {
         $this->setName('poem:user:updateDn')
@@ -29,6 +36,11 @@ class UpdateUserDnCommand extends ContainerAwareCommand
             );
     }
 
+    /**
+     * Finds users and updates their DNs, or updates all users with the --all flag.
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $userManager = $this->getContainer()->get('app.user_manager');

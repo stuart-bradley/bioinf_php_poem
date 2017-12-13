@@ -119,6 +119,29 @@ These two bundles work in concert to provide the user side of POEM. Both have ex
 
 A test LDAP configuration is commented out in `config.yml` which would allow you to test your LDAP connection.
 
+This bundle is also responsible for the `ROLES` for each user. These are (in hierarchical order): 
+`ROLE_DIRECTOR, ROLE_MANAGER, ROLE_ADMIN, ROLE_USER`, where `ROLE_USER` is the default role provided to all users. 
+
+To promote and demote users, the bundle has built in command line tools:
+
+```
+php bin/console fos:user:promote user.name ROLE_ADMIN
+php bin/console fos:user:demote user.name ROLE_ADMIN
+```
+
+There are a number of other command line tools, found [here](ndles/FOSUserBundle/command_line_tools.html). Due to the nature
+of using the LDAP server, two additional commands have been provided, to create users, and also to update their DNs directly
+from the LDAP server, via the custom `UserManager` service:
+
+```
+# Creates users:
+php bin/console poem:user:create user.name1 user.name2
+# Updates DNs of specific users:
+php bin/console poem:user:updateDN user.name1 user.name2
+# Updates DNs of all users:
+php bin/console poem:user:updateDN --all
+```
+
 ##### [LiipFunctionalTestBundle](https://github.com/liip/LiipFunctionalTestBundle)
 
 This bundle uses fixtures defined in `/src/AppBundle/DataFixtures/ORM/Test` to run functional tests on both
@@ -266,8 +289,6 @@ As mentioned previously in the fixtures section, the `UserManager.php` (which is
 might need to be modified heavily before it works correctly. The entire call is designed with a specific LDAP server
 in mind, and will not work correctly in other systems. More specifically, `createAllUsers()` and `createUser()` are 
 good places to start modification, which many of the other methods supporting them.
-
-
 
 #### Excel Data Loading
 
