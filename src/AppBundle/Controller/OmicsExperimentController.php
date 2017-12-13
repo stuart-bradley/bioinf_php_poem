@@ -50,6 +50,7 @@ class OmicsExperimentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $omics_experiment->addUser($user);
+            $omics_experiment->setSampleIdArray($this->createSampleIdArray($omics_experiment));
             // Persist twice to first generate associations, and then generate version.
             $em->persist($omics_experiment);
             $em->flush();
@@ -95,6 +96,7 @@ class OmicsExperimentController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $omics_experiment->setUpdatedAt(new \DateTime());
+            $omics_experiment->setSampleIdArray($this->createSampleIdArray($omics_experiment));
             // Persist twice to first generate associations, and then generate version.
             $em->persist($omics_experiment);
             $em->flush();
@@ -115,13 +117,15 @@ class OmicsExperimentController extends Controller
         $repository = $this->getDoctrine()->getRepository('AppBundle:OmicsExperiment');
         $omics_experiment = $repository->find($id);
 
+        $projectName = $omics_experiment->getProjectName();
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($omics_experiment);
         $em->flush();
 
         $this->addFlash(
             'notice',
-            '"' . $omics_experiment->getProjectName() . '" has successfully been deleted.'
+            '"' . $projectName . '" has successfully been deleted.'
         );
 
         return $this->redirectToRoute('omics_experiment_index');
@@ -153,6 +157,24 @@ class OmicsExperimentController extends Controller
     }
 
     /**
+     * Builds an associative array of the total number of Samples and their IDs.
+     * @param OmicsExperiment $omics_experiment
+     * @return array
+     */
+    private function createSampleIdArray($omics_experiment)
+    {
+        $sampleIdArray = [];
+        foreach ($omics_experiment->getOmicsExperimentTypes() as $exp_type) {
+            foreach ($exp_type->getOmicsExperimentSubTypes() as $exp_sub_type) {
+                foreach ($exp_sub_type->getSamples() as $sample) {
+                    $sampleIdArray[] = $sample->getBCSampleID();
+                }
+            }
+        }
+        return [sizeof($sampleIdArray) => $sampleIdArray];
+    }
+
+    /**
      * set datatable configs
      * @return \Waldo\DatatableBundle\Util\Datatable
      */
@@ -168,6 +190,7 @@ class OmicsExperimentController extends Controller
                     "Author" => 'x.id',
                     "Title" => 'x.projectName',
                     "Description" => 'x.description',
+                    "Samples" => 'x.sampleIdArray',
                     "Statuses" => 'x.id',
                     "" => "x.id",
                     "_identifier_" => 'x.id')
@@ -186,9 +209,12 @@ class OmicsExperimentController extends Controller
                         'view' => 'omics_experiment/datatables/_omics_experiment_description.html.twig'
                     ),
                     5 => array(
-                        'view' => 'omics_experiment/datatables/_omics_experiment_statuses.html.twig'
+                        'view' => 'omics_experiment/datatables/_omics_experiment_samples.html.twig'
                     ),
                     6 => array(
+                        'view' => 'omics_experiment/datatables/_omics_experiment_statuses.html.twig'
+                    ),
+                    7 => array(
                         'view' => 'omics_experiment/datatables/_omics_experiment_buttons.html.twig'
                     ),
                 )

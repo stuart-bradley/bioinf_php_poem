@@ -66,6 +66,12 @@ class SequenceRun
     private $readLength;
 
     /**
+     * @var array
+     * @ORM\Column(name="sample_id_array", type="array", nullable=true)
+     */
+    private $sampleIdArray;
+
+    /**
      * @var \DateTime
      * @ORM\Column(name="created_at", type="date")
      * @Assert\NotBlank()
@@ -261,6 +267,27 @@ class SequenceRun
         $this->readLength = $readLength;
 
         return $this;
+    }
+
+    /**
+     * Set sampleIdArray
+     * @param array $sampleIdArray
+     * @return SequenceRun
+     */
+    public function setSampleIdArray($sampleIdArray)
+    {
+        $this->sampleIdArray = $sampleIdArray;
+
+        return $this;
+    }
+
+    /**
+     * Get sampleIdArray
+     * @return array
+     */
+    public function getSampleIdArray()
+    {
+        return $this->sampleIdArray;
     }
 
     /**

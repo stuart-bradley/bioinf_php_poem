@@ -74,6 +74,12 @@ class OmicsExperiment
     private $requestedEndDate;
 
     /**
+     * @var array
+     * @ORM\Column(name="sample_id_array", type="array", nullable=true)
+     */
+    private $sampleIdArray;
+
+    /**
      * @var \DateTime
      * @ORM\Column(name="created_at", type="date")
      * @Assert\NotBlank()
@@ -267,12 +273,45 @@ class OmicsExperiment
     }
 
     /**
+     * Set requestedEndDate
+     * @param \DateTime $requestedEndDate
+     * @return OmicsExperiment
+     */
+    public function setRequestedEndDate($requestedEndDate)
+    {
+        $this->requestedEndDate = $requestedEndDate;
+
+        return $this;
+    }
+
+    /**
      * Get requestedEndDate
      * @return \DateTime
      */
     public function getRequestedEndDate()
     {
         return $this->requestedEndDate;
+    }
+
+    /**
+     * Set sampleIDArray
+     * @param array $sampleIdArray
+     * @return OmicsExperiment
+     */
+    public function setSampleIdArray($sampleIdArray)
+    {
+        $this->sampleIdArray = $sampleIdArray;
+
+        return $this;
+    }
+
+    /**
+     * Get sampleIdArray
+     * @return array
+     */
+    public function getSampleIdArray()
+    {
+        return $this->sampleIdArray;
     }
 
     /**
@@ -315,18 +354,6 @@ class OmicsExperiment
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set requestedEndDate
-     * @param \DateTime $requestedEndDate
-     * @return OmicsExperiment
-     */
-    public function setRequestedEndDate($requestedEndDate)
-    {
-        $this->requestedEndDate = $requestedEndDate;
-
-        return $this;
     }
 
     /**

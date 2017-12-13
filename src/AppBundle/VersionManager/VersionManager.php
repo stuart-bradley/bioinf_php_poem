@@ -219,6 +219,7 @@ class VersionManager
         $array_hydration['Requested Date'] = $entity->getRequestedDate();
         $array_hydration['Description'] = $entity->getDescription();
         $array_hydration['Questions'] = $entity->getQuestions();
+        $array_hydration['BC Run ID'] = $entity->getBCRunID();
         $array_hydration['Requested End Date'] = $entity->getRequestedEndDate();
         $array_hydration['Created At'] = $entity->getCreatedAt();
         $array_hydration['Updated At'] = $entity->getUpdatedAt();

@@ -58,6 +58,20 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Samples</strong>
+            {% for key,val in sequence_run.sampleIdArray %}
+                <p>Total: {{ key }}</p>
+                <ul style="padding-left: 15px;">
+                    {% for sample_id in val %}
+                        <li>{{ sample_id }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
     {% if sequence_run.files is not empty %}
         <div class="row">
             <div class="col-md-12">
