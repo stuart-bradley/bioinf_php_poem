@@ -7,7 +7,7 @@
  * parent omicsExperimentType value.
  */
 function ExpSubTypeSelectionUpdater(selection_relations) {
-    /*
+    /**
      * Creates on change events for all omicsExperimentType
      * changes (even ones added later).
      */
@@ -43,8 +43,9 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
         observer.observe(omics_experiment_selector[0], observerConfig);
     };
 
-    /*
+    /**
      * Finds parent value and passes it to the update method.
+     * @param selector
      */
     self.modify_selection_updater = function (selector) {
         var frame = $(selector).parent().parent();
@@ -58,6 +59,8 @@ function ExpSubTypeSelectionUpdater(selection_relations) {
 
     /*
      * Takes parent value, and finds correct options before revealing them in list.
+     * @param child_selector
+     * @param parent_val
      */
     self.update_child = function(child_selector, parent_val) {
         // Hides ALL options.

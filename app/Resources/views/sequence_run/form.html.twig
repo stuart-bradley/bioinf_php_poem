@@ -21,6 +21,14 @@
     {{ form_row(form.materialTypeString) }}
     {{ form_row(form.runCoverageTarget) }}
     {{ form_row(form.readLength) }}
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Samples</strong>
+            <p id="sample_total">Total: 0</p>
+            <ul id="sample_total_ul" style="padding-left: 15px;">
+            </ul>
+        </div>
+    </div>
 
     <h3>Files</h3>
     <ul style="list-style-type:none;padding-left:0;" class="col-files">
@@ -82,5 +90,6 @@
     <script type="text/javascript">
         new FormCollections(['samples', 'files']);
         new BioControlSampleUpdater();
+        new SampleIdUpdater();
     </script>
 {% endblock %}
