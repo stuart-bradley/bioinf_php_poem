@@ -1,10 +1,15 @@
 /**
- * Created by wackm on 14-Dec-17.
+ * SampleIdUpdater
+ * Stuart Bradley
+ * 2017-12-14
+ *
+ * Watches Sample boxes and BCsampleID fields for changes and updates
+ * parent
  */
-
 function SampleIdUpdater() {
     /**
      * Creates on change events for all Sample buttons (even ones added later).
+     * Additionally watches DOM for add and remove events.
      */
     self.construct_sample_watcher = function () {
         var omics_experiment_selector = $('ul.col-omics_experiment_types');
@@ -31,6 +36,9 @@ function SampleIdUpdater() {
         observer.observe(omics_experiment_selector[0], observerConfig);
     };
 
+    /**
+     * Counts sample elements, gathers BCSampleIDs and updates parent.
+     */
     self.update_total = function() {
         var sample_total = 0;
         $("ul#sample_total_ul").empty();
