@@ -26,6 +26,15 @@
     {{ form_row(form.requestedDate) }}
     {{ form_row(form.description) }}
     {{ form_row(form.questions) }}
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Samples</strong>
+            <p id="sample_total">Total: 0</p>
+            <ul id="sample_total_ul" style="padding-left: 15px;">
+            </ul>
+        </div>
+    </div>
+    {{ form_row(form.BCRunID) }}
     {{ form_row(form.requestedEndDate) }}
 
     <h3>Files</h3>
@@ -124,5 +133,6 @@
                 new FormCollections(['files', 'statuses', 'omics_experiment_types', 'omics_experiment_sub_types', 'samples']);
                 new ExpSubTypeSelectionUpdater({{ select_relations|json_encode()|raw }});
                 new BioControlSampleUpdater();
+                new SampleIdUpdater();
             </script>
         {% endblock %}

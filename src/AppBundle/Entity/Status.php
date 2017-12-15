@@ -46,6 +46,14 @@ class Status
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getStatusString()->getType();
+    }
+
+    /**
      * Get id
      * @return int
      */

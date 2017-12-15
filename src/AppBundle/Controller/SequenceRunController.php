@@ -47,6 +47,7 @@ class SequenceRunController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $sequence_run->addUser($user);
+            $sequence_run->setSampleIdArray($this->createSampleIdArray($sequence_run));
             // Persist twice to first generate associations, and then generate version.
             $em->persist($sequence_run);
             $em->flush();
@@ -84,6 +85,7 @@ class SequenceRunController extends Controller
         // On submission.
         if ($form->isSubmitted() && $form->isValid()) {
             $sequence_run->setUpdatedAt(new \DateTime());
+            $sequence_run->setSampleIdArray($this->createSampleIdArray($sequence_run));
             $em->persist($sequence_run);
             $em->flush();
             $this->get('app.version_manager')->createVersion($sequence_run);
@@ -108,10 +110,24 @@ class SequenceRunController extends Controller
 
         $this->addFlash(
             'notice',
-            '"' . $sequence_run->getId() . '" has successfully been deleted.'
+            '"' . $id . '" has successfully been deleted.'
         );
 
         return $this->redirectToRoute('sequence_run_index');
+    }
+
+    /**
+     * Builds an associative array of the total number of Samples and their IDs.
+     * @param SequenceRun $sequence_run
+     * @return array
+     */
+    private function createSampleIdArray($sequence_run)
+    {
+        $sequenceIdArray = [];
+        foreach ($sequence_run->getSamples() as $sample) {
+            $sequenceIdArray[] = $sample->getBCSampleID();
+        }
+        return [sizeof($sequenceIdArray) => $sequenceIdArray];
     }
 
     /**
@@ -130,6 +146,7 @@ class SequenceRunController extends Controller
                     "Author" => 'x.id',
                     "Kit" => 'x.kit',
                     "Material Type" => 'm.type',
+                    "Samples" => 'x.sampleIdArray',
                     "" => "x.id",
                     "_identifier_" => 'x.id')
             )
@@ -145,6 +162,9 @@ class SequenceRunController extends Controller
                         'view' => 'sequence_run/datatables/_sequence_run_users.html.twig'
                     ),
                     5 => array(
+                        'view' => 'sequence_run/datatables/_sequence_run_samples.html.twig'
+                    ),
+                    6 => array(
                         'view' => 'sequence_run/datatables/_sequence_run_buttons.html.twig'
                     ),
                 )

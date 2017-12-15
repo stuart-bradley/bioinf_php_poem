@@ -42,6 +42,13 @@ class MaterialTypeStrings
         $this->sequenceRuns = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getType();
+    }
 
     /**
      * Get id

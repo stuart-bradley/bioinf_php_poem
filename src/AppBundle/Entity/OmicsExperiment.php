@@ -60,12 +60,24 @@ class OmicsExperiment
     private $questions;
 
     /**
+     * @var int
+     * @ORM\Column(name="bcrun_id", type="integer", nullable=true)
+     */
+    private $BCRunID;
+
+    /**
      * @var \DateTime
      * @ORM\Column(name="requested_end_date", type="date")
      * @Assert\NotBlank()
      * @Assert\Date()
      */
     private $requestedEndDate;
+
+    /**
+     * @var array
+     * @ORM\Column(name="sample_id_array", type="array", nullable=true)
+     */
+    private $sampleIdArray;
 
     /**
      * @var \DateTime
@@ -240,12 +252,66 @@ class OmicsExperiment
     }
 
     /**
+     * Set bCRunID
+     * @param integer $bCRunID
+     * @return OmicsExperiment
+     */
+    public function setBCRunID($bCRunID)
+    {
+        $this->BCRunID = $bCRunID;
+
+        return $this;
+    }
+
+    /**
+     * Get bCRunID
+     * @return int
+     */
+    public function getBCRunID()
+    {
+        return $this->BCRunID;
+    }
+
+    /**
+     * Set requestedEndDate
+     * @param \DateTime $requestedEndDate
+     * @return OmicsExperiment
+     */
+    public function setRequestedEndDate($requestedEndDate)
+    {
+        $this->requestedEndDate = $requestedEndDate;
+
+        return $this;
+    }
+
+    /**
      * Get requestedEndDate
      * @return \DateTime
      */
     public function getRequestedEndDate()
     {
         return $this->requestedEndDate;
+    }
+
+    /**
+     * Set sampleIDArray
+     * @param array $sampleIdArray
+     * @return OmicsExperiment
+     */
+    public function setSampleIdArray($sampleIdArray)
+    {
+        $this->sampleIdArray = $sampleIdArray;
+
+        return $this;
+    }
+
+    /**
+     * Get sampleIdArray
+     * @return array
+     */
+    public function getSampleIdArray()
+    {
+        return $this->sampleIdArray;
     }
 
     /**
@@ -288,18 +354,6 @@ class OmicsExperiment
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set requestedEndDate
-     * @param \DateTime $requestedEndDate
-     * @return OmicsExperiment
-     */
-    public function setRequestedEndDate($requestedEndDate)
-    {
-        $this->requestedEndDate = $requestedEndDate;
-
-        return $this;
     }
 
     /**

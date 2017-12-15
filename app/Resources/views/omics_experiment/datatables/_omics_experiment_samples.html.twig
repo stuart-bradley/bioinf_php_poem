@@ -1,0 +1,8 @@
+{% for key,val in dt_item %}
+    <p>Total: {{ key }}</p>
+    <ul style="padding-left: 15px;">
+        {% for sample_id in val %}
+            <li>{{ sample_id }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}

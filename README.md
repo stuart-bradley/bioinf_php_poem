@@ -12,9 +12,11 @@ Screencaps of the various views can be found in the [`\screenshots` folder](http
 ### General Features
 
 * **Omics Experiments**:
-  * Title.
+  * Project Name.
+  * Project ID.
   * Description.
   * Questions. 
+  * Experiment BioControl run number.
   * Start and end dates.
   * File upload.
   * Statuses (dated).
@@ -26,8 +28,9 @@ Screencaps of the various views can be found in the [`\screenshots` folder](http
           * Experiment number.
           * Sample date.
           * Sampled by.
-        * Treated flag.
-        * Material type (e.g. DNA).
+          * Comments.
+          * Treated flag.
+          * Material type (e.g. DNA).
 * **Sequencing Runs**:
   * Start and end dates.
   * Kit type.
@@ -119,6 +122,29 @@ These two bundles work in concert to provide the user side of POEM. Both have ex
 
 A test LDAP configuration is commented out in `config.yml` which would allow you to test your LDAP connection.
 
+This bundle is also responsible for the `ROLES` for each user. These are (in hierarchical order): 
+`ROLE_DIRECTOR, ROLE_MANAGER, ROLE_ADMIN, ROLE_USER`, where `ROLE_USER` is the default role provided to all users. 
+
+To promote and demote users, the bundle has built in command line tools:
+
+```
+php bin/console fos:user:promote user.name ROLE_ADMIN
+php bin/console fos:user:demote user.name ROLE_ADMIN
+```
+
+There are a number of other command line tools, found [here](ndles/FOSUserBundle/command_line_tools.html). Due to the nature
+of using the LDAP server, two additional commands have been provided, to create users, and also to update their DNs directly
+from the LDAP server, via the custom `UserManager` service:
+
+```
+# Creates users:
+php bin/console poem:user:create user.name1 user.name2
+# Updates DNs of specific users:
+php bin/console poem:user:updateDN user.name1 user.name2
+# Updates DNs of all users:
+php bin/console poem:user:updateDN --all
+```
+
 ##### [LiipFunctionalTestBundle](https://github.com/liip/LiipFunctionalTestBundle)
 
 This bundle uses fixtures defined in `/src/AppBundle/DataFixtures/ORM/Test` to run functional tests on both
@@ -135,6 +161,26 @@ The quickest way to generate a migration is to change the appropriate entities a
 ```
 php bin/console doctrine:migrations:diff
 ```
+
+##### [waldo2188/DatatableBundle](https://github.com/waldo2188/DatatableBundle)
+
+This bundle handles the server-side logic for managing index page datatables. The bulk of the code is inside the related
+controllers, and is broken down into the `gridAction()` (which handles routing), and the `datatable()` which handles the 
+settings and database interfacing. 
+
+The full documentation can be found on the bundle's github, but it is worth noting how custom renders are used in the POEM
+implementation. In the `setFields()` array, a number of the entries have values which are just `id` fields. This is done
+because inside the `setRenders()` method, there are paths to Twig templates that actually provide the real value for each 
+cell. 
+
+Inside each template, two objects are passed: `dt_item` is the value from `setFields()` (often `id`), and `dt_obj` which is 
+the entire entity object. This latter parameter can them be used to get anything from the object, and is more robust than
+trying to wrangle custom code into the `setFields()` value. 
+
+Currently, this bundle requires `Twig v1.*`. There has been some testing to confirm it works with `Twig v2.*`, and it may
+update in the future. If the update is pulled into the project, some refractoring may need to occur for the new Twig major 
+version.
+
 #### Parameters
 
 During the Composer install, a number of parameters must be set, these are as follows:
@@ -266,8 +312,6 @@ As mentioned previously in the fixtures section, the `UserManager.php` (which is
 might need to be modified heavily before it works correctly. The entire call is designed with a specific LDAP server
 in mind, and will not work correctly in other systems. More specifically, `createAllUsers()` and `createUser()` are 
 good places to start modification, which many of the other methods supporting them.
-
-
 
 #### Excel Data Loading
 

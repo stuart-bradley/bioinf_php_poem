@@ -10,6 +10,11 @@ namespace AppBundle\Repository;
  */
 class OmicsExperimentTypeStringsRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Gets an array of relationships between OmicsExperimentTypes and their child OmicsExperimentSubTypes for use in
+     * the Twig form.
+     * @return array
+     */
     public function getExpTypeSubTypeRelations()
     {
         $qm = $this->getEntityManager()->createQueryBuilder();

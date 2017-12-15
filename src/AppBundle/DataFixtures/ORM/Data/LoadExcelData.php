@@ -18,6 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use PHPExcel_Reader_Excel2007;
 use PHPExcel_Style_NumberFormat;
+use PHPExcel_Worksheet_Row;
 
 class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -31,6 +32,10 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         $this->container = $container;
     }
 
+    /**
+     * Loads data into database from an array structure.
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         // Skips loading if param is empty.
@@ -82,6 +87,7 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                     }
                 }
             }
+            $sampleIdArray = [];
             // Handle each individual sample.
             foreach ($omics_experiment_array["samples"] as $sample_name => $sample_row) {
                 $BCSampleID = $this->getBCSampleID($sample_row);
@@ -128,10 +134,12 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
                             $exp_sub_type->setOmicsExperimentSubTypeString($exp_sub_type_string);
                             $exp_type_genomics->addOmicsExperimentSubType($exp_sub_type);
                         }
+                        $sampleIdArray[] = $sample->getBCSampleID();
                         $exp_sub_type->addSample($sample);
                     }
                 }
             }
+            $omics_experiment->setSampleIdArray([sizeof($sampleIdArray) => $sampleIdArray]);
             $manager->persist($omics_experiment);
             $manager->flush();
             $versionManager->createVersion($omics_experiment, $sample_user);
@@ -141,7 +149,10 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         $manager->flush();
     }
 
-    /*
+    /**
+     * Reads an excel document and converts it into an associative array.
+     * @param string $inputFileName
+     * @return array $current_projects
      * Opens Excel 2007 file and returns a PHP object of the form:
      *
      * Header:
@@ -225,8 +236,10 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         return $current_projects;
     }
 
-    /*
+    /**
      * Given a project name like: "P0001 Test Project", return "P0001".
+     * @param string $projectName
+     * @return string
      */
     private function getProjectID($projectName)
     {
@@ -236,8 +249,11 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         return $matches[0][0];
     }
 
-    /*
+    /**
      * Creates comments out of columns 7 and 9.
+     * @param array $project
+     * @param string $comments (pre-existing comments)
+     * @return string $comments
      */
     private function appendComments($project, $comments = "")
     {
@@ -260,6 +276,10 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         return $comments;
     }
 
+    /**
+     * @param string $sample_row
+     * @return string
+     */
     private function getBCSampleID($sample_row)
     {
         if (preg_match("/\d+/", $sample_row[4])) {
@@ -270,8 +290,10 @@ class LoadExcelData extends AbstractFixture implements OrderedFixtureInterface, 
         }
     }
 
-    /*
+    /**
      * Required because of possible empty cells.
+     * @param PHPExcel_Worksheet_Row $row
+     * @return boolean
      */
     private function isRowEmpty($row)
     {
