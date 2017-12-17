@@ -7,26 +7,26 @@ organised in the same layout as the file structure.
 
 - [app](#app)
   - [config](#config)
-  - [Resources](#Resources) 
-- [src/AppBundle](#src/AppBundle)
-  - [BioControl](#Biocontrol)
-  - [Command](#Command)
-  - [Controller](#Controller)
-  - [DataFixtures](#DataFixtures)
-    - [ORM/Data](#ORM/Data)
-    - [ORM/Real](#ORM/Real)
-    - [ORM/Test](#ORM/Test)
-  - [Entity](#Entity)
-  - [EventListener](#EventListener)
-  - [Form](#Form)
-  - [Repository](#Repository)
-  - [Resources](#Resources)
-  - [Twig](#Twig)
-  - [Uploader](#Uploader)
-  - [UserManager](#UserManager)
-  - [Version Manager](#VersionManager) 
-- [tests/AppBundle](#tests/AppBundle)
-  - [Controller](#Controller)
+  - [Resources](#resources) 
+- [src/AppBundle](#src/appbundle)
+  - [BioControl](#biocontrol)
+  - [Command](#command)
+  - [Controller](#controller)
+  - [DataFixtures](#datafixtures)
+    - [ORM/Data](#orm/data)
+    - [ORM/Real](#orm/real)
+    - [ORM/Test](#orm/test)
+  - [Entity](#entity)
+  - [EventListener](#eventlistener)
+  - [Form](#form)
+  - [Repository](#repository)
+  - [Resources](#resources)
+  - [Twig](#twig)
+  - [Uploader](#uploader)
+  - [UserManager](#usermanager)
+  - [Version Manager](#versionmanager) 
+- [tests/AppBundle](#tests/appbundle)
+  - [Controller](#controller)
   
 ## app
 
@@ -86,7 +86,7 @@ Edit, and Delete. The only notable behavioural change is that the entities have 
 for associations to form, and a second time for versioning to occur. OmicsExperiment also has an `ExportAction` which is 
 used to produce CSV output of the entity.  
 
-The BioControl controller is an AJAX action for interfacing with the `BioControlManager`.
+The BioControl controller is an AJAX action for interfacing with the [`BioControlManager`](#biocontrol).
 
 ### DataFixtures
 
@@ -131,6 +131,13 @@ The EER diagram for all entities is as follows:
 ![EER](screenshots/eer.png)
 
 ### EventListener
+
+The `EntityListener` class is used to watch for changes to Doctrine entities, more specifically, it watches for changes 
+involving the File entity, and calls the [`FileUploader`](#uploader) methods as needed.
+
+This could have been directly inside the entities themselves, but it is better practice and cleaner to move the listener 
+to a separate file. 
+
 ### Form
 ### Repository
 ### Resources
