@@ -8,7 +8,7 @@ organised in the same layout as the file structure.
 - [app](#app)
   - [config](#config)
   - [Resources](#resources) 
-- [src/AppBundle](#src/appbundle)
+- [src/AppBundle](#src//appbundle)
   - [BioControl](#biocontrol)
   - [Command](#command)
   - [Controller](#controller)
