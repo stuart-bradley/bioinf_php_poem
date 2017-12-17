@@ -8,14 +8,14 @@ organised in the same layout as the file structure.
 - [app](#app)
   - [config](#config)
   - [Resources](#resources) 
-- [src/AppBundle](#src//appbundle)
+- [AppBundle](#appbundle)
   - [BioControl](#biocontrol)
   - [Command](#command)
   - [Controller](#controller)
   - [DataFixtures](#datafixtures)
-    - [ORM/Data](#orm/data)
-    - [ORM/Real](#orm/real)
-    - [ORM/Test](#orm/test)
+    - [Data](#data)
+    - [Real](#real)
+    - [Test](#test)
   - [Entity](#entity)
   - [EventListener](#eventlistener)
   - [Form](#form)
@@ -59,7 +59,7 @@ datatable row.
 - `*_subfields.html.twig` is a file containing the prototype templates used for the nested forms. These are used when items 
 are added dynamically to the form. 
 
-## src/AppBundle
+## AppBundle
 
 ### BioControl
 
@@ -98,7 +98,7 @@ For development and production enviroments, initial loading is as follows:
 sudo php bin/console doctrine:fixtures:load --fixtures=src/AppBundle/DataFixtures/ORM/Real --fixtures=src/AppBundle/DataFixtures/ORM/Data
 ```
 
-#### ORM/Data
+#### Data
 
 The data fixture is for loading preexisting Omics Experiments from their old Excel format into the system. It should be 
 run every time the database is created. It uses the `LoadExcelData` class, which is fairly sensitive to the excel 
@@ -106,13 +106,13 @@ structure and would need to be modified should that change.
 
 Additionally, the class requires the following two parameters: `excel_data_path`, and `excel_data_worksheet`.
 
-#### ORM/Real
+#### Real
 
 This set of fixtures is for loading users from the LDAP server, the strings for StatusStrings and MaterialTypeStrings, 
 and also the relationships between OmicsExperimentType and OmicsExperimentSubType. These are all required for operation 
 of POEM, and this folder must be loaded into the database for it work.  
 
-#### ORM/Test
+#### Test
 
 This set of fixtures loads some very simple data into the database for testing. It is used by the testing suite, and can 
 also be loaded seperately for adhoc inspections and testing. 
