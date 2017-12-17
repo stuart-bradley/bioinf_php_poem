@@ -317,3 +317,8 @@ good places to start modification, which many of the other methods supporting th
 
 In the fixtures `Data/LoadExcelData.php` is an example of how to use `PHPExcel` to load experiments into the database. 
 Like `FOSUser.php` it is only setup for a very specific file structure, and would have to be heavily modified before use.  
+
+### POEM Component Guide
+
+[This](COMPONENT_GUIDE.md) outlines all the major parts of the POEM system, and should help clarify what each piece of 
+code is doing. 
