@@ -9,21 +9,24 @@ organised in the same layout as the file structure.
   - [config](#config)
   - [Resources](#Resources) 
 - [src/AppBundle](#src/AppBundle)
-  - BioControl
-  - Command
-  - Controller
-  - DataFixtures
-  - Entity
-  - EventListener
-  - Form
-  - Repository
-  - Resources
-  - Twig
-  - Uploader
-  - UserManager 
-  - Version Manager 
+  - [BioControl](#Biocontrol)
+  - [Command](#Command)
+  - [Controller](#Controller)
+  - [DataFixtures](#DataFixtures)
+    - [ORM/Data](#ORM/Data)
+    - [ORM/Real](#ORM/Real)
+    - [ORM/Test](#ORM/Test)
+  - [Entity](#Entity)
+  - [EventListener](#EventListener)
+  - [Form](#Form)
+  - [Repository](#Repository)
+  - [Resources](#Resources)
+  - [Twig](#Twig)
+  - [Uploader](#Uploader)
+  - [UserManager](#UserManager)
+  - [Version Manager](#VersionManager) 
 - [tests/AppBundle](#tests/AppBundle)
-  - Controller
+  - [Controller](#Controller)
   
 ## app
 
@@ -48,8 +51,94 @@ The resources folder contains all the `Twig` views for POEM. The `FOSUserBundle`
 for custom security views.
 
 For POEM, views are broken down into its two main components, OmicsExperiment and SequenceRun. Both components have the 
-same views, 
+same views. There are two sections which require additional explanation:
+- `/datatables` is a folder containing custom rendering for individual cells of the datatable. Inside the respective 
+controller, there is a `datatable` function which defines which file is used for which field. These templates are passed 
+two parameters: `dt_item` is the value of the field defined by the function, and `dt_object` is the entire entity of that 
+datatable row. 
+- `*_subfields.html.twig` is a file containing the prototype templates used for the nested forms. These are used when items 
+are added dynamically to the form. 
 
 ## src/AppBundle
 
+### BioControl
+
+The `BioControlManager` class is used to convert JSON data from the OmicsExperiment Sample form, into Microsoft SQL 
+queries which interface with the BioControl server, and then converting the results back into JSON for use in the frontend.
+
+There is an additional method (`getBioControlSampleNonJSON`) which can be used to interact with the server while avoiding 
+the JSON overhead.   
+
+### Command
+
+`CreateUsersCommand` and `UpdateUserDnCommand` define console commands for use when interacting with the LDAP server. 
+They have been defined in the main ReadMe, and are there so that changes to the LDAP server (say DN changes) can be 
+quickly propagated to POEM.   
+
+### Controller
+
+The controllers in POEM are broken down in the OmicsExperiment/SequenceRun controllers, and the BioControl controller. 
+
+All controllers use the annotation notation for routing. 
+
+The OmicsExperiment and SequenceRun controllers have the same methods: Index (which uses the GridAction), New, Show, 
+Edit, and Delete. The only notable behavioural change is that the entities have to be persisted and flushed twice: once 
+for associations to form, and a second time for versioning to occur. OmicsExperiment also has an `ExportAction` which is 
+used to produce CSV output of the entity.  
+
+The BioControl controller is an AJAX action for interfacing with the `BioControlManager`.
+
+### DataFixtures
+
+Fixtures are used in POEM both for testing, and for initialising the production and development databases.
+
+For development and production enviroments, initial loading is as follows:
+
+```
+sudo php bin/console doctrine:fixtures:load --fixtures=src/AppBundle/DataFixtures/ORM/Real --fixtures=src/AppBundle/DataFixtures/ORM/Data
+```
+
+#### ORM/Data
+
+The data fixture is for loading preexisting Omics Experiments from their old Excel format into the system. It should be 
+run every time the database is created. It uses the `LoadExcelData` class, which is fairly sensitive to the excel 
+structure and would need to be modified should that change. 
+
+Additionally, the class requires the following two parameters: `excel_data_path`, and `excel_data_worksheet`.
+
+#### ORM/Real
+
+This set of fixtures is for loading users from the LDAP server, the strings for StatusStrings and MaterialTypeStrings, 
+and also the relationships between OmicsExperimentType and OmicsExperimentSubType. These are all required for operation 
+of POEM, and this folder must be loaded into the database for it work.  
+
+#### ORM/Test
+
+This set of fixtures loads some very simple data into the database for testing. It is used by the testing suite, and can 
+also be loaded seperately for adhoc inspections and testing. 
+
+### Entity
+
+These files define the entity structures for database objects via Doctrine. They use the annotation notation, and changes 
+to them can be propagated using the following console command:
+
+```
+sudo php bin/console doctrine:schema:update --force
+```
+
+The EER diagram for all entities is as follows:
+
+![EER](screenshots/eer.png)
+
+### EventListener
+### Form
+### Repository
+### Resources
+### Twig
+### Uploader
+### UserManager 
+### Version Manager 
+
 ## tests/AppBundle
+
+### Controller
