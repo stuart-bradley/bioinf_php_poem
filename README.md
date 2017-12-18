@@ -322,3 +322,7 @@ Like `FOSUser.php` it is only setup for a very specific file structure, and woul
 
 [This](COMPONENT_GUIDE.md) outlines all the major parts of the POEM system, and should help clarify what each piece of 
 code is doing. 
+
+### POEM Cookbook
+
+[This](COOKBOOK.md) outlines a few basic recipes for performing various developmental tasks on POEM. 
