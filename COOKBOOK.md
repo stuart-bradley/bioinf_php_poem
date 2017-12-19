@@ -110,10 +110,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NewTable
 {
-    public function __construct()
-    {
-        
-    }
 }
 ```
 
@@ -231,7 +227,7 @@ from [Adding a New Table](#adding-a-new-table) has been completed.
 
 **1. Controller**
 
-The first step is to decide what actions the entity requires - the standard actions are usual Index, New, Edit, Show, 
+The first step is to decide what actions the entity requires - the standard actions are usually: Index, New, Edit, Show, 
 and Delete. A sample controller would look something like this:
 
 ```php
@@ -539,7 +535,7 @@ class NewSubTableType extends AbstractType
 }
 ```
 
-In addition to this, the parent formbuilder should be extended with a `CollectionType` field:
+In addition to this, the parent FormBuilder should be extended with a `CollectionType` field:
 
 ```php
 <?php
