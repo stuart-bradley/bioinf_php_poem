@@ -29,7 +29,7 @@ You can use the `--env=prod` flag to start the production database, but it's bet
 In `src/AppBundle/Entity` find the doctrine entity associated with the existing table. In this entity add the following 
 parts:
 
-#####1. Variable declaration:
+##### 1. Variable declaration:
 
 In the annotation, `@Assert` and various other annotations can be included.
 
@@ -41,7 +41,7 @@ In the annotation, `@Assert` and various other annotations can be included.
  private $newField;
 ``` 
 
-#####2. Getter and Setter Methods:
+##### 2. Getter and Setter Methods:
 
 ```php
 /**
@@ -66,7 +66,7 @@ In the annotation, `@Assert` and various other annotations can be included.
   }
 ```
 
-#####3. Optional: Change constructor:
+##### 3. Optional: Change constructor:
 
 For some fields, when the entity is created, there needs to be a default value:
 
@@ -80,7 +80,7 @@ public function __construct()
 }
 ```
 
-#####Update the schema
+##### Update the schema
 
 Finally, run the following command (with the `--env=prod` flag for the production environment):
 
@@ -122,7 +122,7 @@ Finally, the schema needs to be updated same as above.
 There are a number of steps to add a column to a form, and a surprisingly large number of files to change. Assuming the 
 requisite database changes have been made (see [above](#adding-a-new-column-to-an-existing-table)), then the following files need to be modified:
 
-#####1. FormBuilder
+##### 1. FormBuilder
 
 To tell Symfony that the new field is part of a form, a `*Type` class object must be added to the correct `FormBuilder` 
 in `src/AppBundle/Form`. Assuming we're building the form for our `NewTable` Entity the addition would look something 
@@ -136,7 +136,7 @@ When adding fields to the `FormBuilder`, a Type class must be specified (and imp
 number of both HTML and Symfony options that can be included. In this example, we've set the form so that the field is 
 not required for submission (and since there's no `@Assert` in the entity, no validation of any kind is performed). 
 
-#####2. Form
+##### 2. Form
 
 Adding a new field to a form is incredibly easy, in fact, all that really needs to done for basic fields is to add the 
 following line between the form start and end Twig tags:
@@ -156,11 +156,11 @@ following line between the form start and end Twig tags:
 This handles the labeling, input and errors of each field. This can be further seperated out for additional complexity, 
 or even completely customised. 
 
-#####Index and Show Pages:
+##### Index and Show Pages:
 
 Finally, you'll want to display the new field somewhere, the two obvious places are the Index and the Show pages:
 
-######Index Page:
+###### Index Page:
 
 The index page uses a DataTable to display information and therefore is a little bit involved to display the information. 
 Inside the parent controller, find the `datatable` method, and add a line to the `setFields` array:
@@ -202,7 +202,7 @@ Either option produces a similar result. The template gets passed two objects:
 - `dt_obj` is the entire `NewTable` entity. This can be useful if you want to render multiple fields in a cell, or 
 associated entities. 
 
-######Show Page:
+###### Show Page:
  
 Adding the new field to the show field is much simpler. All that needs to be done is something along these lines:
 
@@ -225,7 +225,7 @@ Creating a new form is very similar to above, but includes the creation of a new
 This section assumes the form isn't nested. (See [here](#nesting-forms) if it is). It also assumes the database work 
 from [Adding a New Table](#adding-a-new-table) has been completed. 
 
-#####1. Controller
+##### 1. Controller
 
 The first step is to decide what actions the entity requires - the standard actions are usually: Index, New, Edit, Show, 
 and Delete. A sample controller would look something like this:
@@ -324,7 +324,7 @@ class NewTableController extends Controller
 }
 ```
 
-#####2. Form Builder
+##### 2. Form Builder
 
 Creating the form builder is very similar to above, but requires creating the whole file:
 
@@ -359,7 +359,7 @@ class NewTableType extends AbstractType
 }
 ```
 
-#####3. Form:
+##### 3. Form:
 
 Twig forms are at their most basic are incredibly simple, the files for views created should live in 
 `app/Resources/views/new_table/`.
@@ -388,7 +388,7 @@ Twig forms are at their most basic are incredibly simple, the files for views cr
 
 The bulk of the form is boilerplate required for Twig templating. 
 
-#####4. Other Actions:
+##### 4. Other Actions:
 
 As shown in the example controller, all the other services either pass a single NewTable object, or an array. 
 From there it's very easy to build basic HTML/Twig pages for each action.
@@ -406,12 +406,12 @@ can be attached to a button like so:
 Following on from the previous sections, creating a nested form isn't a huge amount of extra work. The first thing to note is
 that you *do not* create a separate controller, as this has already been done inside the parent entity.
 
-#####1. Database Changes: 
+##### 1. Database Changes: 
 
 To link a parent to a child entity, both entity files need to be modified to reflect this. The following example assumes 
 one parent has many children:
 
-######Parent Entity:
+###### Parent Entity:
 
 ```php
 .
@@ -464,7 +464,7 @@ public function getNewSubTables()
 }
 ```
 
-######Child Entity:
+###### Child Entity:
 
 ```php
 .
@@ -502,7 +502,7 @@ public function setNewTable(\AppBundle\Entity\NewTable $newTable = null)
 
 These are standard Doctrine association joins, and are well documented in the docs if other relationships are needed. 
 
-#####2. Form Builder:
+##### 2. Form Builder:
 
 Firstly, a FormBuilder class should be created exactly like above for the nested form, except it has no submit field:
 
@@ -579,7 +579,7 @@ class NewTableType extends AbstractType
 
 Take note of the `prototype_name`, this is used in the form itself. 
 
-#####3. Form:
+##### 3. Form:
 
 The parent form can then be extended to include the new nested form:
 
@@ -638,13 +638,13 @@ Which defines a prototype form that can be added by `FormCollections`, which is 
 
 Inside `form_collection.js`, a few additional changes need to be made to make the form fully dynamic:
 
-######A. Add a button prototype:
+###### A. Add a button prototype:
 
 ```js
 self.prototype_buttons['sub_tables'] = '<button type="button" class="btn btn-samples btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Sub Table </button>';
 ```
 
-######B. Add an if-else statement to `renamePrototype`:
+###### B. Add an if-else statement to `renamePrototype`:
 
 When copying the prototypes into the main form, they need to be renamed, so that multiple sub-forms in the same parent 
 form. This renaming occurs in the `renamePrototype` function, and would look something like this:
@@ -660,7 +660,7 @@ form. This renaming occurs in the `renamePrototype` function, and would look som
 }
 ```
 
-######Optional - Greater than 1 Level Nesting:
+###### Optional - Greater than 1 Level Nesting:
 
 In the case of having a `sub_sub_table`, the above renaming becomes more complicated, as additional levels must be 
 recursed through. For examples, see `samples` in `form_collection.js:renamePrototype`.
@@ -682,7 +682,7 @@ can be passed to other services and modules).
 
 Creation of a service happens in two stages: first code is written, and then the service is registered. 
 
-#####Writing a Basic Service:
+##### Writing a Basic Service:
 
 The most basic service is a simple PHP class:
 
@@ -728,7 +728,7 @@ $adder = $this->container->get('app.adder');
 $result = $adder->add(1,2); # $result = 3.
 ```
 
-#####Writing a More Complex Service:
+##### Writing a More Complex Service:
 
 Services can also have arguments sent to them, these arguments can be the whole container, or individual components:
 
