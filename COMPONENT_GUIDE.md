@@ -174,7 +174,7 @@ to upload images and videos, because this does not use the underlying file uploa
 
 To run these JS files on specific pages, they should be called in the `{% block javascipt %}` section of the Twig 
 template. For example, here is the block for the Omics Experiment Twig view:
-```
+```twig
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
